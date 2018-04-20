@@ -1,0 +1,33 @@
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver a principal</a>
+<a data-ng-href="#!/articles">Volver a lista de artículos</a>
+<hr />
+
+<!-- La view editar artículo -->
+<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+
+	<!-- Formulario editar artículo -->
+	<h1>Editar</h1>
+	<form data-ng-submit="update()" novalidate>
+		<div>
+			<label for="titulo">Titulo</label>
+			<div>
+				<input type="text" data-ng-model="article.titulo" id="titulo" placeholder="Titulo" required>
+			</div>
+		</div>
+		<div>
+			<label for="contenido">Contenido</label>
+			<div>
+				<textarea data-ng-model="article.contenido" id="contenido" cols="30" rows="10" placeholder="Contenido"></textarea>
+			</div>
+		</div>
+		<div>
+			<input type="submit" value="Actualizar">
+		</div>
+		<!-- El elemento mensaje error -->
+		<div data-ng-show="error">
+			<strong data-ng-bind="error"></strong>
+		</div>
+	</form>
+	</div>
+</section>

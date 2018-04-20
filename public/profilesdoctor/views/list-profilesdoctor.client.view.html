@@ -1,0 +1,46 @@
+<section ng-controller="MainController">
+
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver a principal</a>
+
+<!-- Usuario sin autenticar -->
+<div data-ng-show="!authentication.user">
+  <h1>Tienes que estar autenticado para ver listado de doctores</h1>
+  <li><a href="/signin">Identificarse</a></li>
+</div>
+
+<!-- Usuario autenticado  -->
+<div data-ng-show="authentication.user">
+  <!-- La view listar citas -->
+  <section data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+    <!-- Lista de doctores -->
+    <h1>Doctores</h1>
+    <ul>
+      <hr />
+      <li data-ng-repeat="profileDoctor in profilesDoctor">
+        <a data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}" data-ng-bind="profileDoctor.creador.fullName"></a>
+        <br>
+        <small>
+          <em>Creado el</em>
+          <em data-ng-bind="profileDoctor.created | date:'medium'"></em>
+          <em>by</em>
+          <em data-ng-bind="profileDoctor.creador.fullName"></em>
+          <em>Identificado como:</em>
+          <em data-ng-bind="profileDoctor._id"></em>
+        </small>
+        <h1>Centros de salud</h1>
+        <p data-ng-bind="profileDoctor.healthCentre"></p>
+        <h1>Especialidades</h1>
+        <p data-ng-bind="profileDoctor.specialties"></p>
+        <h1>Horario de trabajo</h1>
+        <p data-ng-bind="profileDoctor.workingHours"></p>
+      <hr />
+      </li>
+    </ul>
+    <!-- Si no tiene, sugerimos que se cree un nuevo perfil -->
+    <div data-ng-hide="!profilesDoctor || profilesDoctor.length">
+      Aún no tienes perfil, <a href="#!/profilesDoctor/create">crearte un perfil</a>?
+    </div>
+  </section>
+</div>
+</section>

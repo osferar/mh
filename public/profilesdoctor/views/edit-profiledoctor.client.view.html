@@ -1,0 +1,57 @@
+<section ng-controller="MainController">
+
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver atras</a>
+
+<!-- Usuario sin autenticar -->
+<div data-ng-show="!authentication.user">
+  <h1>Tienes que estar autenticado para poder editar tu perfil de doctor.</h1>
+  <li><a href="/signin">Identificarse</a></li>
+</div>
+
+<!-- Usuario autenticado  -->
+<div data-ng-show="authentication.user">
+  <!-- La view edit profileDoctor -->
+  <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+
+    <!-- Formulario editar perfil -->
+    <h1>Editar perfil</h1>
+    <form data-ng-submit="update()" novalidate>
+      <div>
+        <label for="numberColleged">Número de colegiado</label>
+        <div>
+          <input type="text" data-ng-model="profileDoctor.numberColleged" id="numberColleged" placeholder="NumberColleged" >
+        </div>
+      </div>
+      <div>
+        <label for="healthCentre">Centro médico</label>
+        <div>
+          <input type="text" data-ng-model="profileDoctor.healthCentre" id="healthCentre" placeholder="HealthCentre">
+        </div>
+      </div>
+      <div>
+        <label for="specialties">Especialidad</label>
+        <div>
+          <input type="text" data-ng-model="profileDoctor.specialties" id="specialties" placeholder="Specialties" >
+        </div>
+      </div>
+      <div>
+        <label for="workingHours">Horario de trabajo</label>
+        <div>
+          <input type="date" data-ng-model="profileDoctor.workingHours" id="workingHours" placeholder="WorkingHours" required>
+        </div>
+      </div>
+      <div>
+      <div>
+        <input type="submit" value="Actualizar">
+      </div>
+
+      <!-- El elemento mensaje de error -->
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
+      </div>
+    </form>
+  </section>
+</div>
+
+</section>

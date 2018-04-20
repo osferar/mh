@@ -1,0 +1,24 @@
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver a principal</a>
+<a data-ng-href="#!/articles">Volver a lista de artículos</a>
+<hr />
+
+<!-- La view artículo -->
+<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+
+
+  <h1 data-ng-bind="article.titulo"></h1>
+  <p data-ng-bind="article.contenido"></p>
+  <small>
+      <em>Publicado el</em>
+      <em data-ng-bind="article.creado | date:'mediumDate'"></em>
+      <em>por</em>
+      <em data-ng-bind="article.creador.fullName"></em>
+  </small>
+  <!-- Mostrar los botones de edición para artículo creado -->
+  <div data-ng-show="authentication.user._id == article.creador._id">
+      <a href="/#!/articles/{{article._id}}/edit">editar</a>
+      <a href="#" data-ng-click="delete();">borrar</a>
+  </div>
+
+</section>

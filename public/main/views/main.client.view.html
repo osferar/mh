@@ -1,0 +1,30 @@
+<section ng-controller="MainController">
+
+  <!-- Usuario sin autenticar -->
+  <div data-ng-show="!authentication.user">
+    <li><a href="/signin">Identificarse</a></li>
+    <hr />
+    <ul>
+      <p>Para crear una cuenta como médico.</p>
+        <li><a href="/signup">Crear Cuenta Medico</a></li>
+        <hr />
+      <p>Para crear una cuenta como paciente.</p>
+        <li><a href="/signup">Crear Cuenta Paciente</a></li>
+    </ul>
+  </div>
+
+  <!-- Usuario autenticado  -->
+  <div data-ng-show="authentication.user">
+    <h1>Usuario <span data-ng-bind="authentication.user.fullName"></span></h1>
+    <a href="/signout">Cerrar Sesión</a>
+    <ul>
+      <li><a href="/#!/articles/create">Crear Artículo</a></li>
+      <li><a href="/#!/articles">Listar Artículos</a></li>
+      <li><a href="/#!/profilesDoctor/create">Crear perfil doctor</a></li>
+      <li><a href="/#!/profilesDoctor">Listar doctores</a></li>
+      <li><a href="/#!/appointments/create">Nueva Cita</a></li>
+      <li><a href="/#!/appointments">Listar Citas</a></li>
+    </ul>
+  </div>
+
+</section>
