@@ -7,13 +7,22 @@
 <body>
 	<h1>Plataforma de consultas médicas e historiales médicos</h1>
 	<section ng-view></section>
+
 	<script type="text/javascript">
     window.user = <%- user || 'null' %>;
+		// window.patient = <%- patient || 'null' %>;
   </script>
+
 	<!-- Enlaces a los ficheros de angular -->
 	<script type="text/javascript" src="/lib/angular/angular.js"></script>
 	<script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 	<script type="text/javascript" src="/lib/angular-resource/angular-resource.js"></script>
+
+	<!-- Enlaces a los ficheros de consultations -->
+	<script type="text/javascript" src="/consultations/consultations.client.module.js"></script>
+  <script type="text/javascript" src="/consultations/controllers/consultations.client.controller.js"></script>
+  <script type="text/javascript" src="/consultations/services/consultations.client.service.js"></script>
+  <script type="text/javascript" src="/consultations/config/consultations.client.routes.js"></script>
 
 	<!-- Enlaces a los ficheros de articules -->
 	<script type="text/javascript" src="/articles/articles.client.module.js"></script>
@@ -27,12 +36,6 @@
   <script type="text/javascript" src="/appointments/services/appointments.client.service.js"></script>
   <script type="text/javascript" src="/appointments/config/appointments.client.routes.js"></script>
 
-	<!-- Enlaces a los ficheros de appointments -->
-	<script type="text/javascript" src="/profilesdoctor/profilesdoctor.client.module.js"></script>
-  <script type="text/javascript" src="/profilesdoctor/controllers/profilesdoctor.client.controller.js"></script>
-  <script type="text/javascript" src="/profilesdoctor/services/profilesdoctor.client.service.js"></script>
-  <script type="text/javascript" src="/profilesdoctor/config/profilesdoctor.client.routes.js"></script>
-
 	<!-- Enlaces a los ficheros de main -->
 	<script type="text/javascript" src="/main/main.client.module.js"></script>
 	<script type="text/javascript" src="/main/controllers/main.client.controller.js"></script>
@@ -40,8 +43,19 @@
 
 	<!-- Enlace a los ficheros de users -->
 	<script type="text/javascript" src="/users/users.client.module.js"></script>
-  <script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
-	<script type="text/javascript" src="/users/services/rol.client.service.js"></script>
+	<script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
+
+	<!-- Enlaces a los ficheros de profilesDoctor -->
+	<script type="text/javascript" src="/profilesdoctor/profilesdoctor.client.module.js"></script>
+	<script type="text/javascript" src="/profilesdoctor/controllers/profilesdoctor.client.controller.js"></script>
+	<script type="text/javascript" src="/profilesdoctor/services/profilesdoctor.client.service.js"></script>
+	<script type="text/javascript" src="/profilesdoctor/config/profilesdoctor.client.routes.js"></script>
+
+	<!-- Enlace a los ficheros de profilesPatients -->
+	<script type="text/javascript" src="/profilespatient/profilespatient.client.module.js"></script>
+	<script type="text/javascript" src="/profilespatient/controllers/profilespatient.client.controller.js"></script>
+	<script type="text/javascript" src="/profilespatient/services/profilespatient.client.service.js"></script>
+	<script type="text/javascript" src="/profilespatient/config/profilespatient.client.routes.js"></script>
 
 	<!-- Enlace a los ficheros de application -->
 	<script type="text/javascript" src="/application.js"></script>

@@ -1,7 +1,7 @@
 <section ng-controller="MainController">
 
 <!-- Navegacion -->
-<a data-ng-href="#!/">Volver a principal</a>
+<a data-ng-href="#!/">Principal</a>
 
 <!-- Usuario sin autenticar -->
 <div data-ng-show="!authentication.user">
@@ -25,8 +25,6 @@
           <em data-ng-bind="profileDoctor.created | date:'medium'"></em>
           <em>by</em>
           <em data-ng-bind="profileDoctor.creador.fullName"></em>
-          <em>Identificado como:</em>
-          <em data-ng-bind="profileDoctor._id"></em>
         </small>
         <h1>Centros de salud</h1>
         <p data-ng-bind="profileDoctor.healthCentre"></p>

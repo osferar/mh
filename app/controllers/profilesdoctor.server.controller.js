@@ -3,7 +3,8 @@
 
 // Cargar las dependdencias del módulo
 var mongoose = require('mongoose'),
-    ProfileDoctor = mongoose.model('ProfileDoctor');
+    ProfileDoctor = mongoose.model('ProfileDoctor'),
+    User = require('mongoose').model('User');
 
 // Crear un nuevo método controller para el manejo de errores
 var getErrorMessage = function(err) {
@@ -20,8 +21,13 @@ var getErrorMessage = function(err) {
 // Crear un nuevo método controller para crear nuev@s doctores
 exports.create = function(req, res) {
   var profileDoctor = new ProfileDoctor(req.body);
-  // Configurar la propiedad 'creador' del doctor
+
+  // Configurar los datos del doctor
   profileDoctor.creador = req.user;
+  // profileDoctor.firstName = req.user.firstName;
+  // profileDoctor.lastName = req.user.lastName;
+  // profileDoctor.email = req.user.email;
+  // profileDoctor.username = req.user.username;
 
   // Intentar guardar al doctor
   profileDoctor.save(function(err) {
@@ -31,7 +37,23 @@ exports.create = function(req, res) {
         message: getErrorMessage(err)
       });
     } else {
-      // Enviar una representación JSON de la cita
+
+      // Obtener el usuario usando el objeto 'request'
+      var user = req.user;
+      // Actualiza el campo 'rol' a 'doctor'
+      user.rol = "doctor";
+
+      // Intentar guardar al usuario actualizado el rol
+      user.save(function(err) {
+          if(err) {
+            // Si ocurre un error enviar el mensaje de error
+            return res.status(400).send({
+              message: getErrorMessage(err)
+            });
+          }
+      });
+
+      // Enviar una representación JSON del doctor
       res.json(profileDoctor);
     }
   });
@@ -47,7 +69,7 @@ exports.list = function(req, res) {
         message: getErrorMessage(err)
       });
     } else {
-      // Enviar una represtación JSON de la cita
+      // Enviar una represtación JSON del perfil médico
       res.json(profilesDoctor);
     }
   });
@@ -68,7 +90,7 @@ exports.update = function(req, res) {
   profileDoctor.specialties = req.body.specialties;
   profileDoctor.workingHours = req.body.workingHours;
 
-  // Intentar guardar la cita actualizada
+  // Intentar guardar el doctor actualizado
   profileDoctor.save(function(err) {
       if(err) {
         // Si ocurre un error enviar el mensaje de error
@@ -76,17 +98,17 @@ exports.update = function(req, res) {
           message: getErrorMessage(err)
         });
       } else {
-        // Enviar una represtación JSON de la cita
+        // Enviar una represtación JSON del doctor
         res.json(profileDoctor);
       }
   });
 };
 
-// Crear un nuevo método controller que borre la cita existente
+// Crear un nuevo método controller que borre el doctor existente
 exports.delete = function(req, res) {
   var profileDoctor = req.profileDoctor;
 
-  // Usa el método 'remove' para eliminar la cita
+  // Usa el método 'remove' para eliminar el doctor
   profileDoctor.remove(function(err){
     if (err) {
       // Si ocurre un error enviar el mensaje de error
@@ -94,7 +116,7 @@ exports.delete = function(req, res) {
         message: getErrorMessage(err)
       });
     } else {
-      // Enviar una represtación JSON de la cita
+      // Enviar una represtación JSON del doctor
       res.json(profileDoctor);
     }
   });
@@ -109,7 +131,7 @@ exports.profileDoctorByID = function(req, res, next, id) {
       return next(err);
     if(!profileDoctor) return next(new Error('Failed to load doctor' + id));
 
-    // Si una cita es encontrada usar el objeto 'request' para pasarlo al siguiente middleware
+    // Si un paciente es encontrado usar el objeto 'request' para pasarlo al siguiente middleware
     req.profileDoctor = profileDoctor;
 
     // Llamar al siguiente middleware

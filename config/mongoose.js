@@ -12,13 +12,16 @@ module.exports = function() {
 
 	// Cargar el modelo 'User'
 	require('../app/models/user.server.model');
+	// Cargar el modelo 'ProfileDoctor'
+	require('../app/models/profiledoctor.server.model');
+	// Cargar el modelo 'ProfilePatient'
+	require('../app/models/profilepatient.server.model');
   // Cargar el modelo 'Article'
 	require('../app/models/article.server.model');
 	// Cargar el modelo 'Appointment'
 	require('../app/models/appointment.server.model');
-	// Cargar el modelo 'ProfileDoctor'
-	require('../app/models/profiledoctor.server.model');
-
+	// Cargar el modelo 'Consultation'
+	require('../app/models/consultation.server.model');
 	// Devolver la instancia de conexión a Mongoose
 	return db;
 };

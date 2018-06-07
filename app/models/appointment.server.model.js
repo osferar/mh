@@ -12,7 +12,7 @@ var AppointmentSchema = new Schema({
   date: {
     type: Date,
     // Validar existencia de valor Date
-    required: 'Date is require'
+    required: 'Fecha es obligatoria / Date is require'
   },
   healthCentre: {
     type: String,
@@ -20,28 +20,21 @@ var AppointmentSchema = new Schema({
     trim: true
   },
   specialty: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'ProfileDoctor'
   },
   doctor: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'User'
   },
   patient: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'User'
   },
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
   },
-  // rolcreador:{
-  //   type: Schema.ObjectId,
-  //   ref: 'User'
-  // },
   disorder: {
     type: String,
     default: '',

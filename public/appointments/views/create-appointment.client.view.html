@@ -1,50 +1,98 @@
-<!-- La view create appointment -->
-<section data-ng-controller="AppointmentsController">
-  <h1>Nueva cita</h1>
-  <!-- Formulario nueva cita -->
-  <form data-ng-submit="create()" novalidate>
-    <div>
-      <label for="date">Fecha</label>
+<section ng-controller="MainController">
+
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Volver a principal</a>
+  <hr />
+
+<!-- Usuario autenticado -->
+<div data-ng-show="authentication.user">
+
+  <!-- La view create appointment -->
+  <section data-ng-controller="AppointmentsController">
+    <!-- Formulario nueva cita -->
+    <form data-ng-submit="create()" novalidate>
+      <h1>Nueva cita</h1>
+      <!-- Fecha -->
       <div>
-        <input type="date" data-ng-model="date" id="date" placeholder="Date" required>
+        <label for="date">Fecha</label>
+        <div>
+          <input type="date" min="2018-03-25" max="2018-12-31" step="2" data-ng-model="date" id="date" placeholder="Date" required>
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="healthCentre">Centro médico</label>
+
+      <!-- Hora -->
+      <label for="hour">Hora</label>
+      <div type="time" id="hour" placeholder="Hour">
+        <input type="time" min="9:00" max="15:00" step="3600" name="hour" id="hour" placeholder="Hour">
+      </div>
+
+      <!-- Centro médico -->
       <div>
-        <input type="text" data-ng-model="healthCentre" id="healthCentre" placeholder="HealthCentre">
+        <label for="healthCentre">Centro médico</label>
+        <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+          <select name="healthCentre" id="healthCentre"
+           ng-options="profileDoctor.healthCentre for profileDoctor in profilesDoctor"
+           data-ng-model="healthCentre">
+          </select>
+        </div>
+        <!-- <input type="text" data-ng-model="healthCentre" id="healthCentre" placeholder="HealthCentre"> -->
       </div>
-    </div>
-    <div>
-      <label for="specialty">Especialidad</label>
+
+      <!-- Médico -->
       <div>
-        <input type="text" data-ng-model="specialty" id="specialty" placeholder="Specialty" >
+        <label for="doctor">Médico</label>
+        <div>
+          <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+            <select name="doctor" id="doctor"
+             ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
+             data-ng-model="doctor">
+            </select>
+            <!-- <select data-ng-model="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"></select> -->
+          </div>
+          <!-- <input type="text" data-ng-model="doctor" id="doctor" placeholder="Doctor" > -->
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="doctor">Médico</label>
+
+      <!-- Especialidad -->
       <div>
-        <input type="text" data-ng-model="doctor" id="doctor" placeholder="Doctor" >
+        <label for="specialties">Especialidad</label>
+        <div>
+          <section data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+            <select name="specialty" id="specialty"
+             ng-options="profileDoctor.specialties for profileDoctor in profilesDoctor"
+             data-ng-model="specialty">
+            </select>
+            <!-- <select data-ng-model="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"></select> -->
+          </section>
+          <!-- <input type="text" data-ng-model="specialty" id="specialty" placeholder="Specialty" > -->
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="patient">Paciente</label>
+
+      <!-- Afección -->
       <div>
-        <input type="text" data-ng-model="patient" id="patient" placeholder="Patient" >
+        <label for="disorder">Afección</label>
+        <div>
+          <textarea data-ng-model="disorder" id="disorder" cols="30" rows="10" placeholder="Disorder"></textarea>
+        </div>
       </div>
-    </div>
-    <div>
-      <label for="disorder">Afección</label>
+
+      <!-- Botón de envio -->
       <div>
-        <textarea data-ng-model="disorder" id="disorder" cols="30" rows="10" placeholder="Disorder"></textarea>
+        <input type="submit" value="Crear cita">
       </div>
-    </div>
-    <div>
-      <input type="submit">
-    </div>
-    <!-- El elemento mensaje de error -->
-    <div data-ng-show="error">
-      <strong data-ng-bind="error"></strong>
-    </div>
-  </form>
+
+      <!-- El elemento mensaje de error -->
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
+      </div>
+    </form>
+  </section>
+</div>
+
+<!-- Usuario sin autenticar -->
+<div data-ng-show="!authentication.user">
+  <h1>Tienes que estar autenticado para crear una cita.</h1>
+  <li><a href="/signin">Identificarse</a></li>
+</div>
+
 </section>

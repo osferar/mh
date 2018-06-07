@@ -2,9 +2,12 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-// Definición 'AppointmentSchema'
+// Definición 'ConsultationSchema'
 var ConsultationSchema = new Schema({
-  created: Date,
+  creado: {
+    type: Date,
+    default: Date.now
+  },
   healthCentre: {
     type: String,
     default: '',
@@ -15,25 +18,60 @@ var ConsultationSchema = new Schema({
     default: '',
     trim: true
   },
-  doctor: {
-    type: String,
-    default: '',
-    trim: true
-  },
   patient: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'User'
   },
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
   },
+  height:{
+    type: String
+  },
+  weight:{
+    type: String
+  },
+  breathingFrequency: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  bloodPressure: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  heartRate: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  physicalExploration: {
+    type: String,
+    default: '',
+    trim: true
+  },
   disorder: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  diagnosis: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  medicationPrescription: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  medicalInstructions: {
     type: String,
     default: '',
     trim: true
   }
 });
 
-mongoose.model('Appointment', AppointmentSchema);
+mongoose.model('Consultation', ConsultationSchema);

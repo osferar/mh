@@ -33,8 +33,9 @@ var UserSchema = new Schema({
       }, 'La contraseña debe ser más larga'
     ]
   },
-  rol:{
-    type: String
+  rol: {
+    type: String,
+    default:''
   },
   salt: {
     type: String

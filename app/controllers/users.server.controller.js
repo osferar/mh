@@ -164,19 +164,15 @@ exports.requiresLogin = function(req, res, next) {
   next();
 };
 
-
 // TODO ing
-// // Crear un nuevo método controller que actualiza un usuario
-// exports.update = function(req, res) {
+
+// // Crear un nuevo método controller que actualiza un usuario con rol de paciente
+// exports.signupPatient = function(req, res) {
 //   // Obtener el usuario usando el objeto 'request'
 //   var user = req.user;
-//   // Actualiza los campos de rol
-//   if (req.body.rol=="doctor") {
-//     user.rol = "doctor";
-//   }
-//   if (req.body.rol=="patient") {
-//     user.rol = "patient";
-//   }
+//   // Actualiza el campo 'rol' a 'patient'
+//   user.rol = "patient";
+//
 //   // Intentar guardar al usuario actualizada
 //   user.save(function(err) {
 //       if(err) {
@@ -185,43 +181,30 @@ exports.requiresLogin = function(req, res, next) {
 //           message: getErrorMessage(err)
 //         });
 //       } else {
-//         // Enviar una represtación JSON del usuario
-//         res.json(user);
+//         // Redirecciona al usuario de vuelta a la página de la aplicación principal
+//         res.redirect('/');
 //       }
 //   });
 // };
+
+// Crear un nuevo método controller que actualiza un usuario con rol de doctor
+// exports.signupDoctor = function(req, res) {
+//   // Obtener el usuario usando el objeto 'request'
+//   var user = req.user;
+//   // Actualiza el campo 'rol' a 'doctor'
+//   user.rol = "doctor";
 //
-// // Crear un nuevo método controller que devuelve un usuario existente
-// exports.read = function(req, res) {
-//   res.json(req.user);
-// };
-//
-// // Crear un nuevo método controller middleware que recupera un único doctor existente
-// exports.userByID = function(req, res, next, id) {
-//   // Usar el método static 'findOne' para encontrar una cita específica
-//   User.findById(id).populate('_id','firstName lastName fullName rol').exec(function(err,user) {
-//     if (err)
-//       // llama al siguiente middleware con un mensaje de error
-//       return next(err);
-//     if(!user) return next(new Error('Failed to load user' + id));
-//
-//     // Si una cita es encontrada usar el objeto 'request' para pasarlo al siguiente middleware
-//     req.user = user;
-//
-//     // Llamar al siguiente middleware
-//     next();
+//   // Intentar guardar al usuario actualizada
+//   user.save(function(err) {
+//       if(err) {
+//         // Si ocurre un error enviar el mensaje de error
+//         return res.status(400).send({
+//           message: getErrorMessage(err)
+//         });
+//       } else {
+//         // Redirecciona al usuario de vuelta a la página de la aplicación principal
+//         // res.redirect('/');
+//         res.redirect('/profilesdoctor/views/create-profiledoctor.client.view.html');
+//       }
 //   });
-// };
-//
-// // Crea un nuevo controller middleware para autorizar una operación doctor
-// exports.hasAuthorization = function(req, res, next) {
-// 	// si el usuario actual no es el creador de la cita, enviar el mensaje de error apropiado
-// 	if (req.user.id !== req.user.id) {
-// 		return res.status(403).send({
-// 			message: 'Usuario no está autorizado'
-// 		});
-// 	}
-//
-// 	// Llamar al siguiente middleware
-// 	next();
 // };

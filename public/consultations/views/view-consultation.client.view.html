@@ -1,0 +1,58 @@
+<!-- Navegacion -->
+<a data-ng-href="#!/">Principal</a> >
+<a data-ng-href="#!/appointments">Citas</a> >
+<a data-ng-href="#!/consultations">Consultas Realizadas</a>
+<hr />
+
+<!-- La view consulta -->
+<section data-ng-controller="ConsultationsController" data-ng-init="findOne()">
+
+  <!-- Fecha de creación -->
+  <h1 data-ng-bind="consultation.creado | date:'medium'"></h1>
+  <div data-ng-hide="authentication.user.rol == 'doctor'">
+    <!-- Creador de la consulta -->
+    <small>
+      <em>Realizada por el doctor/a</em>
+      <em data-ng-bind="consultation.creador.fullName"></em>
+    </small>
+  </div>
+  </h1>
+  <!-- Altura -->
+  <h1>Altura</h1>
+  <p data-ng-bind="consultation.height"></p>
+  <!-- Peso -->
+  <h1>Peso</h1>
+  <p data-ng-bind="consultation.weight"></p>
+  <!-- Frecuencia respiratoria -->
+  <h1>Frecuencia respiratoria</h1>
+  <p data-ng-bind="consultation.breathingFrequency"></p>
+  <!-- Presión arterial -->
+  <h1>Presión arterial</h1>
+  <p data-ng-bind="consultation.bloodPressure"></p>
+  <!-- Frecuencia cardiaca -->
+  <h1>Frecuencia cardiaca</h1>
+  <p data-ng-bind="consultation.heartRate"></p>
+  <!-- Exploración física -->
+  <h1>Exploración física</h1>
+  <p data-ng-bind="consultation.physicalExploration"></p>
+  <!-- Afección -->
+  <h1>Afección</h1>
+  <p data-ng-bind="consultation.disorder"></p>
+  <!-- Diagnostico -->
+  <h1>Diagnostico</h1>
+  <p data-ng-bind="consultation.diagnosis"></p>
+  <!-- Prescripción médica -->
+  <h1>Prescripción médica</h1>
+  <p data-ng-bind="consultation.medicationPrescription"></p>
+  <!-- Instruciones médicas -->
+  <h1>Instruciones médicas</h1>
+  <p data-ng-bind="consultation.medicalInstructions"></p>
+
+  <!-- Mostrar los botones de edición para consulta creada -->
+  <div data-ng-show="authentication.user._id == consultation.creador._id">
+      <hr />
+      <a href="/#!/consultations/{{consultation._id}}/edit">editar</a>
+      <a href="#" data-ng-click="delete();">borrar</a>
+  </div>
+
+</section>

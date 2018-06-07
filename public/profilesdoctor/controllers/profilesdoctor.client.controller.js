@@ -1,7 +1,7 @@
 // Invocar modo JavaScript 'strict'
 'use strict';
 
-// Crear el controller 'appointments'
+// Crear el controller 'profilesDoctor'
 angular.module('profilesDoctor').controller('ProfilesDoctorController',['$scope','$routeParams','$location','Authentication','ProfilesDoctor',
   function($scope, $routeParams, $location, Authentication, ProfilesDoctor) {
       // Exponer el service Authentication
@@ -30,7 +30,7 @@ angular.module('profilesDoctor').controller('ProfilesDoctorController',['$scope'
 
       // Crear un nuevo método controller para recuperar una lista de doctores
       $scope.find = function() {
-        // Usar el método 'query' de appointment para enviar una petición GET apropiada
+        // Usar el método 'query' de profileDoctor para enviar una petición GET apropiada
         $scope.profilesDoctor = ProfilesDoctor.query();
       };
 
@@ -70,7 +70,7 @@ angular.module('profilesDoctor').controller('ProfilesDoctorController',['$scope'
         } else {
           // En otro caso, usar el método '$remove' de perfil para borrarlo
           $scope.profileDoctor.$remove(function() {
-            $location.path('profilesDoctor');
+            $location.path('/');
           });
         }
       };

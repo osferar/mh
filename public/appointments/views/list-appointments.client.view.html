@@ -1,36 +1,84 @@
-  <!-- La view listar citas -->
-  <section data-ng-controller="AppointmentsController" data-ng-init="find()">
-    <h1>Citas</h1>
-    <ul>
-      <!-- Lista de citas de su creador -->
-      <p data-ng-show="authentication.user._id == appointment.creador._id">
-      <hr />
-      <li data-ng-repeat="appointment in appointments">
-        <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date"></a>
-        <br>
+<section ng-controller="MainController">
+<!-- Usuario autenticado -->
+<div data-ng-show="authentication.user">
 
-        <small>
-          <em>Creado el</em>
-          <em data-ng-bind="appointment.created | date:'medium'"></em>
-          <em>by</em>
-          <em data-ng-bind="appointment.creador.fullName"></em>
-        </small>
-        <h1>Centro de salud</h1>
-        <p data-ng-bind="appointment.healthCentre"></p>
-        <h1>Especialidad</h1>
-        <p data-ng-bind="appointment.specialty"></p>
-        <h1>Doctor/a</h1>
-        <p data-ng-bind="appointment.doctor"></p>
-        <h1>Paciente</h1>
-        <p data-ng-bind="appointment.patient"></p>
-        <h1>Dolencias</h1>
-        <p data-ng-bind="appointment.disorder"></p>
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Principal</a>
+  <hr />
+
+  <!-- Vista de doctor -->
+  <div data-ng-show="authentication.user.rol == 'doctor'">
+    <section data-ng-controller="AppointmentsController" data-ng-init="find()">
+      <!-- Lista de citas solicitadas -->
+      <h1>Citas</h1>
       <hr />
-    </p>
-      </li>
-    </ul>
-    <!-- Si no hay citas en la lista, sugerimos que se cree una nueva cita -->
-    <div data-ng-hide="!appointments || appointments.length">
-      Aún no hay citas, <a href="#!/appointments/create">crear cita</a>?
-    </div>
-  </section>
+        <ul data-ng-repeat="appointment in appointments">
+          <section data-ng-show="authentication.user._id == appointment.doctor._id">
+            <!-- Fecha de la cita -->
+            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date | date:'medium'"></a>
+            <!-- Fecha de creación -->
+            <small>
+              <em>Creada el</em>
+              <em data-ng-bind="appointment.created | date:'medium'"></em>
+            </small>
+            <!-- Centro de salud -->
+            <h1>Centro de salud</h1>
+            <p data-ng-bind="appointment.healthCentre"></p>
+            <!-- Especialidad -->
+            <h1>Especialidad</h1>
+            <p data-ng-bind="appointment.specialty"></p>
+            <!-- Paciente -->
+            <h1>Paciente</h1>
+            <p data-ng-bind="appointment.creador.fullName"></p>
+          </section>
+        </ul>
+      <!-- Si no hay citas en la lista, lo notificamos -->
+      <div data-ng-hide="!appointments || appointments.length">
+        <h1>Aún no hay citas.</h1>
+      </div>
+    </section>
+  </div>
+
+  <!-- Vista de paciente -->
+  <div data-ng-show="authentication.user.rol == 'patient'">
+
+    <!-- La view listar citas -->
+    <section data-ng-controller="AppointmentsController" data-ng-init="find()">
+      <h1>Citas</h1>
+      <hr />
+        <li data-ng-repeat="appointment in appointments">
+          <div data-ng-show="authentication.user._id == appointment.patient._id">
+            <!-- Fecha de la cita -->
+            <h1>Fecha</h1>
+            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date"></a>
+            <!-- Fecha de creación -->
+            <small>
+              <em>Creada el</em>
+              <em data-ng-bind="appointment.created | date:'medium'"></em>
+            </small>
+            <!-- Centro de salud -->
+            <h1>Centro de salud</h1>
+            <p data-ng-bind="appointment.healthCentre"></p>
+            <!-- Doctor -->
+            <h1>Doctor/a</h1>
+            <p data-ng-bind="appointment.doctor.fullName"></p>
+            <!-- Especialidad -->
+            <h1>Especialidad</h1>
+            <p data-ng-bind="appointment.specialty"></p>
+          </div>
+        </li>
+      <!-- Si no hay citas en la lista, sugerimos que se cree una nueva cita -->
+      <div data-ng-hide="!appointments || appointments.length">
+        No tienes citas,¿ <a href="#!/appointments/create">Pedir cita</a>?
+      </div>
+    </section>
+  </div>
+
+</div>
+
+<!-- Usuario sin autenticar -->
+<div data-ng-show="!authentication.user">
+  <p>Es necesario estar logueado.<a href="/#!/signin">Identificarse</a></p>
+</div>
+
+</section>

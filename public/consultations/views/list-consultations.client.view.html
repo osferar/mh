@@ -1,0 +1,80 @@
+<section ng-controller="MainController">
+
+	<div data-ng-show="authentication.user">
+
+		<!-- Navegacion -->
+		<a data-ng-href="#!/">Principal</a>
+		<hr />
+
+		<!-- Vista de doctor -->
+	  <div data-ng-show="authentication.user.rol == 'doctor'">
+
+			<!-- La view listar consutlas realizadas -->
+			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
+
+				<!-- La lista de consultas -->
+				<h1>Consultas realizadas</h1>
+				<hr />
+				<ul data-ng-repeat="consultation in consultations">
+					<section data-ng-show="authentication.user._id == consultation.creador._id">
+						<h1>
+						<!-- Fecha de la consulta -->
+						<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
+						<!-- Creador de la consulta -->
+						<small>
+							<em>Realizada a </em>
+							<em data-ng-bind="consultation.patient.fullName"></em>
+						</small>
+						</h1>
+						<!-- Contenido de la consulta: diagnostico -->
+						<p>Diagnostico</p>
+						<p data-ng-bind="consultation.diagnosis"></p>
+					</section>
+				</ul>
+
+				<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
+				<div data-ng-hide="!consultations || consultations.length">
+					Aún no ha realizado ninguna consulta, comprueba si tienes <a href="/#!/appointments">citas solicitadas</a>.
+				</div>
+			</section>
+		</div><!-- Fin vista doctor -->
+
+		<!-- Vista de paciente -->
+		<div data-ng-show="authentication.user.rol == 'patient'">
+
+			<!-- La view listar consutlas realizadas -->
+			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
+
+					<!-- La lista de consultas -->
+					<h1>Historial de consultas</h1>
+					<hr />
+					<ul data-ng-repeat="consultation in consultations">
+						<section data-ng-show="authentication.user._id == consultation.patient._id">
+							<!-- Fecha de la consulta -->
+							<h1>
+							<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
+							<!-- Creador de la consulta -->
+							<small>
+								<em>Realizada por el doctor/a </em>
+								<em data-ng-bind="consultation.creador.fullName"></em>
+							</small>
+							</h1>
+							<!-- Contenido de la consulta: Afección -->
+							<p>Afección</p>
+							<p data-ng-bind="consultation.disorder"></p>
+							<!-- Contenido de la consulta: diagnostico -->
+							<p>Diagnostico</p>
+							<p data-ng-bind="consultation.diagnosis"></p>
+						</section>
+					</ul>
+			</section>
+		</div> <!-- Fin vista paciente -->
+
+	</div> <!-- Fin vista usuario autenticado -->
+
+	<!-- Usuario sin autenticar -->
+	<div data-ng-show="!authentication.user">
+	  <p>Es necesario estar logueado.<a href="/#!/signin">Identificarse</a></p>
+	</div>
+
+</section>

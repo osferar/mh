@@ -12,7 +12,7 @@ module.exports = function(app) {
      .get(users.renderSignup)
      .post(users.signup);
 
-  //Configurar las routes 'signin'
+     //Configurar las routes 'signin'
   app.route('/signin')
      .get(users.renderSignin)
      .post(passport.authenticate('local', {

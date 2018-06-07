@@ -1,9 +1,5 @@
 <section ng-controller="MainController">
 
-<!-- Navegacion -->
-<a data-ng-href="#!/">Volver a principal</a>
-<a data-ng-href="#!/profilesDoctor">Volver a lista de perfiles</a>
-
 <!-- Usuario sin autenticar -->
 <div data-ng-show="!authentication.user">
   <h1>Tienes que estar autenticado para ver el perfil del doctor</h1>
@@ -12,33 +8,36 @@
 
 <!-- Usuario autenticado  -->
 <div data-ng-show="authentication.user">
-  <!-- la view appointment -->
-  <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
-    <!-- Mostrar los botones de edicion para el creador del perfil -->
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Principal</a> >
+  <a data-ng-href="#!/profilesDoctor">Lista de doctores</a>
+
+  <!-- la view doctor -->
+  <section data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+    <li data-ng-repeat="profileDoctor in profilesDoctor">
+
+    <!-- Mostrar perfil y los botones de edicion para el creador del perfil -->
     <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+      <!-- Mostrar perfil -->
       <hr />
-      <a href="/#!/profilesDoctor/{{profileDoctor._id}}/edit">Modificar perfil</a>
-      <a href="#" data-ng-click="delete();">Eliminar perfil</a>
-    </div>
-    <!-- Mostrar perfil -->
-    <!-- Fecha de creación del perfil -->
-    <small>
-      <em>Creado el</em>
-      <em data-ng-bind="profileDoctor.created"></em>
-    </small>
-    <!-- Nombre del doctor -->
-    <h1 data-ng-bind="profileDoctor.creador.fullName"></h1>
-    <!-- Si es el creador del perfil mostramos botones de edición y borrado -->
-    <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+      <!-- Nombre del doctor -->
+      <h1 data-ng-bind="profileDoctor.creador.fullName"></h1>
+      <!-- Fecha de creación del perfil -->
+      <small>
+        <em>Creado el</em>
+        <em data-ng-bind="profileDoctor.created"></em>
+      </small>
       <h1>Número de Colegiado</h1>
       <p data-ng-bind="profileDoctor.numberColleged"></p>
+      <h1>Centros de salud</h1>
+      <p data-ng-bind="profileDoctor.healthCentre"></p>
+      <h1>Especialidades</h1>
+      <p data-ng-bind="profileDoctor.specialties"></p>
+      <h1>Horario de trabajo</h1>
+      <p data-ng-bind="profileDoctor.workingHours"></p>
+    </li>
+    <hr />
     </div>
-    <h1>Centros de salud</h1>
-    <p data-ng-bind="profileDoctor.healthCentre"></p>
-    <h1>Especialidades</h1>
-    <p data-ng-bind="profileDoctor.specialties"></p>
-    <h1>Horario de trabajo</h1>
-    <p data-ng-bind="profileDoctor.workingHours"></p>
   </section>
 </div>
 

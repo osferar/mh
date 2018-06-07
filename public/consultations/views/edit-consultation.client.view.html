@@ -1,0 +1,36 @@
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver a principal</a>
+<a data-ng-href="#!/consultations">Volver a lista de consultas</a>
+<hr />
+
+<!-- La view editar artículo -->
+<section data-ng-controller="ConsultationsController" data-ng-init="findOne()">
+
+	<!-- Formulario editar artículo -->
+	<h1>Editar</h1>
+	<form data-ng-submit="update()" novalidate>
+
+		<div>
+			<label for="medicationPrescription">Prescripcion Medica</label>
+			<div>
+				<textarea data-ng-model="consultation.medicationPrescription" id="medicationPrescription" cols="30" rows="10" placeholder="medicationPrescription"></textarea>
+			</div>
+		</div>
+
+		<div>
+			<label for="medicalInstructions">Instruciones Médicas</label>
+			<div>
+				<textarea data-ng-model="consultation.medicalInstructions" id="medicalInstructions" cols="30" rows="10" placeholder="medicalInstructions"></textarea>
+			</div>
+		</div>
+
+		<div>
+			<input type="submit" value="Actualizar">
+		</div>
+		<!-- El elemento mensaje error -->
+		<div data-ng-show="error">
+			<strong data-ng-bind="error"></strong>
+		</div>
+	</form>
+	</div>
+</section>

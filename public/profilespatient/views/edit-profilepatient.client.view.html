@@ -1,0 +1,68 @@
+<section ng-controller="MainController">
+
+<!-- Navegacion -->
+<a data-ng-href="#!/">Volver atras</a>
+
+<!-- Usuario sin autenticar -->
+<div data-ng-show="!authentication.user">
+  <h1>Tienes que estar autenticado para poder editar tu perfil de doctor.</h1>
+  <li><a href="/signin">Identificarse</a></li>
+</div>
+
+<!-- Usuario autenticado  -->
+<div data-ng-show="authentication.user">
+  <!-- La view edit profileDoctor -->
+  <section data-ng-controller="ProfilesPatientController" data-ng-init="findOne()">
+
+    <!-- Formulario editar perfil -->
+    <h1>Editar perfil</h1>
+    <form data-ng-submit="update()" novalidate>
+      <div>
+        <label for="nss">Número de seguridad social</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.nss" id="nss" placeholder="NSS" >
+        </div>
+      </div>
+      <div>
+        <label for="phoneNumber">Número de telefono</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.phoneNumber" id="phoneNumber" placeholder="PhoneNumber">
+        </div>
+      </div>
+      <div>
+        <label for="gender">Género</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.gender" id="gender" placeholder="Gender" required>
+        </div>
+      </div>
+      <div>
+        <label for="height">Altura</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.height" id="height" placeholder="Height" >
+        </div>
+      </div>
+      <div>
+        <label for="weight">Peso</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.weight" id="weight" placeholder="Weight" required>
+        </div>
+      </div>
+      <div>
+        <label for="bloodType">Grupo sanguineo</label>
+        <div>
+          <input type="text" data-ng-model="profilePatient.bloodType" id="bloodType" placeholder="BloodType" required>
+        </div>
+      </div>
+      <div>
+        <input type="submit" value="Actualizar">
+      </div>
+
+      <!-- El elemento mensaje de error -->
+      <div data-ng-show="error">
+        <strong data-ng-bind="error"></strong>
+      </div>
+    </form>
+  </section>
+</div>
+
+</section>

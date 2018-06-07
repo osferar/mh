@@ -15,7 +15,6 @@ angular.module('appointments').controller('AppointmentsController',['$scope','$r
           healthCentre: this.healthCentre,
           specialty: this.specialty,
           doctor: this.doctor,
-          patient: this.patient,
           disorder: this.disorder
         });
 

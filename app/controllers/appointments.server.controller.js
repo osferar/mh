@@ -23,6 +23,7 @@ exports.create = function(req, res) {
 
   // Configurar la propiedad 'creador' de la cita
   appointment.creador = req.user;
+  appointment.patient = req.user;
 
   // Intentar guardar la cita
   appointment.save(function(err) {
@@ -41,7 +42,11 @@ exports.create = function(req, res) {
 // Crear un nuevo método controller que recupera una lista de citas
 exports.list = function(req, res) {
   // Usar el método model 'find' para obtener una lista de citas
-  Appointment.find().sort('-created').populate('creador','firstName lastName fullName').exec(function(err, appointments){
+  Appointment.find().sort('-created')
+  .populate('creador','firstName lastName fullName')
+  .populate('doctor','_id firstName lastName fullName')
+  .populate('patient','_id firstName lastName fullName')
+  .exec(function(err, appointments){
     if (err){
       // Si ocurre un error enviar un mensaje de error
       return res.status(400).send({
@@ -122,7 +127,7 @@ exports.appointmentByID = function(req, res, next, id) {
 };
 
 // Crea un nuevo controller middleware para autorizar una operación appointment
-// TODO: añadir que pueda crear y/o modificar los médicos
+// TODO: añadir que pueda ver, crear y/o modificar los médicos
 exports.hasAuthorization = function(req, res, next) {
 	// si el usuario actual no es el creador de la cita, enviar el mensaje de error apropiado
 	if (req.appointment.creador.id !== req.user.id) {

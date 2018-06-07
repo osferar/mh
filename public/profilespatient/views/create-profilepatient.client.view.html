@@ -1,0 +1,66 @@
+<section ng-controller="MainController">
+
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Principal</a>
+
+  <!-- Usuario sin autenticar -->
+  <div data-ng-show="!authentication.user">
+    <h1>Tienes que estar autenticado para crear un perfil.</h1>
+    <li><a href="/signin">Identificarse</a></li>
+  </div>
+
+  <!-- Usuario autenticado  -->
+  <div data-ng-show="authentication.user">
+    <!-- La view create profileDoctor -->
+    <section data-ng-controller="ProfilesPatientController">
+      <!-- Formulario nuevo perfil médico -->
+      <h1>Nuevo perfil paciente</h1>
+      <form data-ng-submit="create()" novalidate>
+        <div>
+          <label for="nss">Número de seguridad social</label>
+          <div>
+            <input type="text" data-ng-model="nss" id="nss" `placeholder="NSS">
+          </div>
+        </div>
+        <div>
+          <label for="phoneNumber">Número de telefono</label>
+          <div>
+            <input type="text" data-ng-model="phoneNumber" id="phoneNumber" placeholder="PhoneNumber">
+          </div>
+        </div>
+        <div>
+          <label for="gender">Género</label>
+          <div>
+            <input type="text" data-ng-model="gender" id="gender" placeholder="Gender" required>
+          </div>
+        </div>
+        <div>
+          <label for="height">Altura</label>
+          <div>
+            <input type="text" data-ng-model="height" id="height" placeholder="Height" >
+          </div>
+        </div>
+        <div>
+          <label for="weight">Peso</label>
+          <div>
+            <input type="text" data-ng-model="weight" id="weight" placeholder="Weight" required>
+          </div>
+        </div>
+        <div>
+          <label for="bloodType">Grupo sanguineo</label>
+          <div>
+            <input type="text" data-ng-model="bloodType" id="bloodType" placeholder="BloodType" required>
+          </div>
+      </div>
+        <div>
+          <input type="submit">
+        </div>
+
+        <!-- El elemento mensaje de error -->
+        <div data-ng-show="error">
+          <strong data-ng-bind="error"></strong>
+        </div>
+      </form>
+    </section>
+  </div>
+</section>

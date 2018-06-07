@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'medicalhistory';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource','ngRoute','users','main', 'articles', 'appointments','profilesDoctor']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ngResource','ngRoute','main','users','profilesDoctor','profilesPatient', 'articles', 'appointments','consultations']);
 
 mainApplicationModule.config(['$locationProvider',
   function($locationProvider) {

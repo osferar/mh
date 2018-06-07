@@ -27,10 +27,6 @@ var ProfileDoctorSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  password: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
   creador: {
     type: Schema.ObjectId,
     ref: 'User'

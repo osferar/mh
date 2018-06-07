@@ -1,0 +1,47 @@
+<section ng-controller="MainController">
+
+  <!-- Usuario sin autenticar -->
+  <div data-ng-show="!authentication.user">
+    <h1>Tienes que estar autenticado para ver el perfil del doctor</h1>
+    <li><a href="/signin">Identificarse</a></li>
+  </div>
+
+  <!-- Usuario autenticado  -->
+  <div data-ng-show="authentication.user">
+    <!-- Navegacion -->
+    <a data-ng-href="#!/">Principal</a>
+    <!-- <a data-ng-href="#!/profilesPatient">Lista de perfiles</a> -->
+
+
+  <!-- la view patient -->
+  <section data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+    <li data-ng-repeat="profilePatient in profilesPatient">
+
+      <!-- Mostrar perfil y los botones de edicion para el creador del perfil -->
+      <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+        <!-- Mostrar perfil -->
+        <hr />
+      <!-- Nombre del paciente -->
+      <h1 data-ng-bind="profilePatient.creador.fullName"></h1>
+      <!-- Fecha de creación del perfil -->
+      <small>
+        <em>Creado el</em>
+        <em data-ng-bind="profilePatient.created | date:'medium'"></em>
+      </small>
+      <h1>Número de teléfono</h1>
+      <p data-ng-bind="profilePatient.phoneNumber"></p>
+      <h1>Género</h1>
+      <p data-ng-bind="profilePatient.gender"></p>
+      <h1>Altura</h1>
+      <p data-ng-bind="profilePatient.height"></p>
+      <h1>Peso</h1>
+      <p data-ng-bind="profilePatient.weight"></p>
+      <h1>Grupo sanguineo</h1>
+      <p data-ng-bind="profilePatient.bloodType"></p>
+    </li>
+    <hr />
+    </div>
+  </section>
+</div>
+
+</section>

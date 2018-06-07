@@ -1,30 +1,62 @@
-<!-- la view appointment -->
-<section data-ng-controller="AppointmentsController" data-ng-init="findOne()">
-  <h1 data-ng-bind="appointment.date"></h1>
-  <!-- Mostrar los botones de edicion para el creador de la cita -->
-  <div data-ng-show="authentication.user._id == appointment.creador._id">
-    <a data-ng-href="#!/appointments">Volver a lista de citas</a>
-    <hr />
-    <a href="/#!/appointments/{{appointment._id}}/edit">Modificar Cita</a>
-    <a href="#" data-ng-click="delete();">Cancelar Cita</a>
+<section ng-controller="MainController">
+
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Principal</a> >
+  <a data-ng-href="#!/appointments">Citas</a>
+  <hr />
+
+  <!-- Usuario sin autenticar -->
+  <div data-ng-show="!authentication.user">
+    <h1>Tienes que estar autenticado para crear una cita.</h1>
+    <li><a href="/signin">Identificarse</a></li>
   </div>
-<small>
-  <em>Creado</em>
-  <em data-ng-bind="appointment.created"></em>
-  <em>by</em>
-  <em data-ng-bind="appointment.creador.fullName"></em>
-</small>
-<small>
-<h1>Centro de salud</h1>
-<p data-ng-bind="appointment.healthCentre"></p>
-<h1>Especialidad</h1>
-<p data-ng-bind="appointment.specialty"></p>
-<h1>Doctor/a</h1>
-<p data-ng-bind="appointment.doctor"></p>
-<h1>Paciente</h1>
-<p data-ng-bind="appointment.patient"></p>
-<h1>Dolencias</h1>
-<p data-ng-bind="appointment.disorder"></p>
-</small>
+
+  <!-- Usuario autenticado -->
+  <div data-ng-show="authentication.user">
+
+    <!-- la view appointment -->
+    <section data-ng-controller="AppointmentsController" data-ng-init="findOne()">
+      <!-- Fecha de cita -->
+      <h1 data-ng-bind="appointment.date"></h1>
+
+      <!-- Fecha de creación -->
+      <small>
+        <em>Creada el </em>
+        <em data-ng-bind="appointment.created"></em>
+        <!-- <em>by</em>
+        <em data-ng-bind="appointment.creador.fullName"></em> -->
+      </small>
+
+      <!-- Mostrar los botones de edicion para el creador de la cita -->
+      <div data-ng-show="authentication.user._id == appointment.creador._id">
+        <a href="/#!/appointments/{{appointment._id}}/edit">Modificar Cita</a>
+        <a href="#" data-ng-click="delete();">Cancelar Cita</a>
+        <hr />
+      </div>
+      <small>
+      <h1>Centro de salud</h1>
+      <p data-ng-bind="appointment.healthCentre"></p>
+      <h1>Especialidad</h1>
+      <p data-ng-bind="appointment.specialty"></p>
+      <h1>Doctor/a</h1>
+      <p data-ng-bind="appointment.doctor.fullName"></p>
+      <!-- Paciente: solo vista para doctor -->
+      <div data-ng-show="authentication.user.rol == 'doctor'">
+        <h1>Paciente</h1>
+        <p data-ng-bind="appointment.creador.fullName"></p>
+      </div>
+      <!-- Dolencias -->
+      <h1>Dolencias</h1>
+      <p data-ng-bind="appointment.disorder"></p>
+      </small>
+
+      <!-- Vista para consulta medica -->
+      <div data-ng-show="authentication.user.rol == 'doctor'">
+        <hr />
+        <a data-ng-href="#!/consultations/create">Pasar consulta</a>
+        <hr />
+      </div>
+    </section>
+  </div>
 
 </section>

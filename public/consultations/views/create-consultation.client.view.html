@@ -1,0 +1,91 @@
+<!-- Navegacion -->
+<a data-ng-href="#!/">Principal</a>
+<hr />
+
+<!-- Crear la View Articles -->
+<section data-ng-controller="ConsultationsController">
+
+	<!-- El formulario nuevo artículo -->
+	<h1>Nuevo Consulta</h1>
+	<form data-ng-submit="create()" novalidate>
+		<!-- Altura -->
+		<div>
+			<label for="height">Altura</label>
+			<div>
+				<textarea data-ng-model="height" id="height" cols="10" rows="1" placeholder="height"></textarea>
+			</div>
+		</div>
+		<!-- Peso -->
+		<div>
+			<label for="weight">Peso</label>
+			<div>
+				<textarea data-ng-model="weight" id="weight" cols="10" rows="1" placeholder="weight"></textarea>
+			</div>
+		</div>
+		<!-- Frecuencia respiratoria -->
+		<div>
+			<label for="breathingFrequency">Frecuencia respiratoria</label>
+			<div>
+				<textarea data-ng-model="breathingFrequency" id="breathingFrequency" cols="10" rows="1" placeholder="breathingFrequency"></textarea>
+			</div>
+		</div>
+		<!-- Presión arterial -->
+		<div>
+			<label for="bloodPressure">Presión arterial</label>
+			<div>
+				<textarea data-ng-model="bloodPressure" id="bloodPressure" cols="10" rows="1" placeholder="bloodPressure"></textarea>
+			</div>
+		</div>
+		<!-- Frecuencia cardiaca -->
+		<div>
+			<label for="heartRate">Frecuencia cardiaca</label>
+			<div>
+				<textarea data-ng-model="heartRate" id="heartRate" cols="10" rows="1" placeholder="heartRate"></textarea>
+			</div>
+		</div>
+		<!-- Exploración física -->
+		<div>
+			<label for="physicalExploration">Exploración física</label>
+			<div>
+				<textarea data-ng-model="physicalExploration" id="physicalExploration" cols="60" rows="5" placeholder="physicalExploration"></textarea>
+			</div>
+		</div>
+		<!-- Afección -->
+		<div>
+			<label for="disorder">Afección</label>
+			<div>
+				<textarea data-ng-model="disorder" id="disorder" cols="60" rows="5" placeholder="disorder"></textarea>
+			</div>
+		</div>
+		<!-- Diagnostico -->
+		<div>
+			<label for="diagnosis">Diagnostico</label>
+			<div>
+				<textarea data-ng-model="diagnosis" id="diagnosis" cols="60" rows="5" placeholder="diagnosis"></textarea>
+			</div>
+		</div>
+		<!-- Prescripcion médica -->
+		<div>
+			<label for="medicationPrescription">Prescripcion Medica</label>
+			<div>
+				<textarea data-ng-model="medicationPrescription" id="medicationPrescription" cols="60" rows="5" placeholder="medicationPrescription"></textarea>
+			</div>
+		</div>
+		<!-- Instruciones Médicas -->
+		<div>
+			<label for="medicalInstructions">Instruciones Médicas</label>
+			<div>
+				<textarea data-ng-model="medicalInstructions" id="medicalInstructions" cols="60" rows="5" placeholder="medicalInstructions"></textarea>
+			</div>
+		</div>
+
+		<div>
+			<input type="submit" value="Publicar">
+		</div>
+
+		<!-- El elemento mensaje de error -->
+		<div data-ng-show="error">
+			<strong data-ng-bind="error"></strong>
+		</div>
+	</form>
+</section>

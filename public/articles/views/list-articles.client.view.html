@@ -1,5 +1,5 @@
 <!-- Navegacion -->
-<a data-ng-href="#!/">Volver a principal</a>
+<a data-ng-href="#!/">Principal</a>
 <hr />
 
 <!-- La view listar artículos -->
@@ -17,7 +17,6 @@
 			<p data-ng-bind="article.contenido"></p>
 			<!-- Fecha de creación del artículo -->
 			<small data-ng-bind="article.creado | date:'medium'"></small>
-			<small>/</small>
 			<!-- Creador del artículo -->
 			<small data-ng-bind="article.creador.fullName"></small>
 

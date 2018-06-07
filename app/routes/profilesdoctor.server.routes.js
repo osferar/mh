@@ -14,7 +14,7 @@ module.exports = function(app) {
 
   // Configurar las rutas 'profileDoctor' parametrizadas
   app.route('/api/profilesDoctor/:profileDoctorId')
-     .get(profilesDoctor.read)
+     .get(users.requiresLogin, profilesDoctor.read)
      .put(users.requiresLogin, profilesDoctor.hasAuthorization, profilesDoctor.update)
      .delete(users.requiresLogin, profilesDoctor.hasAuthorization, profilesDoctor.delete);
 

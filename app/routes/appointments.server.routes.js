@@ -9,12 +9,12 @@ var users = require('../../app/controllers/users.server.controller'),
 module.exports = function(app) {
   // Configurar la ruta base de 'appointment'
   app.route('/api/appointments')
-     .get(appointments.list)
+     .get(users.requiresLogin, appointments.list)
      .post(users.requiresLogin, appointments.create);
 
   // Configurar las rutas 'appointment' parametrizadas
   app.route('/api/appointments/:appointmentId')
-     .get(appointments.read)
+     .get(users.requiresLogin, appointments.read)
      .put(users.requiresLogin, appointments.hasAuthorization, appointments.update)
      .delete(users.requiresLogin, appointments.hasAuthorization, appointments.delete);
 
