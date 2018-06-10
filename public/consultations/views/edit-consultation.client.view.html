@@ -1,6 +1,6 @@
 <!-- Navegacion -->
-<a data-ng-href="#!/">Volver a principal</a>
-<a data-ng-href="#!/consultations">Volver a lista de consultas</a>
+<a data-ng-href="#!/">Principal</a> >
+<a data-ng-href="#!/consultations">Consultas</a>
 <hr />
 
 <!-- La view editar artículo -->
@@ -10,22 +10,107 @@
 	<h1>Editar</h1>
 	<form data-ng-submit="update()" novalidate>
 
+		<!-- Motivo de consulta -->
 		<div>
-			<label for="medicationPrescription">Prescripcion Medica</label>
+			<label for="chiefComplaint">Motivo de consulta</label>
 			<div>
-				<textarea data-ng-model="consultation.medicationPrescription" id="medicationPrescription" cols="30" rows="10" placeholder="medicationPrescription"></textarea>
+				<textarea data-ng-model="consultation.chiefComplaint" id="chiefComplaint" cols="60" rows="2" placeholder="Motivo de consulta"></textarea>
+			</div>
+		</div>
+		<!-- Antecedentes personales -->
+		<div>
+			<label for="medicalHistory">Antecedentes personales</label>
+			<div>
+				<textarea data-ng-model="consultation.medicalHistory" id="medicalHistory" cols="60" rows="2" placeholder="Antecedentes personales"></textarea>
+			</div>
+		</div>
+		<!-- Tratamiento actual -->
+		<div>
+			<label for="currentTreatment">Tratamiento actual</label>
+			<div>
+				<textarea data-ng-model="consultation.currentTreatment" id="currentTreatment" cols="60" rows="2" placeholder="Tratamiento actual"></textarea>
+			</div>
+		</div>
+		<!-- Antecedentes familiares -->
+		<div>
+			<label for="familyHistory">Antecedentes familiares</label>
+			<div>
+				<textarea data-ng-model="consultation.familyHistory" id="familyHistory" cols="60" rows="2" placeholder="Antecedentes familiares"></textarea>
+			</div>
+		</div>
+		<!-- Anamnesis -->
+		<div>
+			<label for="presentComplaint">Anamnesis</label>
+			<div>
+				<textarea data-ng-model="consultation.presentComplaint" id="presentComplaint" cols="60" rows="2" placeholder="presentComplaint"></textarea>
+			</div>
+		</div>
+		<!-- Altura -->
+		<div>
+			<label for="height">Altura</label>
+			<div>
+				<textarea data-ng-model="consultation.height" id="height" cols="10" rows="1" placeholder="height"></textarea>
+			</div>
+		</div>
+		<!-- Peso -->
+		<div>
+			<label for="weight">Peso</label>
+			<div>
+				<textarea data-ng-model="consultation.weight" id="weight" cols="10" rows="1" placeholder="weight"></textarea>
+			</div>
+		</div>
+		<!-- Frecuencia respiratoria -->
+		<div>
+			<label for="breathingFrequency">Frecuencia respiratoria</label>
+			<div>
+				<textarea data-ng-model="consultation.breathingFrequency" id="breathingFrequency" cols="10" rows="1" placeholder="breathingFrequency"></textarea>
+			</div>
+		</div>
+		<!-- Presión arterial -->
+		<div>
+			<label for="bloodPressure">Presión arterial</label>
+			<div>
+				<textarea data-ng-model="consultation.bloodPressure" id="bloodPressure" cols="10" rows="1" placeholder="bloodPressure"></textarea>
+			</div>
+		</div>
+		<!-- Frecuencia cardiaca -->
+		<div>
+			<label for="heartRate">Frecuencia cardiaca</label>
+			<div>
+				<textarea data-ng-model="consultation.heartRate" id="heartRate" cols="10" rows="1" placeholder="heartRate"></textarea>
+			</div>
+		</div>
+		<!-- Exploración física -->
+		<div>
+			<label for="physicalExploration">Exploración física</label>
+			<div>
+				<textarea data-ng-model="consultation.physicalExploration" id="physicalExploration" cols="60" rows="2" placeholder="physicalExploration"></textarea>
+			</div>
+		</div>
+		<!-- Diagnóstico -->
+		<div>
+			<label for="diagnosis">Diagnóstico</label>
+			<div>
+				<textarea data-ng-model="consultation.diagnosis" id="diagnosis" cols="60" rows="5" placeholder="diagnosis"></textarea>
+			</div>
+		</div>
+		<!-- Prescripcion médica -->
+		<div>
+			<label for="medicationPrescription">Tratamiento médico</label>
+			<div>
+				<textarea data-ng-model="consultation.medicationPrescription" id="medicationPrescription" cols="60" rows="2" placeholder="medicationPrescription"></textarea>
+			</div>
+		</div>
+		<!-- Recomendaciones Médicas -->
+		<div>
+			<label for="medicalInstructions">Recomendaciones médicas</label>
+			<div>
+				<textarea data-ng-model="consultation.medicalInstructions" id="medicalInstructions" cols="60" rows="2" placeholder="medicalInstructions"></textarea>
 			</div>
 		</div>
 
 		<div>
-			<label for="medicalInstructions">Instruciones Médicas</label>
-			<div>
-				<textarea data-ng-model="consultation.medicalInstructions" id="medicalInstructions" cols="30" rows="10" placeholder="medicalInstructions"></textarea>
-			</div>
-		</div>
-
-		<div>
-			<input type="submit" value="Actualizar">
+			<input type="submit" value="Actualizar eipsodio">
 		</div>
 		<!-- El elemento mensaje error -->
 		<div data-ng-show="error">

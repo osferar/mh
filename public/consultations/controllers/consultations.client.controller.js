@@ -11,13 +11,16 @@ angular.module('consultations').controller('ConsultationsController', ['$scope',
         $scope.create = function() {
             // Usar los campos form para crear un nuevo objeto $resource consultation
             var consultation = new Consultations({
+              medicalHistory: this.medicalHistory,
+              currentTreatment: this.currentTreatment,
+              familyHistory: this.familyHistory,
+              presentComplaint: this.presentComplaint,
               height: this.height,
               weight: this.weight,
               breathingFrequency: this.breathingFrequency,
               bloodPressure: this.bloodPressure,
               heartRate: this.heartRate,
               physicalExploration: this.physicalExploration,
-              disorder: this.disorder,
               diagnosis: this.diagnosis,
               medicationPrescription: this.medicationPrescription,
               medicalInstructions: this.medicalInstructions

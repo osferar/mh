@@ -67,7 +67,8 @@ exports.update = function(req, res) {
 	// Actualizar los campos artículo
 	article.titulo = req.body.titulo;
 	article.contenido = req.body.contenido;
-
+	article.url = req.body.url;
+	
 	// Intentar salvar el artículo actualizado
 	article.save(function(err) {
 		if (err) {

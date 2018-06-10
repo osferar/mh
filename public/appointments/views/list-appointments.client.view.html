@@ -8,6 +8,7 @@
 
   <!-- Vista de doctor -->
   <div data-ng-show="authentication.user.rol == 'doctor'">
+
     <section data-ng-controller="AppointmentsController" data-ng-init="find()">
       <!-- Lista de citas solicitadas -->
       <h1>Citas</h1>
@@ -21,21 +22,21 @@
               <em>Creada el</em>
               <em data-ng-bind="appointment.created | date:'medium'"></em>
             </small>
-            <!-- Centro de salud -->
-            <h1>Centro de salud</h1>
-            <p data-ng-bind="appointment.healthCentre"></p>
-            <!-- Especialidad -->
-            <h1>Especialidad</h1>
-            <p data-ng-bind="appointment.specialty"></p>
             <!-- Paciente -->
+            <hr align="left" size="1" width="30%" />
             <h1>Paciente</h1>
             <p data-ng-bind="appointment.creador.fullName"></p>
+            <!-- Motivo de consulta -->
+            <hr align="left" size="1" width="30%" />
+            <h1>Motivo de consulta</h1>
+            <p data-ng-bind="appointment.chiefComplaint"></p>
+            <hr />
           </section>
         </ul>
-      <!-- Si no hay citas en la lista, lo notificamos -->
-      <div data-ng-hide="!appointments || appointments.length">
-        <h1>Aún no hay citas.</h1>
-      </div>
+        <!-- Si no hay citas en la lista, lo notificamos -->
+        <div data-ng-hide="!appointments || appointments.length">
+          <h1>Aún no hay citas.</h1>
+        </div>
     </section>
   </div>
 
@@ -47,24 +48,32 @@
       <h1>Citas</h1>
       <hr />
         <li data-ng-repeat="appointment in appointments">
-          <div data-ng-show="authentication.user._id == appointment.patient._id">
+          <div data-ng-show="authentication.user._id == appointment.creador._id">
             <!-- Fecha de la cita -->
             <h1>Fecha</h1>
-            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date"></a>
+            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date | date:'shortDate'"></a>
+
+            <!-- Hora de cita -->
+            <h1>Hora</h1>
+            <p data-ng-bind="appointment.hour | date:'shortTime'"></p>
+
             <!-- Fecha de creación -->
             <small>
               <em>Creada el</em>
               <em data-ng-bind="appointment.created | date:'medium'"></em>
             </small>
+
+
             <!-- Centro de salud -->
+            <hr align="left" size="1" width="30%" />
             <h1>Centro de salud</h1>
-            <p data-ng-bind="appointment.healthCentre"></p>
+            <p data-ng-bind="appointment.doctor.healthCentre"></p>
+
             <!-- Doctor -->
+            <hr align="left" size="1" width="30%" />
             <h1>Doctor/a</h1>
-            <p data-ng-bind="appointment.doctor.fullName"></p>
-            <!-- Especialidad -->
-            <h1>Especialidad</h1>
-            <p data-ng-bind="appointment.specialty"></p>
+            <p data-ng-bind="appointment.doctor.crador.fullName"></p>
+            <hr align="left" size="1" width="60%" />
           </div>
         </li>
       <!-- Si no hay citas en la lista, sugerimos que se cree una nueva cita -->

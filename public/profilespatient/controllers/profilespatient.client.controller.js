@@ -11,12 +11,19 @@ angular.module('profilesPatient').controller('ProfilesPatientController',['$scop
       $scope.create = function() {
         // Usar los campos form para crear un nuevo objeto $resource profileDoctor
         var profilePatient = new ProfilesPatient({
-          nss: this.nss,
-          phoneNumber : this.phoneNumber,
-          height : this.height,
-          weight : this.weight,
-          bloodType : this.bloodType,
-          gender: this.gender
+          dni: this.dni,
+          nationality: this.nationality,
+          city: this.city,
+          zipCode: this.zipCode,
+          address: this.address,
+          phoneNumber: this.phoneNumber,
+          email: this.email,
+          gender: this.gender,
+          birthDate: this.birthDate,
+          birthPlace: this.birthPlace,
+          civilStatus: this.civilStatus,
+          bloodType: this.bloodType,
+          allergies: this.allergies
         });
 
         // Usar el método '$save' de profilePatient para enviar una petición POST apropiada

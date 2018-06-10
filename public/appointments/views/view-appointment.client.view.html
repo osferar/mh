@@ -17,12 +17,17 @@
     <!-- la view appointment -->
     <section data-ng-controller="AppointmentsController" data-ng-init="findOne()">
       <!-- Fecha de cita -->
-      <h1 data-ng-bind="appointment.date"></h1>
+      <h1>Fecha</h1>
+      <p data-ng-bind="appointment.date | date:'shortDate'"></p>
+
+      <!-- Hora de cita -->
+      <h1>Hora</h1>
+      <p data-ng-bind="appointment.hour | date:'shortTime'"></p>
 
       <!-- Fecha de creación -->
       <small>
         <em>Creada el </em>
-        <em data-ng-bind="appointment.created"></em>
+        <em data-ng-bind="appointment.created | date:'medium'"></em>
         <!-- <em>by</em>
         <em data-ng-bind="appointment.creador.fullName"></em> -->
       </small>
@@ -31,29 +36,41 @@
       <div data-ng-show="authentication.user._id == appointment.creador._id">
         <a href="/#!/appointments/{{appointment._id}}/edit">Modificar Cita</a>
         <a href="#" data-ng-click="delete();">Cancelar Cita</a>
-        <hr />
       </div>
-      <small>
-      <h1>Centro de salud</h1>
-      <p data-ng-bind="appointment.healthCentre"></p>
-      <h1>Especialidad</h1>
-      <p data-ng-bind="appointment.specialty"></p>
-      <h1>Doctor/a</h1>
-      <p data-ng-bind="appointment.doctor.fullName"></p>
+      <!-- Vista solo para paciente -->
+      <div data-ng-show="authentication.user.rol == 'patient'">
+
+        <!-- Centro de salud -->
+        <hr align="left" size="1" width="30%" />
+        <h1>Centro de salud</h1>
+          <p data-ng-bind="appointment.doctor.healthCentre"></p>
+
+        <!-- Especialidad -->
+        <hr align="left" size="1" width="30%" />
+        <h1>Especialidad</h1>
+          <p data-ng-bind="appointment.doctor.specialties"></p>
+
+        <!-- Doctor-->
+        <hr align="left" size="1" width="30%" />
+        <h1>Doctor/a</h1>
+          <p data-ng-bind="appointment.doctor.creador.fullName"></p>
+      </div>
       <!-- Paciente: solo vista para doctor -->
       <div data-ng-show="authentication.user.rol == 'doctor'">
+        <hr align="left" size="1" width="30%" />
         <h1>Paciente</h1>
         <p data-ng-bind="appointment.creador.fullName"></p>
       </div>
-      <!-- Dolencias -->
-      <h1>Dolencias</h1>
-      <p data-ng-bind="appointment.disorder"></p>
-      </small>
+
+      <!-- Motivo de consulta -->
+      <hr align="left" size="1" width="30%" />
+      <h1>Motivo de consulta</h1>
+        <p data-ng-bind="appointment.chiefComplaint"></p>
 
       <!-- Vista para consulta medica -->
       <div data-ng-show="authentication.user.rol == 'doctor'">
         <hr />
-        <a data-ng-href="#!/consultations/create">Pasar consulta</a>
+        <a data-ng-href="#!/consultations/create">Historia Clínica</a>
         <hr />
       </div>
     </section>

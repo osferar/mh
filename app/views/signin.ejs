@@ -5,6 +5,8 @@
   <title><%= title %></title>
 </head>
 <body>
+  	<h1>Plataforma de consultas médicas e historiales médicos</h1>
+    <hr />
     <!-- Mostrar mensajes Flash  -->
   <% for(var i in messages) { %>
      <div class="flash"><%= messages[i] %></div>
@@ -13,17 +15,19 @@
   <!-- Renderizar el formulario signin -->
   <form action="/signin" method="post">
     <div>
-      <label>Usuario:</label>
-      <input type="text" name="username" />
+      <label>Usuario:</label><br>
+      <input type="text" name="username" placeholder="Usuario"/>
     </div>
     <div>
-      <label>Contraseña:</label>
-      <input type="password" name="password" />
+      <label>Contraseña:</label><br>
+      <input type="password" name="password" placeholder="Contraseña"/>
     </div>
     <div>
       <input type="submit" value="Identificarse" />
     </div>
   </form>
-   <a href="/oauth/google">Identificarse usando Google</a>
+  <hr />
+  <a href="/oauth/google">Identificarse usando Google</a>
+  <hr />
 </body>
 </html>

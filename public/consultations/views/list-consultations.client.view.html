@@ -6,9 +6,9 @@
 		<a data-ng-href="#!/">Principal</a>
 		<hr />
 
+
 		<!-- Vista de doctor -->
 	  <div data-ng-show="authentication.user.rol == 'doctor'">
-
 			<!-- La view listar consutlas realizadas -->
 			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
 
@@ -26,15 +26,15 @@
 							<em data-ng-bind="consultation.patient.fullName"></em>
 						</small>
 						</h1>
-						<!-- Contenido de la consulta: diagnostico -->
-						<p>Diagnostico</p>
-						<p data-ng-bind="consultation.diagnosis"></p>
+						<!-- Contenido de la consulta: Anamnesis -->
+						<p>Anamnesis</p>
+						<p data-ng-bind="consultation.presentComplaint"></p>
 					</section>
 				</ul>
 
 				<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
 				<div data-ng-hide="!consultations || consultations.length">
-					Aún no ha realizado ninguna consulta, comprueba si tienes <a href="/#!/appointments">citas solicitadas</a>.
+					Aún no ha realizado ninguna consulta, comprueba si tienes <a href="/#!/appointments">citas programadas</a>.
 				</div>
 			</section>
 		</div><!-- Fin vista doctor -->
@@ -59,14 +59,18 @@
 								<em data-ng-bind="consultation.creador.fullName"></em>
 							</small>
 							</h1>
-							<!-- Contenido de la consulta: Afección -->
-							<p>Afección</p>
-							<p data-ng-bind="consultation.disorder"></p>
+							<!-- Contenido de la consulta: Motivo de consulta -->
+							<p>Motivo de consulta</p>
+							<p data-ng-bind="consultation.chiefComplaint"></p>
 							<!-- Contenido de la consulta: diagnostico -->
 							<p>Diagnostico</p>
 							<p data-ng-bind="consultation.diagnosis"></p>
 						</section>
 					</ul>
+					<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
+					<div data-ng-hide="!consultations || consultations.length">
+						Aún no ha realizado ninguna consulta, pida una <a href="/#!/appointments/create">cita</a> para acudiar a consulta.
+					</div>
 			</section>
 		</div> <!-- Fin vista paciente -->
 

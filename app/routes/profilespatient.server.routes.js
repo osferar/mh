@@ -19,5 +19,5 @@ module.exports = function(app) {
      .delete(users.requiresLogin, profilesPatient.hasAuthorization, profilesPatient.delete);
 
   // Configurar el parámetro middleware 'profileDoctorId'
-  app.param('profileDoctorId', profilesPatient.profilePatientByID);
+  app.param('profilePatientId', profilesPatient.profilePatientByID);
 };

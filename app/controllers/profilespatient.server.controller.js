@@ -23,10 +23,6 @@ exports.create = function(req, res) {
 
   // Configurar las datos del paciente
   profilePatient.creador = req.user;
-  // profilePatient.firstName = req.user.firstName;
-  // profilePatient.lastName = req.user.lastName;
-  // profilePatient.email = req.user.email;
-  // profilePatient.username = req.user.username;
 
   // Intentar guardar al paciente
   profilePatient.save(function(err) {
@@ -85,10 +81,19 @@ exports.update = function(req, res) {
   var profilePatient = req.profilePatient;
 
   // Actualiza los campos del paciente
-  profilePatient.nss = req.body.nss;
+  profilePatient.dni = req.body.dni;
+  profilePatient.nationality = req.body.nationality;
+  profilePatient.city = req.body.city;
+  profilePatient.zipCode = req.body.zipCode;
+  profilePatient.address = req.body.address;
   profilePatient.phoneNumber = req.body.phoneNumber;
-  profilePatient.height = req.body.height;
-  profilePatient.weight = req.body.weight;
+  profilePatient.email = req.body.email;
+  profilePatient.gender = req.body.gender;
+  profilePatient.birthDate = req.body.birthDate;
+  profilePatient.birthPlace = req.body.birthPlace;
+  profilePatient.civilStatus = req.body.civilStatus;
+  profilePatient.bloodType = req.body.bloodType;
+  profilePatient.allergies = req.body.allergies;
 
   // Intentar guardar el paciente actualizado
   profilePatient.save(function(err) {

@@ -3,6 +3,7 @@
 
 //Cargar las dependencias del módulos
 var users = require('../../app/controllers/users.server.controller'),
+    profileDoctor = require('../../app/controllers/profilesdoctor.server.controller'),
     appointments = require('../../app/controllers/appointments.server.controller');
 
 // Definir el método routes de module

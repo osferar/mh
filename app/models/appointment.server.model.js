@@ -14,28 +14,20 @@ var AppointmentSchema = new Schema({
     // Validar existencia de valor Date
     required: 'Fecha es obligatoria / Date is require'
   },
-  healthCentre: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  specialty: {
-    type: Schema.ObjectId,
-    ref: 'ProfileDoctor'
+  hour:{
+    type: Date,
+    // Validar existencia de valor Hour
+    required: 'Hora es obligatoria / Hour is require'
   },
   doctor: {
     type: Schema.ObjectId,
-    ref: 'User'
-  },
-  patient: {
-    type: Schema.ObjectId,
-    ref: 'User'
+    ref: 'ProfileDoctor'
   },
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
   },
-  disorder: {
+  chiefComplaint: {
     type: String,
     default: '',
     trim: true

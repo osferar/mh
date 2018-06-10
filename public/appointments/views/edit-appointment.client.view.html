@@ -18,19 +18,24 @@
     <section data-ng-controller="AppointmentsController" data-ng-init="findOne()">
 
       <!-- Formulario modificar cita -->
-      <h1>Modificar cita</h1>
       <form data-ng-submit="update()" novalidate>
+        <h1>Modificar cita</h1>
 
-        <!-- Botón de envio -->
+        <!-- Fecha -->
         <div>
-          <input type="submit" value="Actualizar Cita">
-        </div>
-        
-        <!-- Centro médico -->
-        <div>
-          <label for="healthCentre">Centro médico</label>
+          <hr align="left" size="1" width="30%" />
+          <label for="date">Fecha</label>
           <div>
-            <input type="text" data-ng-model="appointment.healthCentre" id="healthCentre" placeholder="HealthCentre">
+            <input type="date" data-ng-model="appointment.date" id="date" required>
+          </div>
+        </div>
+
+        <!-- Hora -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+          <label for="hour">Hora</label>
+          <div>
+            <input type="time" data-ng-model="appointment.hour" name="hour" id="hour" required>
           </div>
         </div>
 
@@ -38,24 +43,30 @@
         <div>
           <label for="doctor">Médico</label>
           <div>
-            <input type="text" data-ng-model="appointment.doctor" id="doctor" placeholder="Doctor">
+            <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+              <select name="doctor" id="doctor"
+               ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
+               data-ng-model="doctor">
+              </select>
+              <!-- <select data-ng-model="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"></select> -->
+            </div>
+            <!-- <input type="text" data-ng-model="doctor" id="doctor" placeholder="Doctor" > -->
           </div>
         </div>
 
-        <!-- Especialidad -->
+        <!-- Motivo de consulta -->
         <div>
-          <label for="specialty">Especialidad</label>
+          <hr align="left" size="1" width="30%" />
+          <label for="chiefComplaint">Motivo de consulta</label>
           <div>
-            <input type="text" data-ng-model="appointment.specialty" id="specialty" placeholder="Specialty">
+            <textarea data-ng-model="appointment.chiefComplaint" id="chiefComplaint" cols="30" rows="10" placeholder="Motivo de consulta">
+            </div>
           </div>
-        </div>
 
-        <!-- Afección -->
+        <!-- Botón de envio -->
         <div>
-          <label for="disorder">Afección</label>
-          <div>
-            <textarea data-ng-model="appointment.disorder" id="disorder" cols="30" rows="10" placeholder="Disorder">
-          </div>
+          <hr />
+          <input type="submit" value="Actualizar Cita">
         </div>
 
         <!-- El elemento mensaje de error -->

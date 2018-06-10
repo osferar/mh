@@ -1,8 +1,8 @@
 <section ng-controller="MainController">
 
 <!-- Navegacion -->
-<a data-ng-href="#!/">Volver a principal</a>
-
+<a data-ng-href="#!/">Principal</a>
+<hr />
 <!-- Usuario sin autenticar -->
 <div data-ng-show="!authentication.user">
   <h1>Tienes que estar autenticado para crear un perfil.</h1>
@@ -16,33 +16,58 @@
 
     <!-- Formulario nuevo perfil médico -->
     <h1>Nuevo perfil médico</h1>
+    <hr align="left" size="1" width="30%" />
     <form data-ng-submit="create()" novalidate>
+      <!-- Número de colegiado -->
       <div>
         <label for="numberColleged">Número de colegiado</label>
         <div>
-          <input type="text" data-ng-model="numberColleged" id="numberColleged" placeholder="NumberColleged" >
+          <input type="text" data-ng-model="numberColleged" id="numberColleged" placeholder="Número de colegiado" >
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Centro médicos -->
       <div>
-        <label for="healthCentre">Centros médicos</label>
+        <label for="healthCentre">Centro médicos</label>
         <div>
-          <input type="text" data-ng-model="healthCentre" id="healthCentre" placeholder="HealthCentre">
+          <input type="text" data-ng-model="healthCentre" id="healthCentre" placeholder="Centro médico">
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Especialidad -->
       <div>
-        <label for="specialties">Especialidades</label>
+        <label for="specialties">Especialidad</label>
         <div>
-          <input type="text" data-ng-model="specialties" id="specialties" placeholder="Specialties" >
+          <input type="text" data-ng-model="specialties" id="specialty" placeholder="Especialidad" >
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Horario de trabajo -->
       <div>
-        <label for="workingHours">Horario de trabajo</label>
+        <label>Horario de trabajo</label>
+        <hr align="left" size="1" width="17%" />
+        <label for="startTime">Hora de inicio</label>
+
         <div>
-          <input type="date" data-ng-model="workingHours" id="workingHours" placeholder="WorkingHours" required>
+          <input type="time" data-ng-model="startTime" id="startTime" placeholder="Hora de inicio" required>
+        </div>
+        <label for="endTime">Hora de fin</label>
+        <div>
+          <input type="time" data-ng-model="endTime" id="endTime" placeholder="Hora de fin" required>
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Email -->
       <div>
-        <input type="submit">
+        <label for="email">Email</label>
+        <div>
+          <input type="text" data-ng-model="email" id="email" placeholder="Email">
+        </div>
+      </div>
+
+      <div>
+        <hr />
+        <input type="submit" value="Crear perfil">
       </div>
 
       <!-- El elemento mensaje de error -->

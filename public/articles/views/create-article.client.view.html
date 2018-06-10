@@ -8,20 +8,30 @@
 	<!-- El formulario nuevo artículo -->
 	<h1>Nuevo Artículo</h1>
 	<form data-ng-submit="create()" novalidate>
+		<!-- Título -->
 		<div>
 			<label for="titulo">Titulo</label>
 			<div>
 				<input type="text" data-ng-model="titulo" id="titulo" placeholder="Titulo" required>
 			</div>
 		</div>
+		<!-- Contenido -->
 		<div>
 			<label for="contenido">Contenido</label>
 			<div>
 				<textarea data-ng-model="contenido" id="contenido" cols="30" rows="10" placeholder="Contenido"></textarea>
 			</div>
 		</div>
+		<!-- Url -->
 		<div>
-			<input type="submit" value="Publicar">
+			<label for="url">Url</label>
+			<div>
+				<textarea data-ng-model="url" id="url" cols="30" rows="1" placeholder="Url"></textarea>
+			</div>
+		</div>
+		<div>
+			<hr />
+			<input type="submit" value="Añadir">
 		</div>
 		<!-- El elemento mensaje de error -->
 		<div data-ng-show="error">

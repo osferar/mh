@@ -11,33 +11,43 @@
   <!-- Navegacion -->
   <a data-ng-href="#!/">Principal</a> >
   <a data-ng-href="#!/profilesDoctor">Lista de doctores</a>
-
+  <hr />
   <!-- la view doctor -->
-  <section data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
-    <li data-ng-repeat="profileDoctor in profilesDoctor">
-
-    <!-- Mostrar perfil y los botones de edicion para el creador del perfil -->
-    <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
-      <!-- Mostrar perfil -->
-      <hr />
-      <!-- Nombre del doctor -->
-      <h1 data-ng-bind="profileDoctor.creador.fullName"></h1>
-      <!-- Fecha de creación del perfil -->
-      <small>
-        <em>Creado el</em>
-        <em data-ng-bind="profileDoctor.created"></em>
-      </small>
-      <h1>Número de Colegiado</h1>
-      <p data-ng-bind="profileDoctor.numberColleged"></p>
-      <h1>Centros de salud</h1>
-      <p data-ng-bind="profileDoctor.healthCentre"></p>
-      <h1>Especialidades</h1>
-      <p data-ng-bind="profileDoctor.specialties"></p>
-      <h1>Horario de trabajo</h1>
-      <p data-ng-bind="profileDoctor.workingHours"></p>
-    </li>
+  <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+    <!-- Mostrar perfil -->
+    <!-- Nombre del doctor -->
+    <h1 data-ng-bind="profileDoctor.creador.fullName"></h1>
+    <!-- Fecha de creación del perfil -->
+    <small>
+      <em>Con perfil desde</em>
+      <em data-ng-bind="profileDoctor.created | date:'medium'"></em>
+    </small>
+    <hr align="left" size="1" width="30%" />
+    <!-- Número de Colegiado -->
+    <h1>Número de Colegiado</h1>
+    <p data-ng-bind="profileDoctor.numberColleged"></p>
+    <hr align="left" size="1" width="30%" />
+    <!-- Centro de salud -->
+    <h1>Centro de salud</h1>
+    <p data-ng-bind="profileDoctor.healthCentre"></p>
+    <hr align="left" size="1" width="30%" />
+    <!-- Especialidad -->
+    <h1>Especialidad</h1>
+    <p data-ng-bind="profileDoctor.specialties"></p>
+    <hr align="left" size="1" width="30%" />
+    <!-- Horario de trabajo -->
+    <h1>Horario de trabajo</h1>
+    <hr align="left" size="1" width="17%" />
+    <p>-Hora de inicio:</p>
+    <p data-ng-bind="profileDoctor.startTime | date:'shortTime'"></p>
+    <p>-Hora de fin:</p>
+    <p data-ng-bind="profileDoctor.endTime | date:'shortTime'"></p>
+    <hr align="left" size="1" width="30%" />
+    <!-- Email -->
+    <h1>Email</h1>
+    <p data-ng-bind="profileDoctor.email"></p>
     <hr />
-    </div>
+
   </section>
 </div>
 

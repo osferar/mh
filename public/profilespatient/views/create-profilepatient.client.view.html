@@ -2,7 +2,7 @@
 
   <!-- Navegacion -->
   <a data-ng-href="#!/">Principal</a>
-
+  <hr />
   <!-- Usuario sin autenticar -->
   <div data-ng-show="!authentication.user">
     <h1>Tienes que estar autenticado para crear un perfil.</h1>
@@ -16,44 +16,143 @@
       <!-- Formulario nuevo perfil médico -->
       <h1>Nuevo perfil paciente</h1>
       <form data-ng-submit="create()" novalidate>
+
+        <!-- DNI -->
         <div>
-          <label for="nss">Número de seguridad social</label>
-          <div>
-            <input type="text" data-ng-model="nss" id="nss" `placeholder="NSS">
-          </div>
+          <hr align="left" size="1" width="30%" />
+          <label for="dni">DNI / NIF</label>
+        <div>
+           <input type="text" data-ng-model="dni" id="dni" placeholder="DNI">
+         </div>
         </div>
+
+        <!-- Nacionalidad  -->
         <div>
-          <label for="phoneNumber">Número de telefono</label>
-          <div>
-            <input type="text" data-ng-model="phoneNumber" id="phoneNumber" placeholder="PhoneNumber">
-          </div>
+          <hr align="left" size="1" width="30%" />
+         <label for="nationality">Nacionalidad</label>
+         <div>
+           <input type="text" data-ng-model="nationality" id="nationality" placeholder="Nacionalidad">
+         </div>
         </div>
+
+        <!-- Ciudad  -->
         <div>
-          <label for="gender">Género</label>
-          <div>
-            <input type="text" data-ng-model="gender" id="gender" placeholder="Gender" required>
-          </div>
+          <hr align="left" size="1" width="30%" />
+         <label for="city">Ciudad de residencia</label>
+         <div>
+           <input type="text" data-ng-model="city" id="city" placeholder="Ciudad">
+         </div>
         </div>
+
+        <!-- Código postal -->
         <div>
-          <label for="height">Altura</label>
-          <div>
-            <input type="text" data-ng-model="height" id="height" placeholder="Height" >
-          </div>
+          <hr align="left" size="1" width="30%" />
+         <label for="zipCode">Código postal</label>
+         <div>
+           <input type="text" data-ng-model="zipCode" id="zipCode" placeholder="Código postal">
+         </div>
         </div>
+
+        <!-- Dirección -->
         <div>
-          <label for="weight">Peso</label>
-          <div>
-            <input type="text" data-ng-model="weight" id="weight" placeholder="Weight" required>
-          </div>
+         <label for="address">Dirección</label>
+         <div>
+           <input type="text" data-ng-model="address" id="address" placeholder="Dirección">
+         </div>
         </div>
+
+        <!-- Número de telefono -->
         <div>
-          <label for="bloodType">Grupo sanguineo</label>
-          <div>
-            <input type="text" data-ng-model="bloodType" id="bloodType" placeholder="BloodType" required>
-          </div>
-      </div>
+          <hr align="left" size="1" width="30%" />
+         <label for="phoneNumber">Número de telefono</label>
+         <div>
+           <input type="text" data-ng-model="phoneNumber" id="phoneNumber" placeholder="Número de telefono">
+         </div>
+        </div>
+
+        <!-- Email -->
         <div>
-          <input type="submit">
+          <hr align="left" size="1" width="30%" />
+         <label for="email">Email</label>
+         <div>
+           <input type="text" data-ng-model="email" id="email" placeholder="Email">
+         </div>
+        </div>
+
+        <!-- Género -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="gender">Género</label>
+         <div>
+           <select type="text" data-ng-model="gender" id="gender" placeholder="Género">
+             <option value="hombre">Hombre</option>
+             <option value="mujer">Mujer</option>
+           </select>
+         </div>
+        </div>
+
+        <!-- Fecha de nacimiento -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="birthDate">Fecha de nacimiento</label>
+         <div>
+           <input type="date" data-ng-model="birthDate" id="birthDate" placeholder="Fecha de nacimiento">
+         </div>
+        </div>
+
+        <!-- Lugar de nacimiento -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="birthPlace">Fecha de nacimiento</label>
+         <div>
+           <input type="text" data-ng-model="birthPlace" id="birthPlace" placeholder="Lugar de nacimiento">
+         </div>
+        </div>
+
+        <!-- Estado civil -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="civilStatus">Estado civil</label>
+         <div>
+           <select type="text" data-ng-model="civilStatus" id="civilStatus" placeholder="Estado civil">
+             <option value="Soltero">Soltero</option>
+             <option value="Casado">Casado</option>
+             <option value="Divorciado">Divorciado</option>
+             <option value="Viudo">Viudo</option>
+           </select>
+         </div>
+        </div>
+
+        <!-- Grupo sanguíneo -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="bloodType">Grupo sanguíneo</label>
+         <div>
+           <select type="text" data-ng-model="bloodType" id="bloodType" placeholder="Grupo sanguíneo">
+             <option value="AB+">AB+</option>
+             <option value="AB-">AB-</option>
+             <option value="A+">A+</option>
+             <option value="A-">A-</option>
+             <option value="B+">B+</option>
+             <option value="B-">B-</option>
+             <option value="O+">O+</option>
+             <option value="O-">O-</option>
+           </select>
+         </div>
+        </div>
+
+        <!-- Alergias -->
+        <div>
+          <hr align="left" size="1" width="30%" />
+         <label for="allergies">Alergias</label>
+         <div>
+           <input type="text" data-ng-model="allergies" id="allergies" placeholder="Alergias">
+         </div>
+        </div>
+
+        <div>
+          <hr align="left" size="1" width="30%" />
+          <input type="submit" value="Crear">
         </div>
 
         <!-- El elemento mensaje de error -->

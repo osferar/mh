@@ -1,10 +1,12 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    moment = require('moment');
 
 var ArticleSchema = new Schema({
   creado: {
     type: Date,
-    default: Date.now
+    // default:moment().format()
+    default: moment(new Date()).format("LLLL")
   },
   titulo: {
     type: String,
@@ -13,6 +15,11 @@ var ArticleSchema = new Schema({
     required: 'El título no puede estar en blanco'
   },
   contenido: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  url: {
     type: String,
     default: '',
     trim: true

@@ -2,7 +2,7 @@
 
   <!-- Usuario sin autenticar -->
   <div data-ng-show="!authentication.user">
-    <h1>Tienes que estar autenticado para ver el perfil del doctor</h1>
+    <h1>Tienes que estar autenticado para ver el perfil de paciente.</h1>
     <li><a href="/signin">Identificarse</a></li>
   </div>
 
@@ -10,36 +10,62 @@
   <div data-ng-show="authentication.user">
     <!-- Navegacion -->
     <a data-ng-href="#!/">Principal</a>
-    <!-- <a data-ng-href="#!/profilesPatient">Lista de perfiles</a> -->
+    <hr />
 
 
   <!-- la view patient -->
-  <section data-ng-controller="ProfilesPatientController" data-ng-init="find()">
-    <li data-ng-repeat="profilePatient in profilesPatient">
+  <section data-ng-controller="ProfilesPatientController" data-ng-init="findOne()">
 
       <!-- Mostrar perfil y los botones de edicion para el creador del perfil -->
       <div data-ng-show="authentication.user._id == profilePatient.creador._id">
         <!-- Mostrar perfil -->
-        <hr />
-      <!-- Nombre del paciente -->
-      <h1 data-ng-bind="profilePatient.creador.fullName"></h1>
-      <!-- Fecha de creación del perfil -->
-      <small>
-        <em>Creado el</em>
-        <em data-ng-bind="profilePatient.created | date:'medium'"></em>
-      </small>
-      <h1>Número de teléfono</h1>
-      <p data-ng-bind="profilePatient.phoneNumber"></p>
-      <h1>Género</h1>
-      <p data-ng-bind="profilePatient.gender"></p>
-      <h1>Altura</h1>
-      <p data-ng-bind="profilePatient.height"></p>
-      <h1>Peso</h1>
-      <p data-ng-bind="profilePatient.weight"></p>
-      <h1>Grupo sanguineo</h1>
-      <p data-ng-bind="profilePatient.bloodType"></p>
-    </li>
-    <hr />
+        <!-- Nombre del paciente -->
+        <h1 data-ng-bind="profilePatient.creador.fullName"></h1>
+        <!-- Fecha de creación del perfil -->
+        <small>
+          <em>Con perfil desde</em>
+          <em data-ng-bind="profilePatient.created | date:'medium'"></em>
+        </small>
+        <hr align="left" size="1" width="30%" />
+        <h1>DNI / NIF</h1>
+          <p data-ng-bind="profilePatient.dni"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Nacionalidad</h1>
+          <p data-ng-bind="profilePatient.nationality"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Ciudad de residencia</h1>
+          <p data-ng-bind="profilePatient.city"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Código postal</h1>
+          <p data-ng-bind="profilePatient.zipCode"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Dirección</h1>
+          <p data-ng-bind="profilePatient.address"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Número de teléfono</h1>
+          <p data-ng-bind="profilePatient.phoneNumber"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Email</h1>
+          <p data-ng-bind="profilePatient.email"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Género</h1>
+          <p data-ng-bind="profilePatient.gender"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Fecha de nacimiento</h1>
+          <p data-ng-bind="profilePatient.birthDate | date:'shortDate'"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Lugar de nacimiento</h1>
+          <p data-ng-bind="profilePatient.birthPlace"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Estado civil</h1>
+          <p data-ng-bind="profilePatient.civilStatus"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Grupo sanguineo</h1>
+          <p data-ng-bind="profilePatient.bloodType"></p>
+        <hr align="left" size="1" width="30%" />
+        <h1>Alergias</h1>
+          <p data-ng-bind="profilePatient.allergies"></p>
+      <hr />
     </div>
   </section>
 </div>

@@ -7,6 +7,8 @@
   </title>
 </head>
 <body>
+  	<h1>Plataforma de consultas médicas e historiales médicos</h1>
+    <hr />
   <!-- Mostrar mensajes flash  -->
   <% for(var i in messages) { %>
     <div class="flash"><%= messages[i] %></div>
@@ -14,29 +16,31 @@
   <!-- Renderizar el formulario signup  -->
   <form action="/signup" method="post">
     <div>
-      <label>Nombre:</label>
-      <input type="text" name="firstName" />
+      <label>Nombre:</label><br>
+      <input type="text" name="firstName" placeholder="Nombre" />
     </div>
     <div>
-      <label>Apellido:</label>
-      <input type="text" name="lastName" />
+      <label>Apellido:</label><br>
+      <input type="text" name="lastName" placeholder="Apellido"/>
     </div>
     <div>
-      <label>Email:</label>
-      <input type="text" name="email" />
+      <label>Email:</label><br>
+      <input type="text" name="email" placeholder="Email"/>
     </div>
     <div>
-      <label>Nombre Usuario:</label>
-      <input type="text" name="username" />
+      <label>Nombre Usuario:</label><br>
+      <input type="text" name="username" placeholder="Usuario"/>
     </div>
     <div>
-      <label>Contraseña:</label>
-      <input type="password" name="password" />
+      <label>Contraseña:</label><br>
+      <input type="password" name="password" placeholder="Contraseña"/>
     </div>
     <div>
       <input type="submit" value="Crear Cuenta" />
     </div>
   </form>
+  <hr />
   <a href="/oauth/google">Registrarse usando Google</a>
+  <hr />
 </body>
 </html>

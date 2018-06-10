@@ -15,7 +15,9 @@ angular.module('profilesDoctor').controller('ProfilesDoctorController',['$scope'
           numberColleged: this.numberColleged,
           healthCentre: this.healthCentre,
           specialties: this.specialties,
-          workingHours: this.workingHours
+          email: this.email,
+          startTime: this.startTime,
+          endTime: this.endTime
         });
 
         // Usar el método '$save' de profileDoctor para enviar una petición POST apropiada

@@ -1,7 +1,8 @@
 <section ng-controller="MainController">
 
 <!-- Navegacion -->
-<a data-ng-href="#!/">Volver atras</a>
+<a data-ng-href="#!/">Principal</a>
+<hr />
 
 <!-- Usuario sin autenticar -->
 <div data-ng-show="!authentication.user">
@@ -16,33 +17,56 @@
 
     <!-- Formulario editar perfil -->
     <h1>Editar perfil</h1>
+    <hr align="left" size="1" width="30%" />
     <form data-ng-submit="update()" novalidate>
+      <!-- Número de colegiado -->
       <div>
         <label for="numberColleged">Número de colegiado</label>
         <div>
-          <input type="text" data-ng-model="profileDoctor.numberColleged" id="numberColleged" placeholder="NumberColleged" >
+          <input type="text" data-ng-model="profileDoctor.numberColleged" id="numberColleged" placeholder="Número de colegiado" >
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Centro médicos -->
       <div>
         <label for="healthCentre">Centro médico</label>
         <div>
-          <input type="text" data-ng-model="profileDoctor.healthCentre" id="healthCentre" placeholder="HealthCentre">
+          <input type="text" data-ng-model="profileDoctor.healthCentre" id="healthCentre" placeholder="Centro de salud">
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Especialidad -->
       <div>
         <label for="specialties">Especialidad</label>
         <div>
-          <input type="text" data-ng-model="profileDoctor.specialties" id="specialties" placeholder="Specialties" >
+          <input type="text" data-ng-model="profileDoctor.specialties" id="specialties" placeholder="Especialidad" >
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Horario de trabajo -->
       <div>
-        <label for="workingHours">Horario de trabajo</label>
+        <label>Horario de trabajo</label>
+        <hr align="left" size="1" width="17%" />
+        <label for="startTime">-Hora de inicio</label>
         <div>
-          <input type="date" data-ng-model="profileDoctor.workingHours" id="workingHours" placeholder="WorkingHours" required>
+          <input type="time" data-ng-model="profileDoctor.startTime" id="startTime" placeholder="Hora de inicio" required>
+        </div>
+        <label for="endTime">-Hora de fin</label>
+        <div>
+          <input type="time" data-ng-model="profileDoctor.endTime" id="endTime" placeholder="Hora de fin" required>
+          <hr align="left" size="1" width="30%" />
         </div>
       </div>
+      <!-- Email -->
       <div>
+        <label for="email">Email</label>
+        <div>
+          <input type="text" data-ng-model="profileDoctor.email" id="email" placeholder="Email">
+        </div>
+      </div>
+
       <div>
+        <hr />
         <input type="submit" value="Actualizar">
       </div>
 

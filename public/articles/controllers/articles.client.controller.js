@@ -12,12 +12,13 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$routePa
             // Usar los campos form para crear un nuevo objeto $resource article
             var article = new Articles({
                 titulo: this.titulo,
-                contenido: this.contenido
+                contenido: this.contenido,
+                url: this.url
             });
 
             // Usar el método '$save' de article para enviar una petición POST apropiada
             article.$save(function(response) {
-                // Si un artículo fue creado de modo correcto, redireccionar al usuario a la página del artículo 
+                // Si un artículo fue creado de modo correcto, redireccionar al usuario a la página del artículo
                 $location.path('articles/' + response._id);
             }, function(errorResponse) {
                 // En otro caso, presentar al usuario el mensaje de error
@@ -43,7 +44,7 @@ angular.module('articles').controller('ArticlesController', ['$scope', '$routePa
         $scope.update = function() {
             // Usar el método '$update' de article para enviar una petición PUT apropiada
             $scope.article.$update(function() {
-                // Si un article fue actualizado de modo correcto, redirigir el user a la página del article 
+                // Si un article fue actualizado de modo correcto, redirigir el user a la página del article
                 $location.path('articles/' + $scope.article._id);
             }, function(errorResponse) {
                 // En otro caso, presenta al user un mensaje de error

@@ -6,15 +6,23 @@
 <!-- La view artículo -->
 <section data-ng-controller="ArticlesController" data-ng-init="findOne()">
 
-
+  <!-- Título -->
   <h1 data-ng-bind="article.titulo"></h1>
-  <p data-ng-bind="article.contenido"></p>
+  <!-- Fecha de creación -->
   <small>
-      <em>Publicado el</em>
-      <em data-ng-bind="article.creado | date:'mediumDate'"></em>
-      <em>por</em>
-      <em data-ng-bind="article.creador.fullName"></em>
+    <em>Añadido el</em>
+    <em data-ng-bind="article.creado | date:'mediumDate'"></em>
+    <!-- Creador -->
+    <em>por</em>
+    <em data-ng-bind="article.creador.fullName"></em>
   </small>
+  <hr align="left" size="1" width="30%" />
+  <!-- Contenido -->
+  <p data-ng-bind="article.contenido"></p>
+  <hr align="left" size="1" width="30%" />
+  <!-- Url -->
+  <p data-ng-bind="article.url"></p>
+  <hr />
   <!-- Mostrar los botones de edición para artículo creado -->
   <div data-ng-show="authentication.user._id == article.creador._id">
       <a href="/#!/articles/{{article._id}}/edit">editar</a>

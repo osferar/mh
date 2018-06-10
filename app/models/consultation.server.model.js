@@ -9,14 +9,12 @@ var ConsultationSchema = new Schema({
     default: Date.now
   },
   healthCentre: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'User'
   },
   specialty: {
-    type: String,
-    default: '',
-    trim: true
+    type: Schema.ObjectId,
+    ref: 'User'
   },
   patient: {
     type: Schema.ObjectId,
@@ -26,15 +24,41 @@ var ConsultationSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
+  chiefComplaint:{
+    type: Schema.ObjectId,
+    ref: 'Appointment'
+  },
+  medicalHistory:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  currentTreatment:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  familyHistory:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  presentComplaint:{
+    type: String,
+    default: '-',
+    trim: true
+  },
   height:{
-    type: String
+    type: String,
+    default: '-'
   },
   weight:{
-    type: String
+    type: String,
+    default: '-'
   },
   breathingFrequency: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   bloodPressure: {
@@ -48,11 +72,6 @@ var ConsultationSchema = new Schema({
     trim: true
   },
   physicalExploration: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  disorder: {
     type: String,
     default: '',
     trim: true

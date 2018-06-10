@@ -23,7 +23,6 @@ exports.create = function(req, res) {
 
   // Configurar la propiedad 'creador' de la cita
   appointment.creador = req.user;
-  appointment.patient = req.user;
 
   // Intentar guardar la cita
   appointment.save(function(err) {
@@ -44,8 +43,8 @@ exports.list = function(req, res) {
   // Usar el método model 'find' para obtener una lista de citas
   Appointment.find().sort('-created')
   .populate('creador','firstName lastName fullName')
-  .populate('doctor','_id firstName lastName fullName')
-  .populate('patient','_id firstName lastName fullName')
+  .populate('doctor','healthCentre specialties')
+  .populate('doctor.creador','firstName lastName fullName')
   .exec(function(err, appointments){
     if (err){
       // Si ocurre un error enviar un mensaje de error
@@ -71,11 +70,9 @@ exports.update = function(req, res) {
 
   // Actualiza los campos de la cita
   appointment.date = req.body.date;
-  appointment.healthCentre = req.body.healthCentre;
-  appointment.specialty = req.body.specialty;
+  appointment.hour = req.body.hour;
   appointment.doctor = req.body.doctor;
-  appointment.patient = req.body.patient;
-  appointment.disorder = req.body.disorder;
+  appointment.chiefComplaint = req.body.chiefComplaint;
 
   // Intentar guardar la cita actualizada
   appointment.save(function(err) {
@@ -112,7 +109,11 @@ exports.delete = function(req, res) {
 // Crear un nuevo método controller middleware que recupera una única cita existente
 exports.appointmentByID = function(req, res, next, id) {
   // Usar el método static 'findOne' para encontrar una cita específica
-  Appointment.findById(id).populate('creador', 'firstName lastName fullName').exec(function(err,appointment) {
+  Appointment.findById(id)
+  .populate('creador', 'firstName lastName fullName')
+  .populate('doctor','healthCentre specialties')
+  .populate('doctor.creador','firstName lastName fullName')
+  .exec(function(err,appointment) {
     if (err)
       // llama al siguiente middleware con un mensaje de error
       return next(err);

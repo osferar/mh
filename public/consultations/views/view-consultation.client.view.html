@@ -8,15 +8,41 @@
 <section data-ng-controller="ConsultationsController" data-ng-init="findOne()">
 
   <!-- Fecha de creación -->
+  <h1>Creada el </h1>
   <h1 data-ng-bind="consultation.creado | date:'medium'"></h1>
   <div data-ng-hide="authentication.user.rol == 'doctor'">
     <!-- Creador de la consulta -->
     <small>
-      <em>Realizada por el doctor/a</em>
+      <em>Atendida por el doctor/a </em>
       <em data-ng-bind="consultation.creador.fullName"></em>
+      <em> especialista en </em>
+      <emdata-ng-bind="consultation.specialty"></em>
+      <em>, realizada en el centro médico </em>
+      <emdata-ng-bind="consultation.healthCentre"></em>
     </small>
   </div>
-  </h1>
+  <div data-ng-hide="authentication.user.rol == 'patient'">
+    <!-- Paciente de la consulta -->
+    <small>
+      <em>Realizada al paciente</em>
+      <em data-ng-bind="consultation.patient.fullName"></em>
+    </small>
+  </div>
+  <!-- Motivo de consulta -->
+  <h1>Motivo de consulta</h1>
+  <p data-ng-bind="consultation.chiefComplaint"></p>
+  <!-- Antecedentes personales -->
+  <h1>Antecedentes personales</h1>
+  <p data-ng-bind="consultation.medicalHistory"></p>
+  <!-- Tratamiento actual -->
+  <h1>Tratamiento actual</h1>
+  <p data-ng-bind="consultation.currentTreatment"></p>
+  <!-- Antecedentes familiares -->
+  <h1>Antecedentes familiares</h1>
+  <p data-ng-bind="consultation.familyHistory"></p>
+  <!-- Anamnesis -->
+  <h1>Anamnesis</h1>
+  <p data-ng-bind="consultation.presentComplaint"></p>
   <!-- Altura -->
   <h1>Altura</h1>
   <p data-ng-bind="consultation.height"></p>
@@ -35,9 +61,6 @@
   <!-- Exploración física -->
   <h1>Exploración física</h1>
   <p data-ng-bind="consultation.physicalExploration"></p>
-  <!-- Afección -->
-  <h1>Afección</h1>
-  <p data-ng-bind="consultation.disorder"></p>
   <!-- Diagnostico -->
   <h1>Diagnostico</h1>
   <p data-ng-bind="consultation.diagnosis"></p>

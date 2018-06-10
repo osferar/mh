@@ -1,31 +1,30 @@
 <!-- Navegacion -->
 <a data-ng-href="#!/">Principal</a>
 <hr />
+<a href="/#!/articles/create">Añadir artículo</a>
+<hr />
 
 <!-- La view listar artículos -->
 <section data-ng-controller="ArticlesController" data-ng-init="find()">
-
-		<!-- La lista de artículos -->
-		<h1>Artículos</h1>
+	<!-- La lista de artículos -->
+	<h1>Artículos</h1>
+	<ul>
+		<hr align="left" size="1" width="30%" />
 		<li data-ng-repeat="article in articles">
-			<hr />
+
 			<!-- Titulo del artículo -->
 			<h1>
 				<a data-ng-href="#!/articles/{{article._id}}" data-ng-bind="article.titulo"></a>
 			</h1>
-			<!-- Contenido del artículo -->
-			<p data-ng-bind="article.contenido"></p>
 			<!-- Fecha de creación del artículo -->
-			<small data-ng-bind="article.creado | date:'medium'"></small>
-			<!-- Creador del artículo -->
-			<small data-ng-bind="article.creador.fullName"></small>
-
-			<!-- Mostrar los botones de edición para el creador del artículo -->
-    	<p data-ng-show="authentication.user._id == article.creador._id">
-        <a href="/#!/articles/{{article._id}}/edit">editar</a>
-        <a href="/#!/articles/{{article._id}}" data-ng-click="delete();">borrar</a>
-    </p>
-		<br>
+			<small>
+				<em>Añadido el</em>
+				<em data-ng-bind="article.creado | date:'mediumDate'"></em>
+				<!-- Creador -->
+				<em>por</em>
+				<em data-ng-bind="article.creador.fullName"></em>
+			</small>
+			<hr align="left" size="1" width="30%" />
 		</li>
 	</ul>
 	<!-- Si no hay artículos en la lista, sugiere al usuario que cree un nuevo artículo -->

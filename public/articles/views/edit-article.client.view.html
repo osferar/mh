@@ -9,19 +9,32 @@
 	<!-- Formulario editar artículo -->
 	<h1>Editar</h1>
 	<form data-ng-submit="update()" novalidate>
+		<!-- Título -->
 		<div>
+			<hr align="left" size="1" width="30%" />
 			<label for="titulo">Titulo</label>
 			<div>
 				<input type="text" data-ng-model="article.titulo" id="titulo" placeholder="Titulo" required>
 			</div>
 		</div>
+		<!-- Contenido -->
 		<div>
+			<hr align="left" size="1" width="30%" />
 			<label for="contenido">Contenido</label>
 			<div>
 				<textarea data-ng-model="article.contenido" id="contenido" cols="30" rows="10" placeholder="Contenido"></textarea>
 			</div>
 		</div>
+		<!-- Url -->
 		<div>
+			<hr align="left" size="1" width="30%" />
+			<label for="url">Url</label>
+			<div>
+				<textarea data-ng-model="article.url" id="url" cols="30" rows="1" placeholder="Url"></textarea>
+			</div>
+		</div>
+		<div>
+			<hr />
 			<input type="submit" value="Actualizar">
 		</div>
 		<!-- El elemento mensaje error -->

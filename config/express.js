@@ -10,6 +10,7 @@ var config = require('./config'),
   methodOverride = require('method-override'),
   session = require('express-session'),
   flash = require('connect-flash'),
+  moment = require('moment'),
   passport = require('passport');
 
 // Definir el método de configuración de Express
@@ -54,8 +55,12 @@ module.exports = function() {
   require('../app/routes/articles.server.routes.js')(app);
   require('../app/routes/appointments.server.routes.js')(app);
   require('../app/routes/consultations.server.routes.js')(app);
+
   // Configurar el servidor de archivos estáticos
   app.use(express.static('./public'));
+
+  // Configurar moment para toda la aplicación
+  app.locals.moment = require('moment');
 
   // Devolver la instancia de la aplicación Express
   return app;

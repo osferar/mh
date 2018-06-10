@@ -62,7 +62,7 @@ exports.create = function(req, res) {
 // Crear un nuevo método controller que recupera una lista de doctores
 exports.list = function(req, res) {
   // Usar el método model 'find' para obtener una lista de doctores
-  ProfileDoctor.find().sort('-created').populate('creador','firstName lastName fullName specialties healthCentre  workingHours').exec(function(err, profilesDoctor){
+  ProfileDoctor.find().sort('-created').populate('creador','firstName lastName fullName').exec(function(err, profilesDoctor){
     if (err){
       // Si ocurre un error enviar un mensaje de error
       return res.status(400).send({
@@ -88,8 +88,9 @@ exports.update = function(req, res) {
   // Actualiza los campos del doctor
   profileDoctor.healthCentre = req.body.healthCentre;
   profileDoctor.specialties = req.body.specialties;
-  profileDoctor.workingHours = req.body.workingHours;
-
+  profileDoctor.startTime = req.body.startTime;
+  profileDoctor.endTime = req.body.endTime;
+  profileDoctor.email = req.body.email;
   // Intentar guardar el doctor actualizado
   profileDoctor.save(function(err) {
       if(err) {
@@ -125,7 +126,7 @@ exports.delete = function(req, res) {
 // Crear un nuevo método controller middleware que recupera un único doctor existente
 exports.profileDoctorByID = function(req, res, next, id) {
   // Usar el método static 'findOne' para encontrar una cita específica
-  ProfileDoctor.findById(id).populate('creador','firstName lastName fullName numberColleged numberColleged specialties healthCentre  workingHours').exec(function(err,profileDoctor) {
+  ProfileDoctor.findById(id).populate('creador','firstName lastName fullName').exec(function(err,profileDoctor) {
     if (err)
       // llama al siguiente middleware con un mensaje de error
       return next(err);

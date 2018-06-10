@@ -7,49 +7,62 @@ var mongoose = require('mongoose'),
 
 // Definir un nuevo 'ProfileDoctorSchema'
 var ProfileDoctorSchema = new Schema({
+  // Número de colegiado
   numberColleged: {
     type: String,
     required: 'Es obligatorio introducir el número de colegiado'
   },
+  // Nombre
   firstName: {
     type: Schema.ObjectId,
     ref: 'User'
   },
+  // Apellido
   lastName: {
     type: Schema.ObjectId,
     ref: 'User'
   },
+  // Email
   email: {
-    type: Schema.ObjectId,
-    ref: 'User'
+    type: String,
+    default: '',
   },
+  // Nombre de usuario
   username: {
     type: Schema.ObjectId,
     ref: 'User'
   },
+  // creador
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
   },
-  // TODO: lista de centros médicos donde ejerce
+  // Centro médico
   healthCentre: {
     type: String,
     default: '',
     trim: true
   },
-  // TODO: lista de especialidades médicas que ejerce
+  // Especialidad
   specialties: {
     type: String,
     default: '',
     trim: true,
     required: 'Al menos tiene que tener una especialidad'
   },
-  // TODO: lista de horas disponible para citas
-  workingHours:{
+  // Hora de inicio de consulta
+  startTime:{
     type:Date,
     default: '',
     trim:true
   },
+  // Hora de fin de consulta
+  endTime:{
+    type:Date,
+    default: '',
+    trim:true
+  },
+  // Fecha de creación
   created: {
     type: Date,
     //Crear un valor 'created' por defecto

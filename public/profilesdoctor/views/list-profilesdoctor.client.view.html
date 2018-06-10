@@ -2,6 +2,7 @@
 
 <!-- Navegacion -->
 <a data-ng-href="#!/">Principal</a>
+<hr />
 
 <!-- Usuario sin autenticar -->
 <div data-ng-show="!authentication.user">
@@ -16,23 +17,15 @@
     <!-- Lista de doctores -->
     <h1>Doctores</h1>
     <ul>
-      <hr />
+      <hr align="left" size="1" width="30%" />
       <li data-ng-repeat="profileDoctor in profilesDoctor">
         <a data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}" data-ng-bind="profileDoctor.creador.fullName"></a>
         <br>
         <small>
-          <em>Creado el</em>
+          <em>Con perfil desde</em>
           <em data-ng-bind="profileDoctor.created | date:'medium'"></em>
-          <em>by</em>
-          <em data-ng-bind="profileDoctor.creador.fullName"></em>
         </small>
-        <h1>Centros de salud</h1>
-        <p data-ng-bind="profileDoctor.healthCentre"></p>
-        <h1>Especialidades</h1>
-        <p data-ng-bind="profileDoctor.specialties"></p>
-        <h1>Horario de trabajo</h1>
-        <p data-ng-bind="profileDoctor.workingHours"></p>
-      <hr />
+        <hr align="left" size="1" width="30%" />
       </li>
     </ul>
     <!-- Si no tiene, sugerimos que se cree un nuevo perfil -->

@@ -23,6 +23,15 @@ exports.create = function(req, res) {
 
 	// Configurar la propiedad 'creador' de la consulta
 	consultation.creador = req.user;
+	// Configurar la propiedad 'centro médico' de la consulta
+	consultation.healthCentre = req.user.healthCentre;
+	// Configurar la propiedad 'especialidad' de la consulta
+	consultation.specialties = req.user.specialties;
+// TODO: campos de la cita que es atendida
+	// Configurar la propiedad 'paciente' de la consulta
+	// patient
+	// Configurar la propiedad 'motivo' de la consulta
+	// chiefComplaint
 
 	// Intentar salvar la consutla
 	consultation.save(function(err) {
@@ -68,13 +77,16 @@ exports.update = function(req, res) {
 	var consultation = req.consultation;
 
 	// Actualizar los campos de la consulta
+	consultation.medicalHistory = req.body.medicalHistory;
+	consultation.currentTreatment = req.body.currentTreatment;
+	consultation.familyHistory = req.body.familyHistory;
+	consultation.presentComplaint = req.body.presentComplaint;
 	consultation.height = req.body.height;
 	consultation.weight = req.body.weight;
 	consultation.breathingFrequency = req.body.breathingFrequency;
 	consultation.bloodPressure = req.body.bloodPressure;
 	consultation.heartRate = req.body.heartRate;
 	consultation.physicalExploration = req.body.physicalExploration;
-	consultation.disorder = req.body.disorder;
 	consultation.diagnosis = req.body.diagnosis;
 	consultation.medicationPrescription = req.body.medicationPrescription;
 	consultation.medicalInstructions = req.body.medicalInstructions;

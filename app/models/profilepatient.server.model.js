@@ -8,26 +8,7 @@ var mongoose = require('mongoose'),
 
 // Definir un nuevo 'PatientSchema'
 var ProfilePatientSchema = new Schema({
-  nss: String,
-  firstName: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
-  lastName: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
-  email: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
-  phoneNumber:{
-    type: String
-  },
-  username: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
+
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
@@ -37,17 +18,63 @@ var ProfilePatientSchema = new Schema({
     //Crear un valor 'created' por defecto
     default: Date.now
   },
-  bloodType:{
-    type: String
+  dni: {
+    type: String,
+    required: 'El DNI/NIF no puede estar en blanco'
   },
-  height:{
-    type: String
+  nationality:{
+    type: String,
+    default: '-',
+    trim: true
   },
-  weight:{
-    type: String
+  city:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  zipCode:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  address:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  phoneNumber:{
+    type: String,
+    default: '-',
+  },
+  email: {
+    type: String,
+    default: '-',
   },
   gender:{
-    type: String
+    type: String,
+    default: '-',
+  },
+  birthDate:{
+    type: Date,
+    required: 'La fecha de nacimiento no puede estar en blanco'
+  },
+  birthPlace:{
+    type: String,
+    default: '-'
+  },
+  civilStatus:{
+    type: String,
+    default: '-',
+    trim: true
+  },
+  bloodType:{
+    type: String,
+    default: '-'
+  },
+  allergies:{
+    type: String,
+    default: 'Ninguna',
+    trim: true
   }
 });
 

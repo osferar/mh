@@ -12,10 +12,9 @@ angular.module('appointments').controller('AppointmentsController',['$scope','$r
         // Usar los campos form para crear un nuevo objeto $resource appointment
         var appointment = new Appointments({
           date: this.date,
-          healthCentre: this.healthCentre,
-          specialty: this.specialty,
+          hour: this.hour,
           doctor: this.doctor,
-          disorder: this.disorder
+          chiefComplaint: this.chiefComplaint
         });
 
         // Usar el método '$save' de appointment para enviar una petición POST apropiada
