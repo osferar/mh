@@ -24,10 +24,6 @@ exports.create = function(req, res) {
 
   // Configurar los datos del doctor
   profileDoctor.creador = req.user;
-  // profileDoctor.firstName = req.user.firstName;
-  // profileDoctor.lastName = req.user.lastName;
-  // profileDoctor.email = req.user.email;
-  // profileDoctor.username = req.user.username;
 
   // Intentar guardar al doctor
   profileDoctor.save(function(err) {

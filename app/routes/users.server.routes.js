@@ -37,14 +37,4 @@ module.exports = function(app) {
   //Configurar la route 'signout'
   app.get('/signout', users.signout);
 
-
-  // TODO ing
-  // // Configurar las rutas 'user' parametrizadas
-  // app.route('/api/user/:userId')
-  // .get(user.read)
-  // .put(users.requiresLogin, users.hasAuthorization, users.update);
-  //
-  // // Configurar el parámetro middleware 'userId'
-  // app.param('userId', users.userID);
-
 };

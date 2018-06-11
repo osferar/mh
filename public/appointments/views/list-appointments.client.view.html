@@ -14,7 +14,7 @@
       <h1>Citas</h1>
       <hr />
         <ul data-ng-repeat="appointment in appointments">
-          <section data-ng-show="authentication.user._id == appointment.doctor._id">
+          <section data-ng-show="authentication.user._id == appointment.doctor.creador_id">
             <!-- Fecha de la cita -->
             <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date | date:'medium'"></a>
             <!-- Fecha de creación -->
@@ -49,9 +49,11 @@
       <hr />
         <li data-ng-repeat="appointment in appointments">
           <div data-ng-show="authentication.user._id == appointment.creador._id">
+
+            <a data-ng-href="#!/appointments/{{appointment._id}}">Detalles</a>
             <!-- Fecha de la cita -->
             <h1>Fecha</h1>
-            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date | date:'shortDate'"></a>
+            <p data-ng-bind="appointment.hour | date:'shortDate'"></p>
 
             <!-- Hora de cita -->
             <h1>Hora</h1>
@@ -72,7 +74,7 @@
             <!-- Doctor -->
             <hr align="left" size="1" width="30%" />
             <h1>Doctor/a</h1>
-            <p data-ng-bind="appointment.doctor.crador.fullName"></p>
+            <p data-ng-bind="appointment.doctor.creador.fullName"></p>
             <hr align="left" size="1" width="60%" />
           </div>
         </li>
