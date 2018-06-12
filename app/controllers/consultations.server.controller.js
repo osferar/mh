@@ -23,15 +23,8 @@ exports.create = function(req, res) {
 
 	// Configurar la propiedad 'creador' de la consulta
 	consultation.creador = req.user;
-	// Configurar la propiedad 'centro médico' de la consulta
-	consultation.healthCentre = req.user.healthCentre;
-	// Configurar la propiedad 'especialidad' de la consulta
-	consultation.specialties = req.user.specialties;
-// TODO: campos de la cita que es atendida
-	// Configurar la propiedad 'paciente' de la consulta
-	// patient
-	// Configurar la propiedad 'motivo' de la consulta
-	// chiefComplaint
+	//TODO: Configurar la propiedad 'appointment' de la consulta
+	consultation.appointment = req.appointment;
 
 	// Intentar salvar la consutla
 	consultation.save(function(err) {
@@ -50,9 +43,27 @@ exports.create = function(req, res) {
 // Crear un nuevo método controller que recupera una lista de consultas
 exports.list = function(req, res) {
 	// Usar el método model 'find' para obtener una lista de consultas
-	Consultation.find().sort('-creado')
+	Consultation.find()
+	.sort('-creado')
+	// Doctor
 	.populate('creador' , 'firstName lastName fullName')
-	.populate('patient' , 'firstName lastName fullName')
+	// Paciente
+	.populate({
+		path: 'appointment',
+		populate: {
+			path: 'creador'
+		}
+	})
+	// Motivo de consulta
+	.populate('appointment','chiefComplaint')
+
+	// Especialidad y centro hospitalario
+	.populate({
+		path: 'appointment',
+		populate: {
+			path: 'doctor'
+		}
+	})
 	.exec(function(err, consultations) {
 		if (err) {
 			// Si un error ocurre enviar un mensaje de error
@@ -128,8 +139,26 @@ exports.delete = function(req, res) {
 exports.consultationByID = function(req, res, next, id) {
 	// Usar el método model 'findById' para encontrar una única consulta
 	Consultation.findById(id)
+	.sort('-creado')
+	// Doctor
 	.populate('creador' , 'firstName lastName fullName')
-	.populate('patient' , 'firstName lastName fullName')
+	// Paciente
+	.populate({
+		path: 'appointment',
+		populate:{
+			path:'creador'
+		}
+	})
+	// Motivo de consulta
+	.populate('appointment','chiefComplaint')
+
+	// Especialidad y centro hospitalario
+	.populate({
+		path: 'appointment',
+		populate:{
+			path:'doctor'
+		}
+	})
 	.exec(function(err, consultation) {
 		if (err) return next(err);
 		if (!consultation) return next(new Error('Fallo al cargar la consulta' + id));

@@ -9,28 +9,28 @@
 
   <!-- Fecha de creación -->
   <h1>Creada el </h1>
-  <h1 data-ng-bind="consultation.creado | date:'medium'"></h1>
+  <p data-ng-bind="consultation.creado | date:'medium'"></p>
   <div data-ng-hide="authentication.user.rol == 'doctor'">
     <!-- Creador de la consulta -->
     <small>
       <em>Atendida por el doctor/a </em>
-      <em data-ng-bind="consultation.creador.fullName"></em>
+      <h1><em data-ng-bind="consultation.creador.fullName"></em></h1>
       <em> especialista en </em>
-      <emdata-ng-bind="consultation.specialty"></em>
+      <h1><em data-ng-bind="consultation.appointment.doctor.specialties"></em></h1>
       <em>, realizada en el centro médico </em>
-      <emdata-ng-bind="consultation.healthCentre"></em>
+      <h1><em data-ng-bind="consultation.appointment.doctor.healthCentre"></em></h1>
     </small>
   </div>
   <div data-ng-hide="authentication.user.rol == 'patient'">
     <!-- Paciente de la consulta -->
     <small>
       <em>Realizada al paciente</em>
-      <em data-ng-bind="consultation.patient.fullName"></em>
+      <em data-ng-bind="consultation.appointment.creador.fullName"></em>
     </small>
   </div>
   <!-- Motivo de consulta -->
   <h1>Motivo de consulta</h1>
-  <p data-ng-bind="consultation.chiefComplaint"></p>
+  <p data-ng-bind="consultation.appointment.chiefComplaint"></p>
   <!-- Antecedentes personales -->
   <h1>Antecedentes personales</h1>
   <p data-ng-bind="consultation.medicalHistory"></p>

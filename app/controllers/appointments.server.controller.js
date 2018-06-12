@@ -16,7 +16,8 @@ var getErrorMessage = function(err) {
     return 'Error de servidor desconocido';
   }
 };
-// Formatear hora
+
+// Construcción de 'hour' de la cita
 var buildHoursDate = function(date, hour) {
  var d = new Date(date)
  var time = hour.split(':')
@@ -26,7 +27,7 @@ var buildHoursDate = function(date, hour) {
 
 // Crear un nuevo método controller para crear nuevas citas
 exports.create = function(req, res) {
-  //Establecemos 'hour'
+  //Establecemos 'hour' construida antes de instanciar 'appointment'
   req.body.hour = buildHoursDate(req.body.date, req.body.hour);
 
   var appointment = new Appointment(req.body);
@@ -51,7 +52,9 @@ exports.create = function(req, res) {
 // Crear un nuevo método controller que recupera una lista de citas
 exports.list = function(req, res) {
   // Usar el método model 'find' para obtener una lista de citas
-  Appointment.find().sort('-created')
+  Appointment.find()
+  .sort('date')
+  .sort('hour')
   .populate('creador','firstName lastName fullName')
   .populate({
      path: 'doctor',

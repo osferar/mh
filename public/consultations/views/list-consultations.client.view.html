@@ -22,8 +22,8 @@
 						<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
 						<!-- Creador de la consulta -->
 						<small>
-							<em>Realizada a </em>
-							<em data-ng-bind="consultation.patient.fullName"></em>
+							<em>Realizada al paciente </em>
+							<em data-ng-bind="consultation.appointment.creador.fullName"></em>
 						</small>
 						</h1>
 						<!-- Contenido de la consulta: Anamnesis -->
@@ -46,13 +46,13 @@
 			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
 
 					<!-- La lista de consultas -->
-					<h1>Historial de consultas</h1>
+					<h1>Historial médico</h1>
 					<hr />
 					<ul data-ng-repeat="consultation in consultations">
-						<section data-ng-show="authentication.user._id == consultation.patient._id">
+						<section data-ng-show="authentication.user._id == consultation.appointment.creador._id">
 							<!-- Fecha de la consulta -->
 							<h1>
-							<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
+							<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'shortDate'"></a>
 							<!-- Creador de la consulta -->
 							<small>
 								<em>Realizada por el doctor/a </em>
@@ -61,7 +61,7 @@
 							</h1>
 							<!-- Contenido de la consulta: Motivo de consulta -->
 							<p>Motivo de consulta</p>
-							<p data-ng-bind="consultation.chiefComplaint"></p>
+							<p data-ng-bind="consultation.appointment.chiefComplaint"></p>
 							<!-- Contenido de la consulta: diagnostico -->
 							<p>Diagnostico</p>
 							<p data-ng-bind="consultation.diagnosis"></p>
@@ -69,7 +69,7 @@
 					</ul>
 					<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
 					<div data-ng-hide="!consultations || consultations.length">
-						Aún no ha realizado ninguna consulta, pida una <a href="/#!/appointments/create">cita</a> para acudiar a consulta.
+						Aún no ha realizado ninguna consulta, pida una <a href="/#!/appointments/create">cita</a> para acudir a consulta.
 					</div>
 			</section>
 		</div> <!-- Fin vista paciente -->

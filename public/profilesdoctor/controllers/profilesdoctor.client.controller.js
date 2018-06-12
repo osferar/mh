@@ -11,7 +11,6 @@ angular.module('profilesDoctor').controller('ProfilesDoctorController',['$scope'
       $scope.create = function() {
         // Usar los campos form para crear un nuevo objeto $resource profileDoctor
         var profileDoctor = new ProfilesDoctor({
-          // TODO: falta añadir
           numberColleged: this.numberColleged,
           healthCentre: this.healthCentre,
           specialties: this.specialties,

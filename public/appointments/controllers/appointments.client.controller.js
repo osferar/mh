@@ -43,7 +43,7 @@ angular.module('appointments').controller('AppointmentsController',['$scope','$r
 
       // Usar el método 'query' de ProfilesDoctor para enviar una petición GET apropiada
       $scope.findDoctors = function() {
-      $scope.profilesDoctor = ProfilesDoctor.query();
+        $scope.profilesDoctor = ProfilesDoctor.query();
       };
 
       // Crear un nuevo método controller para actualizar una única cita

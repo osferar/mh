@@ -8,25 +8,13 @@ var ConsultationSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  healthCentre: {
+  appointment:{
     type: Schema.ObjectId,
-    ref: 'User'
-  },
-  specialty: {
-    type: Schema.ObjectId,
-    ref: 'User'
-  },
-  patient: {
-    type: Schema.ObjectId,
-    ref: 'User'
+    ref: 'Appointment'
   },
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
-  },
-  chiefComplaint:{
-    type: Schema.ObjectId,
-    ref: 'Appointment'
   },
   medicalHistory:{
     type: String,
@@ -63,32 +51,32 @@ var ConsultationSchema = new Schema({
   },
   bloodPressure: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   heartRate: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   physicalExploration: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   diagnosis: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   medicationPrescription: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   },
   medicalInstructions: {
     type: String,
-    default: '',
+    default: '-',
     trim: true
   }
 });

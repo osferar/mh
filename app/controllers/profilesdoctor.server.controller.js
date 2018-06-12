@@ -3,7 +3,7 @@
 
 // Cargar las dependdencias del módulo
 var mongoose = require('mongoose'),
-    ProfileDoctor = mongoose.model('ProfileDoctor'),
+    ProfileDoctor = require('mongoose').model('ProfileDoctor'),
     User = require('mongoose').model('User');
 
 // Crear un nuevo método controller para el manejo de errores
@@ -18,8 +18,28 @@ var getErrorMessage = function(err) {
   }
 };
 
+// Construcción de 'startTime' e 'endTime' del intervalo de consulta
+var buildStartTimeAppointment = function(startTime) {
+ var d = new Date()
+ var time = startTime.split(':')
+ d.setHours(time[0], time[1])
+ return d
+}
+
+// Construcción de 'endTime' e 'endTime' del intervalo de consulta
+var buildEndTimeAppointment = function(endTime) {
+ var d = new Date()
+ var time = endTime.split(':')
+ d.setHours(time[0], time[1])
+ return d
+}
+
 // Crear un nuevo método controller para crear nuev@s doctores
 exports.create = function(req, res) {
+
+  req.body.startTime = buildStartTimeAppointment(req.body.startTime);
+  req.body.endTime = buildEndTimeAppointment(req.body.endTime);
+
   var profileDoctor = new ProfileDoctor(req.body);
 
   // Configurar los datos del doctor
