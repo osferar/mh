@@ -30,22 +30,11 @@
           <!-- <input type="time" min="9:00" max="15:00" step="3600" name="hour" id="hour" placeholder="Hora"> -->
       </div>
 
-      <!-- Centro médico -->
-      <!-- <div>
-        <label for="healthCentre">Centro médico</label>
-        <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
-          <select name="healthCentre" id="healthCentre"
-           ng-options="profileDoctor.healthCentre for profileDoctor in profilesDoctor"
-           data-ng-model="healthCentre">
-          </select>
-        </div>
-      </div> -->
-
       <!-- Médico -->
       <div>
         <label for="doctor">Médico</label>
         <div>
-          <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+          <div ata-ng-init="findDoctors()">
             <select name="doctor" id="doctor"
              ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
              data-ng-model="doctor">
@@ -55,19 +44,6 @@
           <!-- <input type="text" data-ng-model="doctor" id="doctor" placeholder="Doctor" > -->
         </div>
       </div>
-
-      <!-- Especialidad -->
-      <!-- <div>
-        <label for="specialties">Especialidad</label>
-        <div>
-          <section data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
-            <select name="specialty" id="specialty"
-             ng-options="profileDoctor.specialties for profileDoctor in profilesDoctor"
-             data-ng-model="specialty">
-            </select>
-          </section>
-        </div>
-      </div> -->
 
       <!-- Motivo de consulta -->
       <div>

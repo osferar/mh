@@ -16,9 +16,19 @@ var getErrorMessage = function(err) {
     return 'Error de servidor desconocido';
   }
 };
+// Formatear hora
+var buildHoursDate = function(date, hour) {
+ var d = new Date(date)
+ var time = hour.split(':')
+ d.setHours(time[0], time[1])
+ return d
+}
 
 // Crear un nuevo método controller para crear nuevas citas
 exports.create = function(req, res) {
+  //Establecemos 'hour'
+  req.body.hour = buildHoursDate(req.body.date, req.body.hour);
+
   var appointment = new Appointment(req.body);
 
   // Configurar la propiedad 'creador' de la cita
@@ -43,8 +53,12 @@ exports.list = function(req, res) {
   // Usar el método model 'find' para obtener una lista de citas
   Appointment.find().sort('-created')
   .populate('creador','firstName lastName fullName')
-  .populate('doctor','healthCentre specialties')
-  .populate('doctor.creador','firstName lastName fullName')
+  .populate({
+     path: 'doctor',
+     populate: {
+       path: 'creador'
+     }
+   })
   .exec(function(err, appointments){
     if (err){
       // Si ocurre un error enviar un mensaje de error
@@ -111,8 +125,12 @@ exports.appointmentByID = function(req, res, next, id) {
   // Usar el método static 'findOne' para encontrar una cita específica
   Appointment.findById(id)
   .populate('creador', 'firstName lastName fullName')
-  .populate('doctor','healthCentre specialties')
-  .populate('doctor.creador','firstName lastName fullName')
+  .populate({
+     path: 'doctor',
+     populate: {
+       path: 'creador'
+     }
+   })
   .exec(function(err,appointment) {
     if (err)
       // llama al siguiente middleware con un mensaje de error

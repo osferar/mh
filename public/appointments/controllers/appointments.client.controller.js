@@ -2,8 +2,8 @@
 'use strict';
 
 // Crear el controller 'appointments'
-angular.module('appointments').controller('AppointmentsController',['$scope','$routeParams','$location','Authentication','Appointments',
-  function($scope, $routeParams, $location, Authentication, Appointments) {
+angular.module('appointments').controller('AppointmentsController',['$scope','$routeParams','$location','Authentication','Appointments','ProfilesDoctor',
+  function($scope, $routeParams, $location, Authentication, Appointments,ProfilesDoctor) {
       // Exponer el service Authentication
       $scope.authentication = Authentication;
 
@@ -39,6 +39,11 @@ angular.module('appointments').controller('AppointmentsController',['$scope','$r
         $scope.appointment = Appointments.get({
           appointmentId: $routeParams.appointmentId
         });
+      };
+
+      // Usar el método 'query' de ProfilesDoctor para enviar una petición GET apropiada
+      $scope.findDoctors = function() {
+      $scope.profilesDoctor = ProfilesDoctor.query();
       };
 
       // Crear un nuevo método controller para actualizar una única cita

@@ -6,7 +6,8 @@ var ArticleSchema = new Schema({
   creado: {
     type: Date,
     // default:moment().format()
-    default: moment(new Date()).format("LLLL")
+    default: Date.now
+  //  default: moment(new Date()).format("LLLL")
   },
   titulo: {
     type: String,
