@@ -21,7 +21,8 @@ var AppointmentSchema = new Schema({
   },
   doctor: {
     type: Schema.ObjectId,
-    ref: 'ProfileDoctor'
+    ref: 'ProfileDoctor',
+    required: 'Elegir doctor es obligatorio / Choose doctor is require'
   },
   creador: {
     type: Schema.ObjectId,
@@ -30,7 +31,8 @@ var AppointmentSchema = new Schema({
   chiefComplaint: {
     type: String,
     default: '',
-    trim: true
+    trim: true,
+    required: 'Motivo de consulta es obligatorio / Chief complaint is require'
   }
 });
 

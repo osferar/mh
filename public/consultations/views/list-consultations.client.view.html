@@ -14,9 +14,9 @@
 
 				<!-- La lista de consultas -->
 				<h1>Consultas realizadas</h1>
-				<hr />
 				<ul data-ng-repeat="consultation in consultations">
 					<section data-ng-show="authentication.user._id == consultation.creador._id">
+						<hr align="left" size="1" width="30%" />
 						<h1>
 						<!-- Fecha de la consulta -->
 						<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
@@ -27,7 +27,7 @@
 						</small>
 						</h1>
 						<!-- Contenido de la consulta: Anamnesis -->
-						<p>Anamnesis</p>
+						<h1>Anamnesis</h1>
 						<p data-ng-bind="consultation.presentComplaint"></p>
 					</section>
 				</ul>
@@ -60,11 +60,12 @@
 							</small>
 							</h1>
 							<!-- Contenido de la consulta: Motivo de consulta -->
-							<p>Motivo de consulta</p>
+							<h1>Motivo de consulta</h1>
 							<p data-ng-bind="consultation.appointment.chiefComplaint"></p>
 							<!-- Contenido de la consulta: diagnostico -->
-							<p>Diagnostico</p>
+							<h1>Diagnóstico</h1>
 							<p data-ng-bind="consultation.diagnosis"></p>
+							<hr align="left" size="1" width="30%" />
 						</section>
 					</ul>
 					<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->

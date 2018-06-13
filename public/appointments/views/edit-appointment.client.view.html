@@ -26,7 +26,7 @@
           <hr align="left" size="1" width="30%" />
           <label for="date">Fecha</label>
           <div>
-            <input type="date" data-ng-model="appointment.date" id="date" required>
+            <input type="date" data-ng-model="appointment.date" id="date" placeholder="date" required>
           </div>
         </div>
 
@@ -35,7 +35,7 @@
           <hr align="left" size="1" width="30%" />
           <label for="hour">Hora</label>
           <div>
-            <input type="time" data-ng-model="appointment.hour" name="hour" id="hour" required>
+            <input type="time" data-ng-model="appointment.hour" name="hour" id="hour" placeholder="time" required>
           </div>
         </div>
 
@@ -44,9 +44,9 @@
           <label for="doctor">Médico</label>
           <div>
             <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
-              <select name="doctor" id="doctor"
+              <select name="doctor" id="doctor" placeholder="doctor"
                ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
-               data-ng-model="doctor">
+               data-ng-model="doctor" required>
               </select>
               <!-- <select data-ng-model="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"></select> -->
             </div>
@@ -59,9 +59,9 @@
           <hr align="left" size="1" width="30%" />
           <label for="chiefComplaint">Motivo de consulta</label>
           <div>
-            <textarea data-ng-model="appointment.chiefComplaint" id="chiefComplaint" cols="30" rows="10" placeholder="Motivo de consulta">
-            </div>
+            <textarea data-ng-model="appointment.chiefComplaint" id="chiefComplaint" cols="60" rows="10" placeholder="chiefComplaint" required></textarea>
           </div>
+        </div>
 
         <!-- Botón de envio -->
         <div>

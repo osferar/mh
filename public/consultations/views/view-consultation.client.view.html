@@ -17,9 +17,11 @@
       <h1><em data-ng-bind="consultation.creador.fullName"></em></h1>
       <em> especialista en </em>
       <h1><em data-ng-bind="consultation.appointment.doctor.specialties"></em></h1>
-      <em>, realizada en el centro médico </em>
+      <em>Realizada en el centro médico </em>
       <h1><em data-ng-bind="consultation.appointment.doctor.healthCentre"></em></h1>
+      <hr align="left" size="1" width="30%" />
     </small>
+
   </div>
   <div data-ng-hide="authentication.user.rol == 'patient'">
     <!-- Paciente de la consulta -->

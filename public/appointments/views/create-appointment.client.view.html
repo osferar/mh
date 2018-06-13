@@ -18,7 +18,6 @@
         <label for="date">Fecha</label>
         <div>
           <input type="date" data-ng-model="date" id="date" required>
-            <!-- <input type="date" min="2018-03-25" max="2018-12-31" step="2" data-ng-model="date" id="date" placeholder="Fecha" required> -->
         </div>
       </div>
 
@@ -27,11 +26,11 @@
       <label for="hour">Hora</label>
       <div>
         <input type="time" data-ng-model="hour" name="hour" id="hour">
-          <!-- <input type="time" min="9:00" max="15:00" step="3600" name="hour" id="hour" placeholder="Hora"> -->
       </div>
 
       <!-- Médico -->
       <div>
+        <hr align="left" size="1" width="30%" />
         <label for="doctor">Médico</label>
         <div>
           <div data-ng-init="findDoctors()">
@@ -39,9 +38,7 @@
              ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
              data-ng-model="doctor">
             </select>
-            <!-- <select data-ng-model="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"></select> -->
           </div>
-          <!-- <input type="text" data-ng-model="doctor" id="doctor" placeholder="Doctor" > -->
         </div>
       </div>
 
@@ -50,7 +47,7 @@
         <hr align="left" size="1" width="30%" />
         <label for="chiefComplaint">Motivo de consulta</label>
         <div>
-          <textarea data-ng-model="chiefComplaint" id="chiefComplaint" cols="30" rows="10" placeholder="Motivo de consulta"></textarea>
+          <textarea data-ng-model="chiefComplaint" id="chiefComplaint" cols="60" rows="10" placeholder="Motivo de consulta"></textarea>
         </div>
       </div>
 

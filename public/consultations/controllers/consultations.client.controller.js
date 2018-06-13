@@ -2,15 +2,19 @@
 'use strict';
 
 // Crear el controller 'consultations'
-angular.module('consultations').controller('ConsultationsController', ['$scope', '$routeParams', '$location', 'Authentication', 'Consultations',
-    function($scope, $routeParams, $location, Authentication, Consultations) {
+angular.module('consultations').controller('ConsultationsController', ['$scope', '$routeParams', '$location', 'Authentication', 'Consultations','ShareDataService',
+    function($scope, $routeParams, $location, Authentication, Consultations,ShareDataService) {
+        $scope.shared = ShareDataService;
+
         // Exponer el service Authentication
         $scope.authentication = Authentication;
 
  // Crear un nuevo método controller para crear nuevas consultations
         $scope.create = function() {
+          console.log($scope.shared);
             // Usar los campos form para crear un nuevo objeto $resource consultation
             var consultation = new Consultations({
+              appointment: $scope.shared.idAppointment,
               medicalHistory: this.medicalHistory,
               currentTreatment: this.currentTreatment,
               familyHistory: this.familyHistory,

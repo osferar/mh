@@ -24,7 +24,7 @@ exports.create = function(req, res) {
 	// Configurar la propiedad 'creador' de la consulta
 	consultation.creador = req.user;
 	//TODO: Configurar la propiedad 'appointment' de la consulta
-	consultation.appointment = req.appointment;
+	// consultation.appointment = req.appointment;
 
 	// Intentar salvar la consutla
 	consultation.save(function(err) {
@@ -54,8 +54,6 @@ exports.list = function(req, res) {
 			path: 'creador'
 		}
 	})
-	// Motivo de consulta
-	.populate('appointment','chiefComplaint')
 
 	// Especialidad y centro hospitalario
 	.populate({
@@ -149,8 +147,6 @@ exports.consultationByID = function(req, res, next, id) {
 			path:'creador'
 		}
 	})
-	// Motivo de consulta
-	.populate('appointment','chiefComplaint')
 
 	// Especialidad y centro hospitalario
 	.populate({
