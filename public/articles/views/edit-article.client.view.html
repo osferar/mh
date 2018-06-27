@@ -1,46 +1,254 @@
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a> >
-<a data-ng-href="#!/articles">Artículos</a>
-<hr />
-
 <!-- La view editar artículo -->
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+<section ng-controller="MainController">
+  <section data-ng-controller="ArticlesController" data-ng-init="findOne()">
 
-	<!-- Formulario editar artículo -->
-	<h1>Editar</h1>
-	<form data-ng-submit="update()" novalidate>
-		<!-- Título -->
-		<div>
-			<hr align="left" size="1" width="30%" />
-			<label for="titulo">Titulo</label>
-			<div>
-				<input type="text" data-ng-model="article.titulo" id="titulo" placeholder="Titulo" required>
-			</div>
-		</div>
-		<!-- Contenido -->
-		<div>
-			<hr align="left" size="1" width="30%" />
-			<label for="contenido">Contenido</label>
-			<div>
-				<textarea data-ng-model="article.contenido" id="contenido" cols="30" rows="10" placeholder="Contenido"></textarea>
-			</div>
-		</div>
-		<!-- Url -->
-		<div>
-			<hr align="left" size="1" width="30%" />
-			<label for="url">Url</label>
-			<div>
-				<textarea data-ng-model="article.url" id="url" cols="30" rows="1" placeholder="Url"></textarea>
-			</div>
-		</div>
-		<div>
-			<hr />
-			<input type="submit" value="Actualizar">
-		</div>
-		<!-- El elemento mensaje error -->
-		<div data-ng-show="error">
-			<strong data-ng-bind="error"></strong>
-		</div>
-	</form>
-	</div>
+    <!-- Usuario no autenticado o paciente -->
+    <div data-ng-show="!authentication.user || authentication.user.rol == 'patient'">
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!-- El menú se agrupa
+        para mostrarlo mejor en los dispositivos móviles -->
+        <div class="navbar-header">
+          <div data-ng-show="authentication.user.rol == 'patient'">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          </div>
+          <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+        </div>
+
+        <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+            <div data-ng-repeat="profilePatient in profilesPatient">
+              <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav">
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                        <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </nav>
+      <!-- Fin barra navegación -->
+      <!-- Body usuario sin autenticar-->
+      <div class="text-center">
+        <div data-ng-show="authentication.user.rol != 'patient'">
+          <div class="alert alert-warning text-center">
+            <h4>Tienes que estar logueado para editar artículos de interés</h4>
+            <hr align="center" size="1" width="33%" />
+            <a href="/signin" class="btn btn-primary" role="button">Login</a>
+          </div>
+        </div>
+
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <div class="alert alert-danger text-center">
+            <h4>No puedes editar artículos de interés siendo paciente</h4>
+          </div>
+        </div>
+        <hr />
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+      </div>
+      <!-- Fin body usuario sin autenticar -->
+    </div>
+    <!-- Fin usuario sin autenticar o paciente -->
+
+    <!-- Usuario médico no autorizado -->
+    <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+      <div data-ng-show="authentication.user.rol == 'doctor' && authentication.user._id != article.creador._id">
+        <!-- Barra de Navegacion -->
+        <nav class="navbar navbar-inverse" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+              <span class="sr-only">Desplegar navegación</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+          </div>
+          <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+            <div data-ng-repeat="profileDoctor in profilesDoctor">
+              <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav">
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                        <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </nav>
+        <!-- Fin barra navegación -->
+        <!-- Body usuario  no autorizado médico -->
+        <div class="text-center">
+          <div class="alert alert-danger text-center">
+            <h4>Solo puedes editar tus artículos</h4>
+          </div>
+          <hr />
+          <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+        </div>
+        <!-- Fin body usuario no autorizado médico -->
+      </div>
+    </section>
+    <!-- Fin usuario no autorizado médico -->
+
+
+    <!-- Usuario médico autenticado y autorizado  -->
+    <div data-ng-show="authentication.user && authentication.user.rol == 'doctor' && authentication.user._id == article.creador._id">
+
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+        <div data-ng-repeat="profileDoctor in profilesDoctor">
+          <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Desplegar navegación</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                  </li>
+                  <li><a href="/#!/articles">Artículos</a></li>
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="#!/consultations">Consultas</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Doctor/a</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                    <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra navegación -->
+
+      <!-- Formulario editar artículo -->
+      <div class="container-fluid">
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div style="margin-left:1%" class="column">
+            <h1>Editar artículo de interés</h1>
+            <hr>
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="row">
+          <div style="margin-left:10%" class="column">
+            <form data-ng-submit="update()" novalidate>
+              <table class="table table-hover" BORDER WIDTH="50%" align="center" FRAME="void" RULES="rows">
+
+                <!-- Título artículo -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="titulo">
+                    <h4>Título</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                    <input type="text" data-ng-model="article.titulo" id="titulo" placeholder="Título" required oninvalid="setCustomValidity('Introduzca un título de artículo')" oninput="setCustomValidity('')">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Contenido -->
+                <tr>
+                  <td width="20%">
+                    <label for="contenido">
+                    <h4>Contenido</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="article.contenido" id="contenido" cols="30" rows="10" placeholder="Contenido"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Url -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="url">
+                    <h4>Url</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                    <input type="text" data-ng-model="article.url" id="url" placeholder="url">
+                  </h4>
+                  </td>
+                </tr>
+
+              </table>
+              <!-- Boton envio -->
+              <hr />
+              <input type="submit" value="Actualizar">
+              <!-- El elemento mensaje de error -->
+              <div data-ng-show="error">
+                <br>
+                <div class="alert alert-warning">
+                  <strong data-ng-bind="error"></strong>
+                  <div data-ng-show="!authentication.user">
+                    <a href="/signin" class="btn btn-primary" role="button">Login</a>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fin vista usuario autenticado -->
+  </section>
 </section>

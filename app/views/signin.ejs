@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Sign in Medical History">
+  <meta name="author" content="Oscar Fernández Aranda">
+  <!-- <link rel="icon" href="https://getbootstrap.com/favicon.ico"> -->
+
   <!-- Usa la propiedad 'title' para renderizar un título de página  -->
   <title><%= title %></title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <!-- Tema opcional -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+  <!-- JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 </head>
-<body>
+
+<body class="text-center">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header text-center">
+        <a class="navbar-brand text-center" href="/">MEDICAL HISTORY</a>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+
   	<h1>Plataforma de consultas médicas e historiales médicos</h1>
     <hr />
     <!-- Mostrar mensajes Flash  -->
   <% for(var i in messages) { %>
-     <div class="flash"><%= messages[i] %></div>
+     <div class="flash alert alert-warning text-center"><%= messages[i] %></div>
   <% } %>
 
   <!-- Renderizar el formulario signin -->
@@ -18,16 +44,22 @@
       <label>Usuario:</label><br>
       <input type="text" name="username" placeholder="Usuario"/>
     </div>
+    <br>
     <div>
       <label>Contraseña:</label><br>
       <input type="password" name="password" placeholder="Contraseña"/>
     </div>
     <div>
-      <input type="submit" value="Identificarse" />
+      <br>
+      <button class="btn btn-primary btn-sm" type="submit">Iniciar sesión</button>
+      <!-- <input type="submit" value="Identificarse" /> -->
     </div>
   </form>
   <hr />
-  <a href="/oauth/google">Identificarse usando Google</a>
+  <!-- <a href="/oauth/google">Identificarse usando Google</a> -->
+  <a href="/oauth/google" class="btn btn-primary" role="button">Iniciar sesión con Google</a>
   <hr />
+  <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
+
 </body>
 </html>

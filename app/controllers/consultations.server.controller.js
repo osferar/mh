@@ -23,9 +23,7 @@ exports.create = function(req, res) {
 
 	// Configurar la propiedad 'creador' de la consulta
 	consultation.creador = req.user;
-	//TODO: Configurar la propiedad 'appointment' de la consulta
-	// consultation.appointment = req.appointment;
-
+	
 	// Intentar salvar la consutla
 	consultation.save(function(err) {
 		if (err) {

@@ -98,6 +98,8 @@ exports.read = function(req, res) {
 
 // Crear un nuevo método controller que actualiza un doctor
 exports.update = function(req, res) {
+  req.body.startTime = buildStartTimeAppointment(req.body.startTime);
+  req.body.endTime = buildEndTimeAppointment(req.body.endTime);
   // Obtener el perfil usando el objeto 'request'
   var profileDoctor = req.profileDoctor;
 

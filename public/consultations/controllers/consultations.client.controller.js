@@ -4,10 +4,10 @@
 // Crear el controller 'consultations'
 angular.module('consultations').controller('ConsultationsController', ['$scope', '$routeParams', '$location', 'Authentication', 'Consultations','ShareDataService',
     function($scope, $routeParams, $location, Authentication, Consultations,ShareDataService) {
-        $scope.shared = ShareDataService;
 
         // Exponer el service Authentication
         $scope.authentication = Authentication;
+        $scope.shared = ShareDataService;
 
  // Crear un nuevo método controller para crear nuevas consultations
         $scope.create = function() {

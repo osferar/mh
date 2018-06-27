@@ -11,10 +11,10 @@ angular.module('appointments').controller('AppointmentsController', [
   'ProfilesDoctor',
   'ShareDataService',
   function($scope, $routeParams, $location, Authentication, Appointments, ProfilesDoctor, ShareDataService) {
-    $scope.shared = ShareDataService;
 
     // Exponer el service Authentication
     $scope.authentication = Authentication;
+    $scope.shared = ShareDataService;
 
     // Crear un nuevo método controller para crear nuevas citas
     $scope.create = function() {
@@ -40,11 +40,8 @@ angular.module('appointments').controller('AppointmentsController', [
     // Crear un nuevo método controller para recuperar una única cita
     $scope.findOne = function() {
       // Usar el método 'get' de appointment para enviar una petición GET apropiada
-      $scope.appointment = Appointments.get({
-        appointmentId: $routeParams.appointmentId});
+      $scope.appointment = Appointments.get({appointmentId: $routeParams.appointmentId});
       $scope.shared.idAppointment = $routeParams.appointmentId;
-
-      console.log($scope.shared);
     };
 
     // Usar el método 'query' de ProfilesDoctor para enviar una petición GET apropiada

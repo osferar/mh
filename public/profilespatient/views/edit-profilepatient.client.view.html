@@ -1,167 +1,415 @@
 <section ng-controller="MainController">
 
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a>
-<hr />
+  <!-- Usuario no autenticado -->
+  <div data-ng-show="!authentication.user">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa
+      para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+    <!-- Body usuario sin autenticar-->
+    <div class="text-center">
+      <div class="alert alert-warning text-center">
+        <h3>Tienes que estar logueado para editar un perfil</h3>
+        <hr align="center" size="1" width="33%" />
+        <a href="/signin" class="btn btn-primary" role="button">Login</a>
+      </div>
+      <hr />
+      <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
+    </div>
+    <!-- Fin body usuario sin autenticar -->
+  </div>
+  <!-- Fin usuario no autenticado -->
 
-<!-- Usuario sin autenticar -->
-<div data-ng-show="!authentication.user">
-  <h1>Tienes que estar autenticado para poder editar tu perfil de doctor.</h1>
-  <li><a href="/signin">Identificarse</a></li>
-</div>
+  <!-- Usuario no autorizado médico -->
+  <div data-ng-show="authentication.user.rol == 'doctor'">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+      </div>
+      <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+        <div data-ng-repeat="profileDoctor in profilesDoctor">
+          <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
 
-<!-- Usuario autenticado  -->
-<div data-ng-show="authentication.user">
-  <!-- La view edit profileDoctor -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav">
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                    <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </nav>
+    <!-- Fin barra navegación -->
+
+    <!-- Body usuario no autorizado médico -->
+    <div class="text-center">
+      <div class="alert alert-danger text-center">
+        <h3>Solo puedes editar tu perfil</h3>
+      </div>
+      <hr />
+      <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+    </div>
+    <!-- Fin body usuario no autorizado médico -->
+  </div>
+  <!-- Fin usuario no autorizado médico -->
+
+  <!-- Usuario no autorizado paciente -->
   <section data-ng-controller="ProfilesPatientController" data-ng-init="findOne()">
+    <div data-ng-show="authentication.user.rol == 'patient' && authentication.user._id != profilePatient.creador._id">
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Desplegar navegación</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+          <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+        </div>
+        <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+          <div data-ng-repeat="profilePatient in profilesPatient">
+            <div data-ng-show="authentication.user._id == profilePatient.creador._id">
 
-    <!-- Formulario editar perfil -->
-    <h1>Editar perfil</h1>
-    <form data-ng-submit="update()" novalidate>
-      <!-- DNI -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="dni">DNI / NIF</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.dni" id="dni" placeholder="DNI">
-       </div>
-      </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
 
-      <!-- Nacionalidad  -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="nationality">Nacionalidad</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.nationality" id="nationality" placeholder="Nacionalidad">
-       </div>
-      </div>
+            </div>
+          </div>
+        </div>
 
-      <!-- Ciudad  -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="city">Ciudad de residencia</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.city" id="city" placeholder="Ciudad">
-       </div>
-      </div>
-
-      <!-- Código postal -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="zipCode">Código postal</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.zipCode" id="zipCode" placeholder="Código postal">
-       </div>
-      </div>
-
-      <!-- Dirección -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="address">Dirección</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.address" id="address" placeholder="Dirección">
-       </div>
-      </div>
-
-      <!-- Número de telefono -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="phoneNumber">Número de telefono</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.phoneNumber" id="phoneNumber" placeholder="Número de telefono">
-       </div>
-      </div>
-
-      <!-- Email -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="email">Email</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.email" id="email" placeholder="Email">
-       </div>
-      </div>
-
-      <!-- Género -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="gender">Género</label>
-       <div>
-         <select type="text" data-ng-model="profilePatient.gender" id="gender" placeholder="Género">
-           <option value="hombre">Hombre</option>
-           <option value="mujer">Mujer</option>
-         </select>
-       </div>
-      </div>
-
-      <!-- Fecha de nacimiento -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="birthDate">Fecha de nacimiento</label>
-       <div>
-         <input type="date" data-ng-model="profilePatient.birthDate" id="birthDate" placeholder="Fecha de nacimiento">
-       </div>
-      </div>
-
-      <!-- Lugar de nacimiento -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="birthPlace">Fecha de nacimiento</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.birthPlace" id="birthPlace" placeholder="Lugar de nacimiento">
-       </div>
-      </div>
-
-      <!-- Estado civil -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="civilStatus">Estado civil</label>
-       <div>
-         <select type="text" data-ng-model="profilePatient.civilStatus" id="civilStatus" placeholder="Estado civil">
-           <option value="Soltero">Soltero</option>
-           <option value="Casado">Casado</option>
-           <option value="Divorciado">Divorciado</option>
-           <option value="Viudo">Viudo</option>
-         </select>
-       </div>
-      </div>
-
-      <!-- Grupo sanguíneo -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="bloodType">Grupo sanguíneo</label>
-       <div>
-         <select type="text" data-ng-model="profilePatient.bloodType" id="bloodType" placeholder="Grupo sanguíneo">
-           <option value="AB+">AB+</option>
-           <option value="AB-">AB-</option>
-           <option value="A+">A+</option>
-           <option value="A-">A-</option>
-           <option value="B+">B+</option>
-           <option value="B-">B-</option>
-           <option value="O+">O+</option>
-           <option value="O-">O-</option>
-         </select>
-       </div>
-      </div>
-
-      <!-- Alergias -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-       <label for="allergies">Alergias</label>
-       <div>
-         <input type="text" data-ng-model="profilePatient.allergies" id="allergies" placeholder="Alergias">
-       </div>
-      </div>
-      <div>
+      </nav>
+      <!-- Fin barra navegación -->
+      <!-- Body usuario  no autorizado Paciente -->
+      <div class="text-center">
+        <div class="alert alert-danger text-center">
+          <h3>Solo puedes editar tu perfil</h3>
+        </div>
         <hr />
-        <input type="submit" value="Actualizar">
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
       </div>
-
-      <!-- El elemento mensaje de error -->
-      <div data-ng-show="error">
-        <strong data-ng-bind="error"></strong>
-      </div>
-    </form>
+      <!-- Fin body usuario no autorizado Paciente -->
+    </div>
   </section>
-</div>
+  <!-- Fin usuario no autorizado paciente -->
+
+  <!-- Usuario paciente autenticado y autorizado  -->
+  <section data-ng-controller="ProfilesPatientController" data-ng-init="findOne()">
+    <div data-ng-show="authentication.user && authentication.user._id == profilePatient.creador._id">
+
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!-- El menú se agrupa
+        para mostrarlo mejor en los dispositivos móviles -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#!">HOME</a>
+        </div>
+
+        <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+          <ul class="nav navbar-nav">
+            <li><a href="/#!/appointments">Citas</a></li>
+            <li><a href="/#!/consultations">Historial médico</a></li>
+            <li><a href="/#!/profilesDoctor">Doctores</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <p class="navbar-text">Paciente</p>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-ng-bind="profilePatient.creador.fullName" data-toggle="dropdown">
+                <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+      <!-- Fin barra navegación -->
+
+      <!-- La view edit profilePatient -->
+      <!-- Contenido -->
+      <div class="container-fluid">
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div style="margin-left:1%" class="column">
+            <h1>Editar Perfil</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="margin-left:10%" class="column">
+            <!-- Formulario editar perfil -->
+            <form data-ng-submit="update()">
+              <table class="table table-hover" BORDER WIDTH="50%" align="center" FRAME="void" RULES="rows">
+                <!-- DNI -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="dni">
+                      <h4> DNI / NIF</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" maxlength="9" data-ng-model="profileDoctor.dni" id="dni" placeholder="DNI" required oninvalid="setCustomValidity('Introduzca un DNI')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Nacionalidad  -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="nationality">
+                      <h4>Nacionalidad</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h3>
+                      <input type="text" data-ng-model="profileDoctor.nationality" id="nationality" placeholder="Nacionalidad">
+                    </h3>
+                  </td>
+                </tr>
+
+                <!-- Ciudad  -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="city">
+                      <h4>Ciudad de residencia</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.city" id="city" placeholder="Ciudad" required oninvalid="setCustomValidity('Introduzca ciudad de residencia')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Código postal -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="zipCode">
+                      <h4>Código postal</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" maxlength="5" data-ng-model="profileDoctor.zipCode" id="zipCode" placeholder="Código postal" required oninvalid="setCustomValidity('Introduzca código postal')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Dirección -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="address">
+                      <h4>Dirección</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.address" id="address" placeholder="Dirección" required oninvalid="setCustomValidity('Introduzca domicilio')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Número de telefono -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="phoneNumber">
+                      <h4>Número de telefono</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text"  maxlength="9" data-ng-model="profileDoctor.phoneNumber" id="phoneNumber" placeholder="Número de telefono" required oninvalid="setCustomValidity('Introduzca un teléfono de contacto')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Email -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="email">
+                      <h4>Email</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.email" id="email" placeholder="Email" required oninvalid="setCustomValidity('Introduzca una dirección de correo')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Género -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="gender">
+                      <h4>Género</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <select type="text" data-ng-model="profileDoctor.gender" id="gender" placeholder="Género" required oninvalid="setCustomValidity('Introduzca género')" oninput="setCustomValidity('')">
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                      </select>
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Fecha de nacimiento -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="birthDate">
+                      <h4>Fecha de nacimiento</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="date" data-ng-model="profileDoctor.birthDate" id="birthDate" placeholder="Fecha de nacimiento" required oninvalid="setCustomValidity('Introduzca su fecha de nacimiento')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Lugar de nacimiento -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="birthPlace">
+                      <h4>Fecha de nacimiento</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.birthPlace" id="birthPlace" placeholder="Lugar de nacimiento" required oninvalid="setCustomValidity('Introduzca lugar de nacimiento')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Estado civil -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="civilStatus">
+                      <h4>Estado civil</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <select type="text" data-ng-model="profileDoctor.civilStatus" id="civilStatus" placeholder="Estado civil">
+                        <option value="Soltero">Soltero</option>
+                        <option value="Casado">Casado</option>
+                        <option value="Divorciado">Divorciado</option>
+                        <option value="Viudo">Viudo</option>
+                      </select></h4>
+                  </td>
+                </tr>
+
+                <!-- Grupo sanguíneo -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="bloodType">
+                      <h4>Grupo sanguíneo</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <select type="text" data-ng-model="profileDoctor.bloodType" id="bloodType" placeholder="Grupo sanguíneo">
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select></h4>
+                  </td>
+                </tr>
+
+                <!-- Alergias -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="allergies">
+                      <h4>Alergias</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.allergies" id="allergies" placeholder="Alergias">
+                    </h4>
+                  </td>
+                </tr>
+              </table>
+              <!-- Boton de envio -->
+              <hr />
+              <input type="submit" value="Actualizar">
+
+              <!-- El elemento mensaje de error -->
+              <div data-ng-show="error">
+                <br>
+                <div class="alert alert-warning">
+                  <strong data-ng-bind="error"></strong>
+                  <div data-ng-show="!authentication.user">
+                    <a href="/signin" class="btn btn-primary" role="button">Login</a>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <!-- Fin contenido -->
+      <hr />
+      <div class="text-center">
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+      </div>
+    </div>
+  </section>
+  <!-- Fin usuario autenticado y autorizado  -->
 
 </section>

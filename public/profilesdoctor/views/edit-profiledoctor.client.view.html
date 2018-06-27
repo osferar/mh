@@ -1,81 +1,296 @@
 <section ng-controller="MainController">
 
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a>
-<hr />
+  <!-- Usuario no autenticado -->
+  <div data-ng-show="!authentication.user">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa
+      para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+    <!-- Body usuario sin autenticar-->
+    <div class="text-center">
+      <div class="alert alert-warning text-center">
+        <h4>Tienes que estar logueado para editar un perfil</h4>
+        <hr align="center" size="1" width="33%" />
+        <a href="/signin" class="btn btn-primary" role="button">Login</a>
+      </div>
+      <hr />
+      <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
+    </div>
+    <!-- Fin body usuario sin autenticar -->
+  </div>
+  <!-- Fin usuario no autenticado -->
 
-<!-- Usuario sin autenticar -->
-<div data-ng-show="!authentication.user">
-  <h1>Tienes que estar autenticado para poder editar tu perfil de doctor.</h1>
-  <li><a href="/signin">Identificarse</a></li>
-</div>
-
-<!-- Usuario autenticado  -->
-<div data-ng-show="authentication.user">
-  <!-- La view edit profileDoctor -->
+  <!-- Usuario médico no autorizado -->
   <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+    <div data-ng-show="authentication.user.rol == 'doctor' && authentication.user._id != profileDoctor.creador._id">
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+        </div>
+        <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+          <div data-ng-repeat="profileDoctor in profilesDoctor">
+            <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
 
-    <!-- Formulario editar perfil -->
-    <h1>Editar perfil</h1>
-    <hr align="left" size="1" width="30%" />
-    <form data-ng-submit="update()" novalidate>
-      <!-- Número de colegiado -->
-      <div>
-        <label for="numberColleged">Número de colegiado</label>
-        <div>
-          <input type="text" data-ng-model="profileDoctor.numberColleged" id="numberColleged" placeholder="Número de colegiado" >
-          <hr align="left" size="1" width="30%" />
-        </div>
-      </div>
-      <!-- Centro médicos -->
-      <div>
-        <label for="healthCentre">Centro médico</label>
-        <div>
-          <input type="text" data-ng-model="profileDoctor.healthCentre" id="healthCentre" placeholder="Centro de salud">
-          <hr align="left" size="1" width="30%" />
-        </div>
-      </div>
-      <!-- Especialidad -->
-      <div>
-        <label for="specialties">Especialidad</label>
-        <div>
-          <input type="text" data-ng-model="profileDoctor.specialties" id="specialties" placeholder="Especialidad" >
-          <hr align="left" size="1" width="30%" />
-        </div>
-      </div>
-      <!-- Horario de trabajo -->
-      <div>
-        <label>Horario de trabajo</label>
-        <hr align="left" size="1" width="17%" />
-        <label for="startTime">-Hora de inicio</label>
-        <div>
-          <input type="time" data-ng-model="profileDoctor.startTime" id="startTime" placeholder="Hora de inicio" required>
-        </div>
-        <label for="endTime">-Hora de fin</label>
-        <div>
-          <input type="time" data-ng-model="profileDoctor.endTime" id="endTime" placeholder="Hora de fin" required>
-          <hr align="left" size="1" width="30%" />
-        </div>
-      </div>
-      <!-- Email -->
-      <div>
-        <label for="email">Email</label>
-        <div>
-          <input type="text" data-ng-model="profileDoctor.email" id="email" placeholder="Email">
-        </div>
-      </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
 
-      <div>
+            </div>
+          </div>
+        </div>
+
+      </nav>
+      <!-- Fin barra navegación -->
+      <!-- Body usuario  no autorizado médico -->
+      <div class="text-center">
+        <div class="alert alert-danger text-center">
+          <h4>Solo puedes editar este perfil</h4>
+        </div>
         <hr />
-        <input type="submit" value="Actualizar">
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+      </div>
+      <!-- Fin body usuario no autorizado médico -->
+    </div>
+  </section>
+  <!-- Fin usuario médico no autorizado -->
+
+  <!-- Usuario paciente no autorizado -->
+  <div data-ng-show="authentication.user.rol == 'patient'">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Desplegar navegación</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+      </div>
+      <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+        <div data-ng-repeat="profilePatient in profilesPatient">
+          <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav">
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                    <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      <!-- El elemento mensaje de error -->
-      <div data-ng-show="error">
-        <strong data-ng-bind="error"></strong>
+    </nav>
+    <!-- Fin barra navegación -->
+
+    <!-- Body usuario no autorizado Paciente -->
+    <div class="text-center">
+      <div class="alert alert-danger text-center">
+        <h4>Solo puedes editar tu perfil</h4>
       </div>
-    </form>
+      <hr />
+      <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+    </div>
+    <!-- Fin body usuario no autorizado Paciente -->
+  </div>
+  <!-- Fin usuario paciente no autorizado -->
+
+  <!-- Usuario autenticado y autorizado -->
+  <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+    <div data-ng-show="authentication.user && authentication.user._id == profileDoctor.creador._id">
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#!">HOME</a>
+        </div>
+        <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/#!/profilesDoctor">Doctores</a></li>
+            </li>
+            <li><a href="/#!/articles">Artículos</a></li>
+            <li><a href="/#!/appointments">Citas</a></li>
+            <li><a href="#!/consultations">Consultas</a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <p class="navbar-text">Doctor/a</p>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+              <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+      <!-- Fin barra navegación -->
+
+      <!-- La view edit profileDoctor -->
+      <!-- Contenido -->
+      <div class="container-fluid">
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div style="margin-left:1%" class="column">
+            <h1>Editar Perfil</h1>
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="margin-left:10%" class="column">
+            <!-- Formulario editar perfil -->
+            <form data-ng-submit="update()">
+              <table class="table table-hover" BORDER WIDTH="50%" align="center" FRAME="void" RULES="rows">
+
+                <!-- Número de colegiado -->
+                <tr>
+                  <td style="vertical-align:middle" width="25%">
+                    <label for="numberColleged">
+                      <h4>Número de colegiado</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" maxlength="11" data-ng-model="profileDoctor.numberColleged" id="numberColleged" placeholder="Número de colegiado" required oninvalid="setCustomValidity('Introduzca un el número de colegiado')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Centro médicos -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="healthCentre">
+                      <h4>Centro médico</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.healthCentre" id="healthCentre" placeholder="Centro médico" required oninvalid="setCustomValidity('Introduzca un centro médico')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+                <!-- Especialidad -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="specialties">
+                      <h4>Especialidad</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.specialties" id="specialty" placeholder="Especialidad" required oninvalid="setCustomValidity('Introduzca una especialidad')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+                <!-- Horario de trabajo -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="startTime">
+                      <h4>Hora de inicio de consulta</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="time" data-ng-model="profileDoctor.startTime" id="startTime" placeholder="Hora de inicio" required oninvalid="setCustomValidity('Introduzca hora de inicio de consulta')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="endTime">
+                      <h4>Hora de fin de consulta</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="time" data-ng-model="profileDoctor.endTime" id="endTime" placeholder="Hora de fin" required oninvalid="setCustomValidity('Introduzca hora de fin de consulta')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+                <!-- Email -->
+                <tr>
+                  <td style="vertical-align:middle">
+                    <label for="email">
+                      <h4>Email</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="profileDoctor.email" id="email" placeholder="Email">
+                    </h4>
+                  </td>
+                </tr>
+              </table>
+              <!-- Boton envio -->
+              <hr />
+              <input type="submit" value="Actualizar">
+
+              <!-- El elemento mensaje de error -->
+              <div data-ng-show="error">
+                <br>
+                <div class="alert alert-warning">
+                  <strong data-ng-bind="error"></strong>
+                  <div data-ng-show="!authentication.user">
+                    <a href="/signin" class="btn btn-primary" role="button">Login</a>
+                  </div>
+                </div>
+                <hr />
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+      <!-- Fin contenido -->
+      <hr />
+      <div class="text-center">
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+      </div>
+    </div>
   </section>
-</div>
+  <!-- Fin usuario autenticado y autorizado -->
 
 </section>

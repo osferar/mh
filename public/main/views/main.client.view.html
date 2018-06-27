@@ -1,10 +1,22 @@
 <section ng-controller="MainController">
 
-  <!-- Usuario sin autenticar -->
-  <div data-ng-show="!authentication.user">
-    <li><a href="/signin">Identificacion</a></li>
-    <li><a href="/signup">Crear Cuenta</a></li>
+  <!-- Usuario sin registrarse o sin autenticar -->
+  <div class="text-center" data-ng-show="!authentication.user">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa
+      para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+    <h1 class="text-center">Plataforma de consultas médicas e historiales médicos</h1>
     <hr />
+    <a href="/signin" class="btn btn-primary" role="button">Iniciar sesión</a>
+    <a href="/signup" class="btn btn-primary" role="button">Registrarse</a>
+    <hr />
+    <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
   </div>
 
   <!-- Usuario autenticado  -->
@@ -15,58 +27,153 @@
       <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
         <div data-ng-repeat="profileDoctor in profilesDoctor">
           <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
-            <h1>Doct@r <a data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}" data-ng-bind="profileDoctor.creador.fullName"></a></h1>
-            <a href="/signout">Cerrar Sesión</a>
-            <hr />
-            <ul>
-              <li><a data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}/edit">Editar perfil</a></li>
-              <li><a href="/#!/profilesDoctor">Lista de doctores</a></li>
-              <li><a href="/#!/articles">Artículos de interés</a></li>
-              <li><a href="/#!/appointments">Citas programadas</a></li>
-              <li><a href="#!/consultations">Consultas Realizadas</a></li>
-            </ul>
+
+            <!-- Barra de Navegacion -->
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                  </li>
+                  <li><a href="/#!/articles">Artículos</a></li>
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="#!/consultations">Consultas</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Doctor/a</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+            <!-- Fin barra navegación -->
+
+            <a data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}/edit">Editar perfil</a>
+
           </div>
         </div>
       </div>
     </div>
+    <!-- Fin vista Doctores -->
 
     <!-- Vista para Pacientes -->
     <div data-ng-show="authentication.user.rol == 'patient'">
       <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
         <div data-ng-repeat="profilePatient in profilesPatient">
           <div data-ng-show="authentication.user._id == profilePatient.creador._id">
-            <h1>Paciente <a data-ng-href="#!/profilesPatient/{{profilePatient._id}}" data-ng-bind="profilePatient.creador.fullName"></a></h1>
-            <a href="/signout">Cerrar Sesión</a>
-            <hr />
-            <ul>
-              <li><a data-ng-href="#!/profilesPatient/{{profilePatient._id}}/edit">Editar perfil</a></li>
-              <li><a href="/#!/appointments/create">Nueva Cita</a></li>
-              <li><a href="/#!/appointments">Registro de citas</a></li>
-              <li><a href="/#!/consultations">Ver historial médico</a></li>
-            </ul>
+
+            <!-- Barra de Navegacion -->
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="/#!/consultations">Historial médico</a></li>
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Paciente</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profilePatient.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+            <!-- Fin barra navegación -->
           </div>
         </div>
       </div>
     </div>
+    <!-- Fin vista pacientes -->
 
     <!-- Alta de perfiles -->
-    <div data-ng-show="authentication.user.rol == ''">
-      <h1>Usuario <span data-ng-bind="authentication.user.fullName"></span></h1>
-      <a href="/signout">Cerrar Sesión</a>
-      <hr />
+    <div class="text-center" data-ng-show="authentication.user.rol == ''">
+
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#!">MEDICAL HISTORY</a>
+        </div>
+
+        <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav"></ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown">
+                <b class="caret"></b></a>
+
+              <ul class="dropdown-menu">
+                <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Fin barra navegación -->
+
       <!-- Perfil de médico -->
       <p>Para crear una cuenta como médico.</p>
-      <!-- <li><a href="/signupdoctor">Crear Cuenta Medico</a></li> -->
-      <li><a href="/#!/profilesDoctor/create">Crear Perfil Medico</a></li>
-      <hr align="left" noshade="noshade" size="1" width="35%" />
+      <a href="/#!/profilesDoctor/create" class="btn btn-primary" role="button">Crear Perfil Medico</a>
+
+      <hr align="center" noshade="noshade" size="1" width="35%" />
+
       <!-- Perfil de paciente -->
       <p>Para crear una cuenta como paciente.</p>
-      <!-- <li><a href="/signuppatient">Crear Cuenta Paciente</a></li> -->
-      <li><a href="/#!/profilesPatient/create">Crear Perfil Paciente</a></li>
+      <a href="/#!/profilesPatient/create" class="btn btn-primary" role="button">Crear Perfil Paciente</a>
+
       <hr />
+      <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
     </div>
-
-
+    <!-- Fin alta de perfiles -->
   </div>
 
 </section>

@@ -1,85 +1,258 @@
 <section ng-controller="MainController">
 
-	<div data-ng-show="authentication.user">
+  <!-- Usuario no autenticado -->
+  <div data-ng-show="!authentication.user">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
 
-		<!-- Navegacion -->
-		<a data-ng-href="#!/">Principal</a>
-		<hr />
+    <!-- Body usuario sin autenticar-->
+    <div class="text-center">
+      <div class="alert alert-warning text-center">
+        <div data-ng-show="authentication.user.rol == 'doctor'">
+          <h3>Tienes que estar logueado para ver tus historias médicas realizadas</h3>
+        </div>
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <h3>Tienes que estar logueado para ver tus consultas</h3>
+        </div>
+        <hr align="center" size="1" width="33%" />
+        <a href="/signin" class="btn btn-primary" role="button">Login</a>
+      </div>
+      <hr />
+      <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
+    </div>
+    <!-- Fin body usuario sin autenticar -->
+  </div>
+  <!-- Fin usuario no autenticado -->
 
+  <!-- Usuario autenticado -->
+  <div data-ng-show="authentication.user">
 
-		<!-- Vista de doctor -->
-	  <div data-ng-show="authentication.user.rol == 'doctor'">
-			<!-- La view listar consutlas realizadas -->
-			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
+    <!-- Vista de doctor -->
+    <div data-ng-show="authentication.user.rol == 'doctor'">
 
-				<!-- La lista de consultas -->
-				<h1>Consultas realizadas</h1>
-				<ul data-ng-repeat="consultation in consultations">
-					<section data-ng-show="authentication.user._id == consultation.creador._id">
-						<hr align="left" size="1" width="30%" />
-						<h1>
-						<!-- Fecha de la consulta -->
-						<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
-						<!-- Creador de la consulta -->
-						<small>
-							<em>Realizada al paciente </em>
-							<em data-ng-bind="consultation.appointment.creador.fullName"></em>
-						</small>
-						</h1>
-						<!-- Contenido de la consulta: Anamnesis -->
-						<h1>Anamnesis</h1>
-						<p data-ng-bind="consultation.presentComplaint"></p>
-					</section>
-				</ul>
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+        <div data-ng-repeat="profileDoctor in profilesDoctor">
+          <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
 
-				<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
-				<div data-ng-hide="!consultations || consultations.length">
-					Aún no ha realizado ninguna consulta, comprueba si tienes <a href="/#!/appointments">citas programadas</a>.
-				</div>
-			</section>
-		</div><!-- Fin vista doctor -->
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                  </li>
+                  <li><a href="/#!/articles">Artículos</a></li>
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="#!/consultations">Consultas</a></li>
+                </ul>
 
-		<!-- Vista de paciente -->
-		<div data-ng-show="authentication.user.rol == 'patient'">
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Doctor/a</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
 
-			<!-- La view listar consutlas realizadas -->
-			<section data-ng-controller="ConsultationsController" data-ng-init="find()">
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra navegación -->
 
-					<!-- La lista de consultas -->
-					<h1>Historial médico</h1>
-					<hr />
-					<ul data-ng-repeat="consultation in consultations">
-						<section data-ng-show="authentication.user._id == consultation.appointment.creador._id">
-							<!-- Fecha de la consulta -->
-							<h1>
-							<a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'shortDate'"></a>
-							<!-- Creador de la consulta -->
-							<small>
-								<em>Realizada por el doctor/a </em>
-								<em data-ng-bind="consultation.creador.fullName"></em>
-							</small>
-							</h1>
-							<!-- Contenido de la consulta: Motivo de consulta -->
-							<h1>Motivo de consulta</h1>
-							<p data-ng-bind="consultation.appointment.chiefComplaint"></p>
-							<!-- Contenido de la consulta: diagnostico -->
-							<h1>Diagnóstico</h1>
-							<p data-ng-bind="consultation.diagnosis"></p>
-							<hr align="left" size="1" width="30%" />
-						</section>
-					</ul>
-					<!-- Si no hay consultas en la lista, sugiere al usuario que revise citas solicitadas -->
-					<div data-ng-hide="!consultations || consultations.length">
-						Aún no ha realizado ninguna consulta, pida una <a href="/#!/appointments/create">cita</a> para acudir a consulta.
-					</div>
-			</section>
-		</div> <!-- Fin vista paciente -->
+      <!-- La view listar consutlas realizadas -->
+      <section data-ng-controller="ConsultationsController" data-ng-init="find()">
 
-	</div> <!-- Fin vista usuario autenticado -->
+        <!-- Lista de consultas -->
+        <div class="container-fluid">
+          <!-- Titulo -->
+          <div class="row alert alert-info">
+            <div style="margin-left:1%" class="column ">
+              <h1>Historias médicas realizadas</h1>
+            </div>
+          </div>
 
-	<!-- Usuario sin autenticar -->
-	<div data-ng-show="!authentication.user">
-	  <p>Es necesario estar logueado.<a href="/#!/signin">Identificarse</a></p>
-	</div>
+          <!-- Contenido -->
+          <div class="row">
+            <div style="margin-left:3%" class="column">
+              <ul data-ng-repeat="consultation in consultations">
+                <div data-ng-show="authentication.user.rol == 'doctor' && authentication.user._id == consultation.creador._id">
+                  <h4>
+                      <a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
+                    </h4>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <!-- Paciente creador de la consulta -->
+                      <h6>
+                        <em>Realizada al paciente </em>
+          							<em data-ng-bind="consultation.appointment.creador.fullName"></em>
+                      </h6>
+                    </div>
+                    <div class="col-md-7">
+                      <!-- Contenido de la consulta: Anamnesis -->
+                      <h5><b>Anamnesis:&nbsp;&nbsp;</b> </h5>
+                      <p data-ng-bind="consultation.presentComplaint"></p>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </ul>
+            </div>
+          </div>
+          <!-- Fin contenido -->
+
+          <!-- Si no hay consultas en la lista, mostrar mensaje -->
+          <div class="alert alert-warning" data-ng-hide="!consultations || consultations.length">
+            Aún no ha atendido ninguna cita.
+          </div>
+          <!-- Footer -->
+          <hr />
+          <div class="text-center">
+            <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+          </div>
+        </div>
+
+      </section>
+    </div>
+    <!-- Fin vista doctor -->
+
+    <!-- Vista de paciente -->
+    <div data-ng-show="authentication.user.rol == 'patient'">
+
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+        <div data-ng-repeat="profilePatient in profilesPatient">
+          <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="/#!/consultations">Historial médico</a></li>
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Paciente</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profilePatient.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra navegación -->
+
+      <!-- La view listar consutlas realizadas -->
+      <section data-ng-controller="ConsultationsController" data-ng-init="find()">
+
+        <!-- Lista de consultas -->
+        <div class="container-fluid">
+          <!-- Titulo -->
+          <div class="row alert alert-info">
+            <div style="margin-left:1%" class="column ">
+              <h1>Historial médico</h1>
+            </div>
+          </div>
+
+          <!-- Contenido -->
+          <div class="row">
+            <div style="margin-left:3%" class="column">
+              <ul>
+                <ul data-ng-repeat="consultation in consultations">
+
+                  <div data-ng-show="authentication.user.rol == 'patient' && authentication.user._id == consultation.appointment.creador._id">
+                    <h4>
+                      <a data-ng-href="#!/consultations/{{consultation._id}}" data-ng-bind="consultation.creado | date:'medium'"></a>
+                  </h4>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <!-- Medico creador de la historia médica -->
+                        <h6>
+                        <em>Atendida por el doctor/a</em>
+          							<em data-ng-bind="consultation.creador.fullName"></em>
+                      </h6>
+                      </div>
+                      <div class="col-md-7">
+                        <!-- Contenido de la consulta: Motivo de consulta -->
+                        <h5><b>Motivo de consulta:&nbsp;&nbsp;</b> </h5>
+                        <p data-ng-bind="consultation.appointment.chiefComplaint"></p>
+                      </div>
+                      <div class="col-md-2">
+                      </div>
+                    </div>
+                    <hr>
+                  </div>
+
+                </ul>
+              </ul>
+            </div>
+          </div>
+          <!-- Fin contenido -->
+          <!-- Si no hay consultas en la lista, mostrar mensaje -->
+          <div class="alert alert-warning" data-ng-hide="!consultations || consultations.length">
+            Aún no has sido atendido en ninguna cita.
+          </div>
+          <!-- Footer -->
+          <hr />
+          <div class="text-center">
+            <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+          </div>
+        </div>
+
+      </section>
+    </div>
+    <!-- Fin vista paciente -->
+
+  </div>
+  <!-- Fin vista usuario autenticado -->
 
 </section>

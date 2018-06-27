@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<html lang="es">
 <head>
-	<!-- Usar la propiedad 'title' para renderizar un título de página  -->
-	<title><%= title %></title>
+	  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="description" content="Sign in Medical History">
+	  <meta name="author" content="Oscar Fernández Aranda">
+	  <!-- <link rel="icon" href="https://getbootstrap.com/favicon.ico"> -->
+
+	  <!-- Usa la propiedad 'title' para renderizar un título de página  -->
+	  <title><%= title %></title>
+
+	  <!-- CSS -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	  <!-- Tema opcional -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+	  <!-- JavaScript -->
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
 </head>
 <body>
-	<h1>Plataforma de consultas médicas e historiales médicos</h1>
-	<hr />
+
 	<section ng-view></section>
 
 	<script type="text/javascript">
     window.user = <%- user || 'null' %>;
-		// window.patient = <%- patient || 'null' %>;
   </script>
 
 	<!-- Enlaces a los ficheros de angular -->
@@ -41,7 +55,6 @@
 	<script type="text/javascript" src="/main/main.client.module.js"></script>
 	<script type="text/javascript" src="/main/controllers/main.client.controller.js"></script>
 	<script type="text/javascript" src="/main/config/main.client.routes.js"></script>
-
 	<script type="text/javascript" src="/main/services/shareDataService.client.services.js"></script>
 
 

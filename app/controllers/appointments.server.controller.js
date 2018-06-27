@@ -13,7 +13,7 @@ var getErrorMessage = function(err) {
         return err.errors[errName].message;
     }
   } else {
-    return 'Error de servidor desconocido';
+    return 'Error de servidor desconocido / Unknown server error';
   }
 };
 
@@ -82,6 +82,9 @@ exports.read = function(req, res) {
 
 // Crear un nuevo método controller que actualiza una cita
 exports.update = function(req, res) {
+  //Establecemos 'hour' construida antes de instanciar 'appointment'
+  req.body.hour = buildHoursDate(req.body.date, req.body.hour);
+
   // Obtener la cita usando el objeto 'request'
   var appointment = req.appointment;
 
@@ -138,7 +141,7 @@ exports.appointmentByID = function(req, res, next, id) {
     if (err)
       // llama al siguiente middleware con un mensaje de error
       return next(err);
-    if(!appointment) return next(new Error('Failed to load appointment' + id));
+    if(!appointment) return next(new Error('Fallo al cargar la cita / Failed to load appointment:' + id));
 
     // Si una cita es encontrada usar el objeto 'request' para pasarlo al siguiente middleware
     req.appointment = appointment;
@@ -149,12 +152,11 @@ exports.appointmentByID = function(req, res, next, id) {
 };
 
 // Crea un nuevo controller middleware para autorizar una operación appointment
-// TODO: añadir que pueda ver, crear y/o modificar los médicos
 exports.hasAuthorization = function(req, res, next) {
 	// si el usuario actual no es el creador de la cita, enviar el mensaje de error apropiado
 	if (req.appointment.creador.id !== req.user.id) {
 		return res.status(403).send({
-			message: 'Usuario no está autorizado'
+			message: 'Usuario no está autorizado / User is not authorized'
 		});
 	}
 

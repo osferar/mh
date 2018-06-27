@@ -20,7 +20,7 @@ var UserSchema = new Schema({
     //Configurar un único index 'username'
     unique: true,
     //Validar existencia valor 'username'
-    required: 'Nombre de usuario es obligatorio',
+    required: 'Usuario es obligatorio',
     //Trim el campo 'username'
     trim: true
   },

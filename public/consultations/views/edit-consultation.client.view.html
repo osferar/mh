@@ -1,115 +1,402 @@
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a> >
-<a data-ng-href="#!/consultations">Consultas</a>
-<hr />
-
 <!-- La view editar artículo -->
-<section data-ng-controller="ConsultationsController" data-ng-init="findOne()">
+<section ng-controller="MainController">
+  <section data-ng-controller="ConsultationsController" data-ng-init="findOne()">
 
-	<!-- Formulario editar artículo -->
-	<h1>Editar</h1>
-	<form data-ng-submit="update()" novalidate>
+    <!-- Usuario no autenticado o paciente -->
+    <div data-ng-show="!authentication.user || authentication.user.rol == 'patient'">
 
-		<!-- Antecedentes personales -->
-		<div>
-			<label for="medicalHistory">Antecedentes personales</label>
-			<div>
-				<textarea data-ng-model="consultation.medicalHistory" id="medicalHistory" cols="60" rows="2" placeholder="Antecedentes personales"></textarea>
-			</div>
-		</div>
-		<!-- Tratamiento actual -->
-		<div>
-			<label for="currentTreatment">Tratamiento actual</label>
-			<div>
-				<textarea data-ng-model="consultation.currentTreatment" id="currentTreatment" cols="60" rows="2" placeholder="Tratamiento actual"></textarea>
-			</div>
-		</div>
-		<!-- Antecedentes familiares -->
-		<div>
-			<label for="familyHistory">Antecedentes familiares</label>
-			<div>
-				<textarea data-ng-model="consultation.familyHistory" id="familyHistory" cols="60" rows="2" placeholder="Antecedentes familiares"></textarea>
-			</div>
-		</div>
-		<!-- Anamnesis -->
-		<div>
-			<label for="presentComplaint">Anamnesis</label>
-			<div>
-				<textarea data-ng-model="consultation.presentComplaint" id="presentComplaint" cols="60" rows="2" placeholder="presentComplaint"></textarea>
-			</div>
-		</div>
-		<!-- Altura -->
-		<div>
-			<label for="height">Altura</label>
-			<div>
-				<textarea data-ng-model="consultation.height" id="height" cols="10" rows="1" placeholder="height"></textarea>
-			</div>
-		</div>
-		<!-- Peso -->
-		<div>
-			<label for="weight">Peso</label>
-			<div>
-				<textarea data-ng-model="consultation.weight" id="weight" cols="10" rows="1" placeholder="weight"></textarea>
-			</div>
-		</div>
-		<!-- Frecuencia respiratoria -->
-		<div>
-			<label for="breathingFrequency">Frecuencia respiratoria</label>
-			<div>
-				<textarea data-ng-model="consultation.breathingFrequency" id="breathingFrequency" cols="10" rows="1" placeholder="breathingFrequency"></textarea>
-			</div>
-		</div>
-		<!-- Presión arterial -->
-		<div>
-			<label for="bloodPressure">Presión arterial</label>
-			<div>
-				<textarea data-ng-model="consultation.bloodPressure" id="bloodPressure" cols="10" rows="1" placeholder="bloodPressure"></textarea>
-			</div>
-		</div>
-		<!-- Frecuencia cardiaca -->
-		<div>
-			<label for="heartRate">Frecuencia cardiaca</label>
-			<div>
-				<textarea data-ng-model="consultation.heartRate" id="heartRate" cols="10" rows="1" placeholder="heartRate"></textarea>
-			</div>
-		</div>
-		<!-- Exploración física -->
-		<div>
-			<label for="physicalExploration">Exploración física</label>
-			<div>
-				<textarea data-ng-model="consultation.physicalExploration" id="physicalExploration" cols="60" rows="2" placeholder="physicalExploration"></textarea>
-			</div>
-		</div>
-		<!-- Diagnóstico -->
-		<div>
-			<label for="diagnosis">Diagnóstico</label>
-			<div>
-				<textarea data-ng-model="consultation.diagnosis" id="diagnosis" cols="60" rows="5" placeholder="diagnosis"></textarea>
-			</div>
-		</div>
-		<!-- Prescripcion médica -->
-		<div>
-			<label for="medicationPrescription">Tratamiento médico</label>
-			<div>
-				<textarea data-ng-model="consultation.medicationPrescription" id="medicationPrescription" cols="60" rows="2" placeholder="medicationPrescription"></textarea>
-			</div>
-		</div>
-		<!-- Recomendaciones Médicas -->
-		<div>
-			<label for="medicalInstructions">Recomendaciones médicas</label>
-			<div>
-				<textarea data-ng-model="consultation.medicalInstructions" id="medicalInstructions" cols="60" rows="2" placeholder="medicalInstructions"></textarea>
-			</div>
-		</div>
+      <!-- Barra de Navegacion -->
+      <nav class="navbar navbar-inverse" role="navigation">
+        <!-- El menú se agrupa
+        para mostrarlo mejor en los dispositivos móviles -->
+        <div class="navbar-header">
+          <div data-ng-show="authentication.user.rol == 'patient'">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          </div>
+          <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+        </div>
 
-		<div>
-			<hr />
-			<input type="submit" value="Actualizar eipsodio">
-		</div>
-		<!-- El elemento mensaje error -->
-		<div data-ng-show="error">
-			<strong data-ng-bind="error"></strong>
-		</div>
-	</form>
-	</div>
+        <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+            <div data-ng-repeat="profilePatient in profilesPatient">
+              <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav">
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                        <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </nav>
+      <!-- Fin barra navegación -->
+
+      <!-- Body usuario sin autenticar-->
+      <div class="text-center">
+        <div data-ng-show="authentication.user.rol != 'patient'">
+          <div class="alert alert-warning text-center">
+            <h4>Tienes que estar logueado para editar historias médicas</h4>
+            <hr align="center" size="1" width="33%" />
+            <a href="/signin" class="btn btn-primary" role="button">Login</a>
+          </div>
+        </div>
+
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <div class="alert alert-danger text-center">
+            <h4>No puedes editar historias médicas siendo paciente</h4>
+          </div>
+        </div>
+        <hr />
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+      </div>
+      <!-- Fin body usuario sin autenticar -->
+    </div>
+    <!-- Fin usuario sin autenticar o paciente -->
+
+    <!-- Usuario médico no autorizado -->
+    <section data-ng-controller="ProfilesDoctorController" data-ng-init="findOne()">
+      <div data-ng-show="authentication.user.rol == 'doctor' && authentication.user._id != consultation.creador._id">
+
+        <!-- Barra de Navegacion -->
+        <nav class="navbar navbar-inverse" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+            <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+          </div>
+          <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+            <div data-ng-repeat="profileDoctor in profilesDoctor">
+              <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                  <ul class="nav navbar-nav">
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                        <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </nav>
+        <!-- Fin barra navegación -->
+
+        <!-- Body usuario  no autorizado médico -->
+        <div class="text-center">
+          <div class="alert alert-danger text-center">
+            <h4>Solo puedes editar las historias médicas que has atendido</h4>
+          </div>
+          <hr />
+          <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+        </div>
+        <!-- Fin body usuario no autorizado médico -->
+      </div>
+    </section>
+    <!-- Fin usuario no autorizado médico -->
+
+    <!-- Usuario médico autenticado y autorizado  -->
+    <div data-ng-show="authentication.user && authentication.user.rol == 'doctor' && authentication.user._id == consultation.creador._id">
+
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+        <div data-ng-repeat="profileDoctor in profilesDoctor">
+          <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Desplegar navegación</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                  </li>
+                  <li><a href="/#!/articles">Artículos</a></li>
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="#!/consultations">Consultas</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Doctor/a</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                    <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra navegación -->
+
+      <div class="container-fluid">
+
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div style="margin-left:1%" class="column">
+            <h1>Editar episodio</h1>
+            <hr>
+          </div>
+        </div>
+
+        <!-- El formulario nuevo artículo -->
+        <div class="row">
+          <div style="margin-left:10%" class="column">
+            <form data-ng-submit="update()" novalidate>
+              <table class="table table-hover" BORDER WIDTH="50%" align="center" FRAME="void" RULES="rows">
+
+                <!-- Antecedentes personales -->
+                <tr>
+                  <td width="20%">
+                    <label for="medicalHistory">
+                    <h4>Antecedentes personales</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.medicalHistory" id="medicalHistory" cols="60" rows="10" placeholder="Antecedentes personales"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Tratamiento actual -->
+                <tr>
+                  <td width="20%">
+                    <label for="currentTreatment">
+                    <h4>Tratamiento actual</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.currentTreatment" id="currentTreatment" cols="60" rows="10" placeholder="Tratamiento actual"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Antecedentes familiares -->
+                <tr>
+                  <td width="20%">
+                    <label for="familyHistory">
+                    <h4>Antecedentes familiares</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.familyHistory" id="familyHistory" cols="60" rows="10" placeholder="Antecedentes familiares"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Anamnesis -->
+                <tr>
+                  <td width="20%">
+                    <label for="presentComplaint">
+                    <h4>Anamnesis</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.presentComplaint" id="presentComplaint" cols="60" rows="10" placeholder="Anamnesis"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Altura -->
+                <tr>
+                  <td width="20%">
+                    <label for="height">
+                    <h4>Altura</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="consultation.height" id="height" cols="60" rows="10" placeholder="Altura">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Peso -->
+                <tr>
+                  <td width="20%">
+                    <label for="weight">
+                    <h4>Peso</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="consultation.weight" id="weight" cols="60" rows="10" placeholder="Peso">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Frecuencia respiratoria -->
+                <tr>
+                  <td width="20%">
+                    <label for="breathingFrequency">
+                    <h4>Frecuencia respiratoria</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="consultation.breathingFrequency" id="breathingFrequency" cols="60" rows="10" placeholder="Frecuencia respiratoria">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Presión arterial -->
+                <tr>
+                  <td width="20%">
+                    <label for="bloodPressure">
+                    <h4>Presión arterial</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="consultation.bloodPressure" id="bloodPressure" cols="60" rows="10" placeholder="Presión arterial">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Frecuencia cardiaca -->
+                <tr>
+                  <td width="20%">
+                    <label for="heartRate">
+                    <h4>Frecuencia cardiaca</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="text" data-ng-model="consultation.heartRate" id="heartRate" cols="60" rows="10" placeholder="Frecuencia cardiaca">
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Exploración física -->
+                <tr>
+                  <td width="20%">
+                    <label for="physicalExploration">
+                    <h4>Exploración física</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.physicalExploration" id="physicalExploration" cols="60" rows="10" placeholder="Exploración física"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Diagnóstico -->
+                <tr>
+                  <td width="20%">
+                    <label for="diagnosis">
+                    <h4>Diagnóstico</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.diagnosis" id="diagnosis" cols="60" rows="10" placeholder="Diagnóstico"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Prescripcion médica -->
+                <tr>
+                  <td width="20%">
+                    <label for="medicationPrescription">
+                    <h4>Tratamiento médico</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.medicationPrescription" id="medicationPrescription" cols="60" rows="10" placeholder="Tratamiento médico"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+                <!-- Recomendaciones Médicas -->
+                <tr>
+                  <td width="20%">
+                    <label for="medicalInstructions">
+                    <h4>Recomendaciones médicas</h4>
+                  </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <textarea data-ng-model="consultation.medicalInstructions" id="medicalInstructions" cols="60" rows="10" placeholder="Recomendaciones médicas"></textarea>
+                  </h4>
+                  </td>
+                </tr>
+
+              </table>
+              <!-- Boton envio -->
+              <hr />
+              <input type="submit" value="Actualizar episodio">
+
+              <!-- El elemento mensaje de error -->
+              <div data-ng-show="error">
+                <br>
+                <div class="alert alert-warning">
+                  <strong data-ng-bind="error"></strong>
+                  <div data-ng-show="!authentication.user">
+                    <a href="/signin" class="btn btn-primary" role="button">Login</a>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <hr />
+            <div class="text-center">
+              <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fin container -->
+    </div>
+    <!-- Fin vista usuario autenticado -->
+  </section>
 </section>

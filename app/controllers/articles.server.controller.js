@@ -12,7 +12,7 @@ var getErrorMessage = function(err) {
 			if (err.errors[errName].message) return err.errors[errName].message;
 		}
 	} else {
-		return 'Error de servidor desconocido';
+		return 'Error de servidor desconocido / Unknown server error';
 	}
 };
 
@@ -68,7 +68,7 @@ exports.update = function(req, res) {
 	article.titulo = req.body.titulo;
 	article.contenido = req.body.contenido;
 	article.url = req.body.url;
-	
+
 	// Intentar salvar el artículo actualizado
 	article.save(function(err) {
 		if (err) {
@@ -107,7 +107,7 @@ exports.articleByID = function(req, res, next, id) {
 	// Usar el método model 'findById' para encontrar un único artículo
 	Article.findById(id).populate('creador', 'firstName lastName fullName').exec(function(err, article) {
 		if (err) return next(err);
-		if (!article) return next(new Error('Fallo al cargar el artículo ' + id));
+		if (!article) return next(new Error('Fallo al cargar el artículo / Failure to load the article:' + id));
 
 		// Si un artículo es encontrado usar el objeto 'request' para pasarlo al siguietne middleware
 		req.article = article;
@@ -122,7 +122,7 @@ exports.hasAuthorization = function(req, res, next) {
 	// si el usuario actual no es el creador del artículo, enviar el mensaje de error apropiado
 	if (req.article.creador.id !== req.user.id) {
 		return res.status(403).send({
-			message: 'Usuario no está autorizado'
+			message: 'Usuario no está autorizado / User is not authorized'
 		});
 	}
 

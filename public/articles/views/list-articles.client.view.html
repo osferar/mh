@@ -1,34 +1,208 @@
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a>
-<hr />
-<a href="/#!/articles/create">Añadir artículo</a>
-<hr />
+<section ng-controller="MainController">
 
-<!-- La view listar artículos -->
-<section data-ng-controller="ArticlesController" data-ng-init="find()">
-	<!-- La lista de artículos -->
-	<h1>Artículos</h1>
-	<ul>
-		<hr align="left" size="1" width="30%" />
-		<li data-ng-repeat="article in articles">
+  <!-- Usuario no autenticado o paciente -->
+  <div data-ng-show="!authentication.user || authentication.user.rol == 'patient'">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa
+        para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <div data-ng-show="authentication.user.rol == 'patient'">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Desplegar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
+      </div>
 
-			<!-- Titulo del artículo -->
-			<h1>
-				<a data-ng-href="#!/articles/{{article._id}}" data-ng-bind="article.titulo"></a>
-			</h1>
-			<!-- Fecha de creación del artículo -->
-			<small>
-				<em>Añadido el</em>
-				<em data-ng-bind="article.creado | date:'mediumDate'"></em>
-				<!-- Creador -->
-				<em>por</em>
-				<em data-ng-bind="article.creador.fullName"></em>
-			</small>
-			<hr align="left" size="1" width="30%" />
-		</li>
-	</ul>
-	<!-- Si no hay artículos en la lista, sugiere al usuario que cree un nuevo artículo -->
-	<div data-ng-hide="!articles || articles.length">
-		Aún no hay artículos, porque no creas <a href="/#!/articles/create">el primero</a>?
-	</div>
+      <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+      otro elemento que se pueda ocultar al minimizar la barra -->
+      <div data-ng-show="authentication.user.rol == 'patient'">
+        <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+          <div data-ng-repeat="profilePatient in profilesPatient">
+            <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </nav>
+    <!-- Fin barra navegación -->
+    <!-- Body usuario sin autenticar-->
+    <div class="text-center">
+      <div data-ng-show="authentication.user.rol != 'patient'">
+        <div class="alert alert-warning text-center">
+          <h4>Tienes que estar logueado para ver artículos de interés</h4>
+          <hr align="center" size="1" width="33%" />
+          <a href="/signin" class="btn btn-primary" role="button">Login</a>
+        </div>
+      </div>
+
+      <div data-ng-show="authentication.user.rol == 'patient'">
+        <div class="alert alert-danger text-center">
+          <h4>No puedes ver artículos de interés siendo paciente</h4>
+        </div>
+      </div>
+      <hr />
+      <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+    </div>
+    <!-- Fin body usuario sin autenticar -->
+  </div>
+  <!-- Fin usuario sin autenticar o paciente -->
+
+  <!-- Usuario doctor autenticado  -->
+  <div data-ng-show="authentication.user && authentication.user.rol == 'doctor'">
+
+    <!-- Barra de Navegacion -->
+    <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+      <div data-ng-repeat="profileDoctor in profilesDoctor">
+        <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+          <nav class="navbar navbar-inverse" role="navigation">
+            <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Desplegar navegación</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#!">HOME</a>
+            </div>
+            <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                </li>
+                <li><a href="/#!/articles">Artículos</a></li>
+                <li><a href="/#!/appointments">Citas</a></li>
+                <li><a href="#!/consultations">Consultas</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <p class="navbar-text">Doctor/a</p>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                    <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                    <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                  </ul>
+                </li>
+              </ul>
+
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Fin barra navegación -->
+
+    <!-- La view listar artículos -->
+    <section data-ng-controller="ArticlesController" data-ng-init="find()">
+      <!-- La lista de artículos -->
+      <div class="container-fluid">
+
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div class="col-md-12">
+
+            <div class="row">
+
+              <div class="col-md-1">
+                <h1>Artículos</h1>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-1 align-middle">
+                <a href="/#!/articles/create" class="btn btn-primary" role="button">Anãdir artículo de interés</a></h1>
+              </div>
+              <div class="col-md-4"></div>
+
+              <div class="col-md-1"></div>
+              <div class="col-md-1"></div>
+
+
+            </div>
+          </div>
+        </div>
+        <hr>
+
+        <!-- Contenido -->
+        <div class="row">
+          <div style="margin-left:3%" class="column">
+            <ul>
+              <div class="col-md-9">
+                <li data-ng-repeat="article in articles">
+                  <!-- Titulo del artículo -->
+                  <h3>
+                    <a data-ng-href="#!/articles/{{article._id}}" data-ng-bind="article.titulo"></a>
+                  <h3>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <!-- Fecha de creación del artículo -->
+                      <h5>
+                      <em>Añadido el</em>
+                      <em data-ng-bind="article.creado | date:'mediumDate'"></em>
+                      </h5>
+                      <!-- Creador -->
+                      <div data-ng-hide="authentication.user._id == article.creador._id">
+                        <small>
+                  				<em>por</em>
+                  				<em data-ng-bind="article.creador.fullName"></em>
+                        </small>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div data-ng-show="authentication.user._id == article.creador._id">
+                        <a class="btn btn-primary" role="button" data-ng-href="#!/articles/{{article._id}}/edit">Editar</a>
+                      </div>
+                    </div>
+                      <div class="col-md-4">
+                      </div>
+                  </div>
+                <hr>
+              </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Fin contenido -->
+
+        <!-- Si no hay artículos en la lista, mostrar mensaje -->
+        <div class="alert alert-warning" data-ng-hide="!articles || articles.length">
+          Aún no se ha creado ningún artículo de interés.
+        </div>
+
+        <!-- Footer -->
+        <hr />
+        <div class="text-center">
+          <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+        </div>
+        </div>
+
+    </section>
+    </div>
+    <!-- Fin vista usuario autenticado -->
 </section>

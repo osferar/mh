@@ -1,93 +1,351 @@
 <section ng-controller="MainController">
+
+  <!-- Usuario no autenticado -->
+  <div data-ng-show="!authentication.user">
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+
+    <!-- Body usuario sin autenticar-->
+    <div class="text-center">
+      <div class="alert alert-warning text-center">
+        <h3>Tienes que estar logueado para ver tus citas</h3>
+        <hr align="center" size="1" width="33%" />
+        <a href="/signin" class="btn btn-primary" role="button">Login</a>
+      </div>
+      <hr />
+      <p class="mt-5 mb-3 text-muted">Medical History 2018</p>
+    </div>
+    <!-- Fin body usuario sin autenticar -->
+  </div>
+  <!-- Fin usuario no autenticado -->
+
   <!-- Usuario autenticado -->
   <div data-ng-show="authentication.user">
-
-    <!-- Navegacion -->
-    <a data-ng-href="#!/">Principal</a>
-    <hr />
 
     <!-- Vista de doctor -->
     <div data-ng-show="authentication.user.rol == 'doctor'">
 
-      <section data-ng-controller="AppointmentsController" data-ng-init="find()">
-        <!-- Lista de citas solicitadas -->
-        <h1>Citas</h1>
-        <ul data-ng-repeat="appointment in appointments">
-          <section data-ng-show="authentication.user._id == appointment.doctor.creador._id">
-            <hr align="left" size="1" width="30%" />
-            <!-- Fecha de la cita -->
-            <a data-ng-href="#!/appointments/{{appointment._id}}" data-ng-bind="appointment.date | date:'shortDate'"></a>
-            <!-- Hora de la cita -->
-            <h1>Hora</h1>
-            <p data-ng-bind="appointment.hour | date:'shortTime'"></p>
-            <!-- Fecha de creación -->
-            <small>
-              <em>Creada el</em>
-              <em data-ng-bind="appointment.created | date:'medium'"></em>
-            </small>
-            <!-- Paciente -->
-            <hr align="left" size="1" width="30%" />
-            <h1>Paciente</h1>
-            <p data-ng-bind="appointment.creador.fullName"></p>
-            <hr />
-          </section>
-        </ul>
-        <!-- Si no hay citas en la lista, lo notificamos -->
-        <div data-ng-hide="!appointments || appointments.length">
-          <h1>Aún no hay citas.</h1>
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+        <div data-ng-repeat="profileDoctor in profilesDoctor">
+          <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
+
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                  </li>
+                  <li><a href="/#!/articles">Artículos</a></li>
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="#!/consultations">Consultas</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Doctor/a</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profileDoctor.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+          </div>
         </div>
+      </div>
+      <!-- Fin barra navegación -->
+
+      <section data-ng-controller="AppointmentsController" data-ng-init="find()">
+        <section data-ng-controller="ConsultationsController" data-ng-init="find()">
+
+          <!-- La lista de citas -->
+          <div class="container-fluid">
+
+            <!-- Titulo -->
+            <div class="row alert alert-info">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-1">
+                    <h1>Citas</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+
+            <!-- Contenido -->
+            <div class="row">
+              <div class="column">
+                <div class="col-md-9">
+
+                  <div data-ng-hide="!consultations || consultations.length">
+
+                    <ul data-ng-repeat="appointment in appointments ">
+                      <div data-ng-show="authentication.user._id == appointment.doctor.creador._id">
+                        <li style="list-style-type: disc">
+
+                          <!-- Hora de cita -->
+                          <h4 data-ng-bind="appointment.date | date:'short'"></h4>
+                          <div class="row">
+                            <div class="col-md-5">
+                              <!-- Fecha de creación de la cita -->
+                              <h5>
+                              <h3 data-ng-bind="appointment.creador.fullName"></h3>
+                              <em>Solicitada el</em>
+                              <em data-ng-bind="appointment.created | date:'short'"></em>
+                            </h5>
+                            </div>
+                            <div class="col-md-4">
+                              <a class="btn btn-primary" role="button" data-ng-href="#!/appointments/{{appointment._id}}">Atender</a>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                          </div>
+                          <hr>
+                        </li>
+                      </div>
+                    </ul>
+                  </div>
+
+                  <div data-ng-show="!consultations || consultations.length">
+                    <ul data-ng-repeat="appointment in appointments ">
+                      <ul data-ng-repeat="consultation in consultations">
+                        <div data-ng-show="appointment._id != consultation.appointment._id">
+                          <div data-ng-show="authentication.user._id == appointment.doctor.creador._id">
+                            <li style="list-style-type: disc">
+                              <!-- Hora de cita -->
+                              <h4 data-ng-bind="appointment.date | date:'short'"></h4>
+                              <div class="row">
+                                <div class="col-md-5">
+                                  <!-- Fecha de creación de la cita -->
+                                  <h5>
+                                    <h3 data-ng-bind="appointment.creador.fullName"></h3>
+                                    <em>Solicitada el</em>
+                                    <em data-ng-bind="appointment.created | date:'short'"></em>
+                                  </h5>
+                                </div>
+                                <div class="col-md-4">
+                                  <a class="btn btn-primary" role="button" data-ng-href="#!/appointments/{{appointment._id}}">Atender</a>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                              </div>
+                              <hr>
+                            </li>
+                          </div>
+                        </div>
+                      </ul>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Fin contenido -->
+
+            <!-- Si no hay citas en la lista, informar al médico -->
+            <div class="alert alert-warning" data-ng-hide="!appointments || appointments.length">
+              Aún no te han solicitado ninguna cita.
+            </div>
+
+            <!-- Footer -->
+            <hr />
+            <div class="text-center">
+              <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+            </div>
+          </div>
+
+        </section>
       </section>
     </div>
+    <!-- Fin vista de doctor -->
 
     <!-- Vista de paciente -->
     <div data-ng-show="authentication.user.rol == 'patient'">
 
+      <!-- Barra de Navegacion -->
+      <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+        <div data-ng-repeat="profilePatient in profilesPatient">
+          <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+            <nav class="navbar navbar-inverse" role="navigation">
+              <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Desplegar navegación</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#!">HOME</a>
+              </div>
+
+              <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+                <ul class="nav navbar-nav">
+                  <li><a href="/#!/appointments">Citas</a></li>
+                  <li><a href="/#!/consultations">Historial médico</a></li>
+                  <li><a href="/#!/profilesDoctor">Doctores</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                  <li>
+                    <p class="navbar-text">Paciente</p>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="profilePatient.creador.fullName" data-toggle="dropdown">
+                      <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Fin barra navegación -->
+
       <!-- La view listar citas -->
       <section data-ng-controller="AppointmentsController" data-ng-init="find()">
-        <h1>Citas</h1>
-        <hr />
-        <ul data-ng-repeat="appointment in appointments">
-          <div data-ng-show="authentication.user._id == appointment.creador._id">
-            <a data-ng-href="#!/appointments/{{appointment._id}}">Detalles</a>
-            <!-- Fecha de la cita -->
-            <h1>Fecha</h1>
-            <p data-ng-bind="appointment.hour | date:'shortDate'"></p>
+        <section data-ng-controller="ConsultationsController" data-ng-init="find()">
 
-            <!-- Hora de cita -->
-            <h1>Hora</h1>
-            <p data-ng-bind="appointment.hour | date:'shortTime'"></p>
+          <!-- La lista de citas -->
+          <div class="container-fluid">
 
-            <!-- Fecha de creación -->
-            <small>
-              <em>Creada el</em>
-              <em data-ng-bind="appointment.created | date:'medium'"></em>
-            </small>
+            <!-- Titulo -->
+            <div class="row alert alert-info">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-1">
+                    <h1>Citas</h1>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-1 align-middle">
+                    <a href="/#!/appointments/create" class="btn btn-primary" role="button">Nueva cita</a></h1>
+                  </div>
+                  <div class="col-md-4"></div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1"></div>
+                </div>
+              </div>
+            </div>
+            <hr>
 
+            <!-- Contenido -->
+            <div class="row">
+              <div class="column">
+                <div class="col-md-9">
 
-            <!-- Centro de salud -->
-            <hr align="left" size="1" width="30%" />
-            <h1>Centro de salud</h1>
-            <p data-ng-bind="appointment.doctor.healthCentre"></p>
+                  <div data-ng-hide="!consultations || consultations.length">
+                    <ul data-ng-repeat="appointment in appointments ">
+                      <div data-ng-show="authentication.user._id == appointment.creador._id">
+                        <li style="list-style-type: disc">
+                          <!-- Hora de cita -->
+                          <h4 data-ng-bind="appointment.date | date:'short'"></h4>
+                          <div class="row">
+                            <div class="col-md-5">
+                              <!-- Fecha de creación de la cita -->
+                              <h5>
+                              <h3 data-ng-bind="appointment.creador.fullName"></h3>
+                              <em>Solicitada el</em>
+                              <em data-ng-bind="appointment.created | date:'short'"></em>
+                            </h5>
+                            </div>
+                            <div class="col-md-4">
+                              <a class="btn btn-primary" role="button" data-ng-href="#!/appointments/{{appointment._id}}">Detalle</a>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                          </div>
+                          <hr>
+                        </li>
+                      </div>
+                    </ul>
+                  </div>
 
-            <!-- Doctor -->
-            <hr align="left" size="1" width="30%" />
-            <h1>Doctor/a</h1>
-            <p data-ng-bind="appointment.doctor.creador.fullName"></p>
+                  <div data-ng-show="!consultations || consultations.length">
+                    <ul data-ng-repeat="appointment in appointments ">
+                      <ul data-ng-repeat="consultation in consultations">
+                        <div data-ng-show="appointment._id != consultation.appointment._id">
+                          <div data-ng-show="authentication.user._id == appointment.creador._id">
+                            <li style="list-style-type: disc">
+                              <!-- Hora de cita -->
+                              <h4 data-ng-bind="appointment.date | date:'short'"></h4>
+                              <div class="row">
+                                <div class="col-md-5">
+                                  <!-- Fecha de creación de la cita -->
+                                  <h5>
+                                    <h3 data-ng-bind="appointment.creador.fullName"></h3>
+                                    <em>Solicitada el</em>
+                                    <em data-ng-bind="appointment.created | date:'short'"></em>
+                                  </h5>
+                                </div>
+                                <div class="col-md-4">
+                                  <a class="btn btn-primary" role="button" data-ng-href="#!/appointments/{{appointment._id}}">Detalle</a>
+                                </div>
+                                <div class="col-md-4">
+                                </div>
+                              </div>
+                              <hr>
+                            </li>
+                          </div>
+                        </div>
+                      </ul>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Fin contenido -->
+
+            <!-- Si no hay citas en la lista, mostrar mensaje -->
+            <div class="alert alert-warning" data-ng-hide="!appointments || appointments.length">
+              Aún no has solicitado ninguna cita.
+            </div>
+
+            <!-- Footer -->
             <hr />
+            <div class="text-center">
+              <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+            </div>
           </div>
-        </ul>
-        <!-- Si no hay citas en la lista, sugerimos que se cree una nueva cita -->
-        <div data-ng-hide="!appointments || appointments.length">
-          No tienes citas,¿ <a href="#!/appointments/create">Pedir cita</a>?
-        </div>
+
+        </section>
       </section>
     </div>
+    <!-- Fin vista de paciente -->
 
   </div>
-
-  <!-- Usuario sin autenticar -->
-  <div data-ng-show="!authentication.user">
-    <p>Es necesario estar logueado.<a href="/#!/signin">Identificarse</a></p>
-  </div>
+  <!-- Fin usuario autenticado -->
 
 </section>

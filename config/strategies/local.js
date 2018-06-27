@@ -8,7 +8,7 @@ var passport = require('passport'),
 
 // Crear la estrategia local del método de configuración
 module.exports = function() {
-  // Usar la estrategia local de Passport 
+  // Usar la estrategia local de Passport
   passport.use(new LocalStrategy(function(username, password, done) {
     // Usar el método 'findOne' de 'User'  para encontrar un usuario con el nombre de usuario actual
     User.findOne({
@@ -18,21 +18,21 @@ module.exports = function() {
       if (err) {
         return done(err);
       }
-      
+
       // Si no se ha encontrado un usuario, continuar al siguiente middleware con un mensaje de error
       if (!user) {
         return done(null, false, {
-          message: 'Usuario desconocido'
+          message: 'Usuario desconocido / Unknown user'
         });
       }
 
       // Si la contraseña es incorrecta, continuar al siguiente middleware con un mensaje de error
       if (!user.authenticate(password)) {
         return done(null, false, {
-          message: 'Contraseña incorrecta'
+          message: 'Contraseña incorrecta / Wrong password'
         });
       }
-      
+
       // En otro caso, continuar al siguiente middleware con el objeto user
       return done(null, user);
     });

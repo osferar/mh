@@ -1,16 +1,32 @@
 <section ng-controller="MainController">
 
-<!-- Navegacion -->
-<a data-ng-href="#!/">Principal</a>
-<hr />
-<!-- Usuario sin autenticar -->
-<div data-ng-show="!authentication.user">
-  <h1>Tienes que estar autenticado para ver listado de doctores</h1>
-  <li><a href="/signin">Identificarse</a></li>
-</div>
+  <!-- Usuario sin autenticar -->
+  <div data-ng-show="!authentication.user">
+
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa
+      para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <h4 style="color:#FFFFFF" class="navbar-text text-center">MEDICAL HISTORY</h4>
+      </div>
+    </nav>
+    <!-- Fin barra navegación -->
+    <div class="text-center">
+      <div class="alert alert-warning text-center">
+        <h3>Tienes que estar autenticado para ver listado de pacientes</h3>
+      </div>
+      <a href="/signin" class="btn btn-primary" role="button">Login</a>
+      <hr />
+      <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+    </div>
+  </div>
 
 <!-- Usuario autenticado  -->
 <div data-ng-show="authentication.user">
+  <!-- Navegacion -->
+  <a data-ng-href="#!/">Principal</a>
+  <hr />
   <!-- La view listar citas -->
   <section data-ng-controller="ProfilesPatientController" data-ng-init="find()">
     <!-- Lista de pacientes -->

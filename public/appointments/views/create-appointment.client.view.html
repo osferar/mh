@@ -1,74 +1,231 @@
 <section ng-controller="MainController">
 
-  <!-- Navegacion -->
-  <a data-ng-href="#!/">Principal</a>
-  <hr />
+  <!-- Usuario no autenticado o doctor -->
+  <div data-ng-show="!authentication.user || authentication.user.rol == 'doctor'">
 
-<!-- Usuario autenticado -->
-<div data-ng-show="authentication.user">
-
-  <!-- La view create appointment -->
-  <section data-ng-controller="AppointmentsController">
-    <!-- Formulario nueva cita -->
-    <form data-ng-submit="create()" novalidate>
-      <h1>Nueva cita</h1>
-      <!-- Fecha -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-        <label for="date">Fecha</label>
-        <div>
-          <input type="date" data-ng-model="date" id="date" required>
+    <!-- Barra de Navegacion -->
+    <nav class="navbar navbar-inverse" role="navigation">
+      <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+      <div class="navbar-header">
+        <div data-ng-show="authentication.user.rol == 'doctor'">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Desplegar navegación</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
         </div>
+        <a class="navbar-brand text-center" href="#!">MEDICAL HISTORY</a>
       </div>
 
-      <!-- Hora -->
-      <hr align="left" size="1" width="30%" />
-      <label for="hour">Hora</label>
-      <div>
-        <input type="time" data-ng-model="hour" name="hour" id="hour">
-      </div>
+      <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+      <div data-ng-show="authentication.user.rol == 'doctor'">
+        <div data-ng-controller="ProfilesDoctorController" data-ng-init="find()">
+          <div data-ng-repeat="profileDoctor in profilesDoctor">
+            <div data-ng-show="authentication.user._id == profileDoctor.creador._id">
 
-      <!-- Médico -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-        <label for="doctor">Médico</label>
-        <div>
-          <div data-ng-init="findDoctors()">
-            <select name="doctor" id="doctor"
-             ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor"
-             data-ng-model="doctor">
-            </select>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-ng-bind="authentication.user.fullName" data-toggle="dropdown"><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li> <a class="text-center" data-ng-href="#!/profilesDoctor/{{profileDoctor._id}}">Perfil</a> </li>
+                      <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Motivo de consulta -->
-      <div>
-        <hr align="left" size="1" width="30%" />
-        <label for="chiefComplaint">Motivo de consulta</label>
-        <div>
-          <textarea data-ng-model="chiefComplaint" id="chiefComplaint" cols="60" rows="10" placeholder="Motivo de consulta"></textarea>
+    </nav>
+    <!-- Fin barra navegación -->
+
+    <!-- Body usuario sin autenticar o doctor-->
+    <div class="text-center">
+      <div data-ng-show="authentication.user.rol != 'doctor'">
+        <div class="alert alert-warning text-center">
+          <h4>Tienes que estar logueado para pedir citas</h4>
+          <hr align="center" size="1" width="33%" />
+          <a href="/signin" class="btn btn-primary" role="button">Login</a>
         </div>
       </div>
 
-      <!-- Botón de envio -->
-      <div>
-        <hr />
-        <input type="submit" value="Crear cita">
+      <div data-ng-show="authentication.user.rol == 'doctor'">
+        <div class="alert alert-danger text-center">
+          <h4>No puedes pedir citas siendo doctor/a</h4>
+        </div>
+      </div>
+      <hr />
+      <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
+    </div>
+    <!-- Fin body usuario sin autenticar o doctor -->
+  </div>
+  <!-- Fin usuario sin autenticar o doctor -->
+
+  <!-- Usuario autenticado paciente -->
+  <div data-ng-show="authentication.user && authentication.user.rol == 'patient'">
+
+    <!-- Barra de Navegacion -->
+    <div data-ng-controller="ProfilesPatientController" data-ng-init="find()">
+      <div data-ng-repeat="profilePatient in profilesPatient">
+        <div data-ng-show="authentication.user._id == profilePatient.creador._id">
+
+          <nav class="navbar navbar-inverse" role="navigation">
+            <!-- El menú se agrupa para mostrarlo mejor en los dispositivos móviles -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Desplegar navegación</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#!">HOME</a>
+            </div>
+
+            <!-- Agrupar los enlaces de navegación, los formularios y cualquier otro elemento que se pueda ocultar al minimizar la barra -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+
+              <ul class="nav navbar-nav">
+                <li><a href="/#!/appointments">Citas</a></li>
+                <li><a href="/#!/consultations">Historial médico</a></li>
+                <li><a href="/#!/profilesDoctor">Doctores</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                  <p class="navbar-text">Paciente</p>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-ng-bind="profilePatient.creador.fullName" data-toggle="dropdown">
+                    <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li> <a class="text-center" data-ng-href="#!/profilesPatient/{{profilePatient._id}}">Perfil</a> </li>
+                    <li> <a href="/signout" class="btn btn-danger btn-xs" role="button">Logout</a> </li>
+                  </ul>
+                </li>
+              </ul>
+
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Fin barra navegación -->
+
+
+    <!-- La view create appointment -->
+    <section data-ng-controller="AppointmentsController">
+
+      <div class="container-fluid">
+
+        <!-- Titulo -->
+        <div class="row alert alert-info">
+          <div style="margin-left:1%" class="column">
+            <h1>Nueva cita</h1>
+            <hr>
+          </div>
+        </div>
+
+        <!-- Formulario nueva cita -->
+        <div class="row">
+          <div style="margin-left:10%" class="column">
+            <form data-ng-submit="create()">
+              <table class="table table-hover" BORDER WIDTH="50%" align="center" FRAME="void" RULES="rows">
+
+                <!-- Fecha -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="date">
+                      <h4>Fecha</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="date" data-ng-model="date" id="date" required oninvalid="setCustomValidity('Introduzca fecha de cita')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Hora -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="hour">
+                      <h4>Hora</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                      <input type="time" data-ng-model="hour" name="hour" id="hour" required oninvalid="setCustomValidity('Introduzca hora de cita')" oninput="setCustomValidity('')">
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Médico -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="doctor">
+                      <h4>Médico</h4>
+                    </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                    <div data-ng-init="findDoctors()">
+                      <select name="doctor" id="doctor" ng-options="profileDoctor.creador.fullName for profileDoctor in profilesDoctor" data-ng-model="doctor" required oninvalid="setCustomValidity('Elige el doctor/a que atenderá la cita')" oninput="setCustomValidity('')"></select>
+                    </div>
+                    </h4>
+                  </td>
+                </tr>
+
+                <!-- Motivo de consulta -->
+                <tr>
+                  <td style="vertical-align:middle" width="20%">
+                    <label for="chiefComplaint">
+                  <h4>Motivo de consulta</h4>
+                </label>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <h4>
+                  <textarea data-ng-model="chiefComplaint" id="chiefComplaint" cols="40" rows="10" placeholder="Motivo de consulta"  required oninvalid="setCustomValidity('Introduzca motivo de consulta')" oninput="setCustomValidity('')"></textarea>
+                </h4>
+                  </td>
+                </tr>
+
+              </table>
+              <!-- Botón de envio -->
+              <div>
+                <hr />
+                <input type="submit" value="Crear cita">
+              </div>
+
+              <!-- El elemento mensaje de error -->
+              <div data-ng-show="error">
+                <br>
+                <div class="alert alert-warning">
+                  <strong data-ng-bind="error"></strong>
+                  <div data-ng-show="!authentication.user">
+                    <a href="/signin" class="btn btn-primary" role="button">Login</a>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
       </div>
 
-      <!-- El elemento mensaje de error -->
-      <div data-ng-show="error">
-        <strong data-ng-bind="error"></strong>
+      <hr />
+      <div class="text-center">
+        <h6 class="mt-5 mb-3 text-muted">Medical History 2018</h6>
       </div>
-    </form>
-  </section>
-</div>
-
-<!-- Usuario sin autenticar -->
-<div data-ng-show="!authentication.user">
-  <h1>Tienes que estar autenticado para crear una cita.</h1>
-  <li><a href="/signin">Identificarse</a></li>
-</div>
+    </section>
+  </div>
+  <!-- Fin usuario autenticado paciente -->
 
 </section>
