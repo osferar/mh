@@ -40,7 +40,7 @@ exports.renderSignin = function(req, res, next) {
     // Usa el objeto 'response' para renderizar la página signin
     res.render('signin', {
       // Configurar la variable title de la página
-      title: 'MH > Sign-in Form',
+      title: 'MH > Acceso',
       // Configurar la variable del mensaje flash
       messages: req.flash('error') || req.flash('info')
     });
@@ -56,7 +56,7 @@ exports.renderSignup = function(req, res, next) {
     // Usa el objeto 'response' para renderizar la página signup
     res.render('signup', {
       // Configurar la variable title de la página
-      title: 'MH > Sign-up Form',
+      title: 'MH > Resgistro',
       // Configurar la variable del mensaje flash
       messages: req.flash('error')
     });

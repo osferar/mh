@@ -8,16 +8,18 @@ var mongoose = require('mongoose'),
 
 // Definir un nuevo 'PatientSchema'
 var ProfilePatientSchema = new Schema({
-
+  // Usuario que crea el perfil
   creador: {
     type: Schema.ObjectId,
     ref: 'User'
   },
+  // Fecha de creación
   created: {
     type: Date,
     //Crear un valor 'created' por defecto
     default: Date.now
   },
+  // DNI del paciente
   dni: {
     type: String,
     unique: true,
@@ -50,26 +52,31 @@ var ProfilePatientSchema = new Schema({
     },
     required: 'El DNI/NIF no puede estar en blanco'
   },
+  // Nacionalidad
   nationality: {
     type: String,
     default: '-',
     trim: true
   },
+  // Ciudad de residencia
   city: {
     type: String,
     trim: true,
     required: 'Introduzca ciudad de residencia'
   },
+  // Codigo postal de residencia
   zipCode: {
     type: String,
     trim: true,
     required: 'Introduzca código postal'
   },
+  // Dirección de residencia
   address: {
     type: String,
     trim: true,
     required: 'Introduzca domicilio'
   },
+  // Número de teléfono de contacto
   phoneNumber: {
     type: String,
     validate: {
@@ -81,33 +88,40 @@ var ProfilePatientSchema = new Schema({
     required: 'Es obligatorio introducir un número de teléfono'
 
   },
+  // Correo electrónico de contacto
   email: {
     type: String,
     required: 'Introduzca una dirección de correo',
     // Validar el formato email
     match: [/.+\@.+\..+/, "Por favor escribe una dirección de email correcta"]
   },
+  // Género
   gender: {
     type: String,
     required: 'Introduzca género'
   },
+  // Fecha de nacimiento
   birthDate: {
     type: Date,
     required: 'La fecha de nacimiento no puede estar en blanco'
   },
+  // Lugar de nacimiento
   birthPlace: {
     type: String,
     required: 'Lugar de nacimiento'
   },
+  // Estado civil
   civilStatus: {
     type: String,
     default: '-',
     trim: true
   },
+  // Grupo sanguíneo
   bloodType: {
     type: String,
     default: '-'
   },
+  // Alergias
   allergies: {
     type: String,
     default: 'Ninguna',

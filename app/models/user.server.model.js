@@ -8,13 +8,17 @@ var mongoose = require('mongoose'),
 
 // Definir un nuevo 'UserSchema'
 var UserSchema = new Schema({
+  // Nombre
   firstName: String,
+  // Apellido
   lastName: String,
+  // Correo electrónico de contacto
   email: {
     type: String,
     // Validar el formato email
     match: [/.+\@.+\..+/, "Por favor escribe una dirección de email correcta"]
   },
+  // Nombre de usuario
   username: {
     type: String,
     //Configurar un único index 'username'
@@ -24,6 +28,7 @@ var UserSchema = new Schema({
     //Trim el campo 'username'
     trim: true
   },
+  // Contraseña
   password: {
     type: String,
     //Validar el valor length de 'password'
@@ -33,6 +38,7 @@ var UserSchema = new Schema({
       }, 'La contraseña debe ser más larga'
     ]
   },
+  // Rol en el sistema
   rol: {
     type: String,
     default:''
@@ -40,6 +46,7 @@ var UserSchema = new Schema({
   salt: {
     type: String
   },
+  // Proveedor de alamcenamiento de perfil
   provider: {
     type: String,
     //Validar existencia valor Provider
@@ -47,6 +54,7 @@ var UserSchema = new Schema({
   },
   providerId: String,
   providerData: {},
+  // Fecha de creación
   created: {
     type: Date,
     //Crear un valor 'created' por defecto
