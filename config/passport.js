@@ -9,8 +9,6 @@ var passport = require('passport'),
 module.exports = function() {
   //Cargar el modelo 'User'
   var User = mongoose.model('User');
-  //Cargar el modelo 'Patient'
-  // var Patient = mongoose.model('Patient');
 
   //Usar el método 'serializeUser' para serializar la id del usuario
   passport.serializeUser(function(user, done) {

@@ -59,9 +59,6 @@ module.exports = function() {
   // Configurar el servidor de archivos estáticos
   app.use(express.static('./public'));
 
-  // Configurar moment para toda la aplicación
-//  app.locals.moment = require('moment');
-
   // Devolver la instancia de la aplicación Express
   return app;
 };
